@@ -1,4 +1,4 @@
-import { GameMap, ResourceType, HarborType } from '@/types/game';
+import { GameMap, HarborType } from '@/types/game';
 import { 
   cubeToPixel, 
   getHexPath, 
@@ -36,26 +36,70 @@ export function MapRenderer({ map }: MapRendererProps) {
     };
   }, [map.hexes, layout]);
 
-  // Resource icons/text
-  const resourceIcons: Record<ResourceType, string> = {
-    brick: '🧱',
-    lumber: '🌲',
-    wool: '🐑',
-    grain: '🌾',
-    ore: '⛰️',
-    desert: '🏜️',
-    gold: '💰',
-    fish: '🐟',
-  };
-
   // Harbor display
   const harborDisplay: Record<HarborType, string> = {
     generic: '3:1',
-    brick: '2:1🧱',
-    lumber: '2:1🌲',
-    wool: '2:1🐑',
-    grain: '2:1🌾',
-    ore: '2:1⛰️',
+    brick: '2:1',
+    lumber: '2:1',
+    wool: '2:1',
+    grain: '2:1',
+    ore: '2:1',
+  };
+
+  // Harbor colors
+  const harborColors: Record<HarborType, string> = {
+    generic: '#8B4513',
+    brick: '#B22222',
+    lumber: '#228B22',
+    wool: '#F5F5DC',
+    grain: '#DAA520',
+    ore: '#696969',
+  };
+
+  // Create harbor icon based on type
+  const createHarborIcon = (type: HarborType, x: number, y: number, direction: number = 0) => {
+    const color = harborColors[type];
+    const transform = `rotate(${direction * 60} ${x} ${y})`;
+    
+    return (
+      <g transform={transform}>
+        {/* Harbor building */}
+        <path
+          d={`M ${x - 12} ${y + 8} L ${x - 8} ${y - 8} L ${x + 8} ${y - 8} L ${x + 12} ${y + 8} Z`}
+          fill={color}
+          stroke="#000"
+          strokeWidth="1"
+        />
+        {/* Roof */}
+        <path
+          d={`M ${x - 10} ${y - 8} L ${x} ${y - 15} L ${x + 10} ${y - 8} Z`}
+          fill="#8B0000"
+          stroke="#000"
+          strokeWidth="1"
+        />
+        {/* Exchange rate */}
+        <rect
+          x={x - 8}
+          y={y - 3}
+          width="16"
+          height="8"
+          fill="#FFF"
+          stroke="#000"
+          strokeWidth="1"
+          rx="2"
+        />
+        <text
+          x={x}
+          y={y + 2}
+          textAnchor="middle"
+          className="text-xs font-bold select-none pointer-events-none"
+          fill="#000"
+          fontSize="10"
+        >
+          {harborDisplay[type]}
+        </text>
+      </g>
+    );
   };
 
   return (
@@ -66,23 +110,43 @@ export function MapRenderer({ map }: MapRendererProps) {
       >
         {/* Define patterns for terrain types */}
         <defs>
-          <pattern id="water-pattern" patternUnits="userSpaceOnUse" width="4" height="4">
-            <rect width="4" height="4" fill="#4169E1" opacity="0.3" />
-            <path d="M0,2 Q2,0 4,2 Q2,4 0,2Z" fill="#1E90FF" opacity="0.5" />
+          <pattern id="water-pattern" patternUnits="userSpaceOnUse" width="8" height="8">
+            <rect width="8" height="8" fill="#4682B4" />
+            <path d="M0,4 Q2,2 4,4 Q6,6 8,4" stroke="#5F9EA0" strokeWidth="1" fill="none"/>
+            <path d="M0,0 Q2,-2 4,0 Q6,2 8,0" stroke="#87CEEB" strokeWidth="1" fill="none"/>
+          </pattern>
+          
+          {/* Blue sea corners pattern */}
+          <pattern id="sea-corner-pattern" patternUnits="userSpaceOnUse" width="12" height="12">
+            <rect width="12" height="12" fill="#4169E1" />
+            <circle cx="3" cy="3" r="1" fill="#1E90FF" opacity="0.7"/>
+            <circle cx="9" cy="9" r="1" fill="#1E90FF" opacity="0.7"/>
+            <circle cx="9" cy="3" r="0.5" fill="#87CEEB" opacity="0.5"/>
+            <circle cx="3" cy="9" r="0.5" fill="#87CEEB" opacity="0.5"/>
           </pattern>
           
           {/* Tile patterns */}
           <g dangerouslySetInnerHTML={{ __html: generateTilePatterns() }} />
         </defs>
         
-        {/* Water background around entire map */}
+        {/* Water background around entire map with blue sea corners */}
         <rect
           x={minX}
           y={minY}
           width={width}
           height={height}
+          fill="url(#sea-corner-pattern)"
+          opacity="0.8"
+        />
+        
+        {/* Additional water border for cleaner look */}
+        <rect
+          x={minX + 20}
+          y={minY + 20}
+          width={width - 40}
+          height={height - 40}
           fill="url(#water-pattern)"
-          opacity="0.3"
+          opacity="0.6"
         />
         
         {/* Render hexes */}
@@ -102,50 +166,40 @@ export function MapRenderer({ map }: MapRendererProps) {
                 opacity={hex.terrain === 'desert' ? 0.8 : 1}
               />
               
-              {/* Resource icon for land tiles only */}
-              {!isWater && (
-                <text
-                  x={center.x}
-                  y={center.y - 8}
-                  textAnchor="middle"
-                  className="text-lg select-none pointer-events-none"
-                >
-                  {resourceIcons[hex.resource]}
-                </text>
-              )}
-              
-              {/* Number token */}
+              {/* Number token and odds */}
               {hex.number && (
                 <g>
+                  {/* Number token at top */}
                   <circle
                     cx={center.x}
-                    cy={center.y + 8}
-                    r="12"
+                    cy={center.y - 10}
+                    r="14"
                     fill={hex.number === 6 || hex.number === 8 ? '#FF6B6B' : '#FFF'}
                     stroke="#2F2F2F"
-                    strokeWidth="1"
+                    strokeWidth="2"
                   />
                   <text
                     x={center.x}
-                    y={center.y + 13}
+                    y={center.y - 5}
                     textAnchor="middle"
-                    className="text-sm font-bold select-none pointer-events-none"
+                    className="text-base font-bold select-none pointer-events-none"
                     fill={hex.number === 6 || hex.number === 8 ? '#FFF' : '#2F2F2F'}
+                    fontSize="16"
                   >
                     {hex.number}
                   </text>
-                  {/* Probability dots */}
-                  {hex.number && (
-                    <text
-                      x={center.x}
-                      y={center.y + 20}
-                      textAnchor="middle"
-                      className="text-xs select-none pointer-events-none"
-                      fill="#666"
-                    >
-                      {'•'.repeat(6 - Math.abs(hex.number - 7))}
-                    </text>
-                  )}
+                  
+                  {/* Probability dots at bottom */}
+                  <text
+                    x={center.x}
+                    y={center.y + 20}
+                    textAnchor="middle"
+                    className="text-sm select-none pointer-events-none"
+                    fill="#2F2F2F"
+                    fontSize="14"
+                  >
+                    {'•'.repeat(6 - Math.abs(hex.number - 7))}
+                  </text>
                 </g>
               )}
               
@@ -154,18 +208,19 @@ export function MapRenderer({ map }: MapRendererProps) {
                 <g>
                   <circle
                     cx={center.x}
-                    cy={center.y - 15}
-                    r="8"
+                    cy={center.y + 5}
+                    r="10"
                     fill="#2F2F2F"
                     stroke="#FFF"
-                    strokeWidth="1"
+                    strokeWidth="2"
                   />
                   <text
                     x={center.x}
-                    y={center.y - 11}
+                    y={center.y + 10}
                     textAnchor="middle"
-                    className="text-xs font-bold select-none pointer-events-none"
+                    className="text-sm font-bold select-none pointer-events-none"
                     fill="#FFF"
+                    fontSize="12"
                   >
                     R
                   </text>
@@ -177,18 +232,19 @@ export function MapRenderer({ map }: MapRendererProps) {
                 <g>
                   <circle
                     cx={center.x}
-                    cy={center.y - 15}
-                    r="8"
+                    cy={center.y + 5}
+                    r="10"
                     fill="#8B4513"
                     stroke="#FFF"
-                    strokeWidth="1"
+                    strokeWidth="2"
                   />
                   <text
                     x={center.x}
-                    y={center.y - 11}
+                    y={center.y + 10}
                     textAnchor="middle"
-                    className="text-xs font-bold select-none pointer-events-none"
+                    className="text-sm font-bold select-none pointer-events-none"
                     fill="#FFF"
+                    fontSize="12"
                   >
                     P
                   </text>
@@ -214,27 +270,12 @@ export function MapRenderer({ map }: MapRendererProps) {
         {/* Render harbors on hexes */}
         {map.hexes.filter(hex => hex.harbor).map((hex) => {
           const center = cubeToPixel(hex.position, layout);
+          // Position harbor at edge of hex
+          const harborX = center.x + (layout.size * 0.7);
+          const harborY = center.y;
           return (
             <g key={`hex-harbor-${hex.id}`}>
-              <rect
-                x={center.x - 15}
-                y={center.y + 15}
-                width="30"
-                height="12"
-                fill="#FFF"
-                stroke="#2F2F2F"
-                strokeWidth="1"
-                rx="2"
-              />
-              <text
-                x={center.x}
-                y={center.y + 24}
-                textAnchor="middle"
-                className="text-xs font-bold select-none pointer-events-none"
-                fill="#2F2F2F"
-              >
-                {harborDisplay[hex.harbor!]}
-              </text>
+              {createHarborIcon(hex.harbor!, harborX, harborY, 0)}
             </g>
           );
         })}
@@ -246,25 +287,25 @@ export function MapRenderer({ map }: MapRendererProps) {
             y="0"
             width="140"
             height="70"
-            fill="#FFF"
-            stroke="#2F2F2F"
-            strokeWidth="1"
+            fill="#FFFFFF"
+            stroke="#000000"
+            strokeWidth="2"
             rx="4"
-            opacity="0.9"
+            opacity="0.95"
           />
-          <text x="8" y="15" className="text-xs font-bold fill-current" fill="#2F2F2F">
+          <text x="8" y="15" className="text-xs font-bold" fill="#000000" fontSize="12">
             Legend
           </text>
-          <text x="8" y="28" className="text-xs fill-current" fill="#2F2F2F">
+          <text x="8" y="28" className="text-xs" fill="#000000" fontSize="11">
             Red numbers = High prob
           </text>
-          <text x="8" y="40" className="text-xs fill-current" fill="#2F2F2F">
+          <text x="8" y="40" className="text-xs" fill="#000000" fontSize="11">
             Dots = Roll frequency
           </text>
-          <text x="8" y="52" className="text-xs fill-current" fill="#2F2F2F">
+          <text x="8" y="52" className="text-xs" fill="#000000" fontSize="11">
             R = Robber, P = Pirate
           </text>
-          <text x="8" y="64" className="text-xs fill-current" fill="#2F2F2F">
+          <text x="8" y="64" className="text-xs" fill="#000000" fontSize="11">
             🏠 = Harbor
           </text>
         </g>

@@ -2,69 +2,58 @@
 export const TILE_PATTERNS = {
   hills: (id: string) => `
     <pattern id="hills-${id}" patternUnits="userSpaceOnUse" width="20" height="20">
-      <rect width="20" height="20" fill="#8B4513"/>
-      <path d="M0 10 Q5 5 10 10 Q15 15 20 10 L20 20 L0 20 Z" fill="#A0522D"/>
-      <path d="M0 0 Q5 5 10 0 Q15 -5 20 0 L20 10 Q15 15 10 10 Q5 5 0 10 Z" fill="#CD853F"/>
+      <rect width="20" height="20" fill="#D2691E"/>
+      <path d="M0 15 Q5 8 10 15 Q15 20 20 15 L20 20 L0 20 Z" fill="#A0522D"/>
+      <path d="M0 10 Q5 5 10 10 Q15 15 20 10 L20 15 Q15 20 10 15 Q5 8 0 15 Z" fill="#CD853F"/>
+      <path d="M0 5 Q5 0 10 5 Q15 10 20 5 L20 10 Q15 15 10 10 Q5 5 0 10 Z" fill="#F4A460"/>
     </pattern>
   `,
   
   forest: (id: string) => `
-    <pattern id="forest-${id}" patternUnits="userSpaceOnUse" width="16" height="16">
-      <rect width="16" height="16" fill="#228B22"/>
-      <circle cx="4" cy="4" r="2" fill="#32CD32"/>
-      <circle cx="12" cy="4" r="2" fill="#32CD32"/>
-      <circle cx="8" cy="8" r="2" fill="#32CD32"/>
-      <circle cx="4" cy="12" r="2" fill="#32CD32"/>
-      <circle cx="12" cy="12" r="2" fill="#32CD32"/>
-      <path d="M0 14 Q8 10 16 14 L16 16 L0 16 Z" fill="#006400"/>
+    <pattern id="forest-${id}" patternUnits="userSpaceOnUse" width="20" height="20">
+      <rect width="20" height="20" fill="#228B22"/>
+      <path d="M0 15 Q10 8 20 15 L20 20 L0 20 Z" fill="#006400"/>
+      <path d="M0 10 Q10 3 20 10 L20 15 Q10 8 0 15 Z" fill="#32CD32"/>
+      <path d="M0 5 Q10 -2 20 5 L20 10 Q10 3 0 10 Z" fill="#90EE90"/>
     </pattern>
   `,
   
   pasture: (id: string) => `
-    <pattern id="pasture-${id}" patternUnits="userSpaceOnUse" width="24" height="24">
-      <rect width="24" height="24" fill="#9ACD32"/>
-      <path d="M0 12 Q6 8 12 12 Q18 16 24 12 L24 24 L0 24 Z" fill="#ADFF2F"/>
-      <circle cx="6" cy="6" r="1" fill="#7CFC00"/>
-      <circle cx="18" cy="6" r="1" fill="#7CFC00"/>
-      <circle cx="12" cy="18" r="1" fill="#7CFC00"/>
-      <path d="M4 20 Q8 16 12 20 Q16 24 20 20" stroke="#7CFC00" stroke-width="1" fill="none"/>
+    <pattern id="pasture-${id}" patternUnits="userSpaceOnUse" width="20" height="20">
+      <rect width="20" height="20" fill="#9ACD32"/>
+      <path d="M0 15 Q10 10 20 15 L20 20 L0 20 Z" fill="#ADFF2F"/>
+      <path d="M0 10 Q10 5 20 10 L20 15 Q10 10 0 15 Z" fill="#7CFC00"/>
+      <path d="M0 5 Q10 0 20 5 L20 10 Q10 5 0 10 Z" fill="#CCFF99"/>
     </pattern>
   `,
   
   fields: (id: string) => `
     <pattern id="fields-${id}" patternUnits="userSpaceOnUse" width="20" height="20">
       <rect width="20" height="20" fill="#DAA520"/>
-      <path d="M0 5 L20 5 M0 10 L20 10 M0 15 L20 15" stroke="#FFD700" stroke-width="1"/>
-      <path d="M5 0 L5 20 M10 0 L10 20 M15 0 L15 20" stroke="#FFD700" stroke-width="1"/>
-      <circle cx="7" cy="7" r="1" fill="#FFA500"/>
-      <circle cx="13" cy="13" r="1" fill="#FFA500"/>
-      <circle cx="7" cy="13" r="1" fill="#FFA500"/>
-      <circle cx="13" cy="7" r="1" fill="#FFA500"/>
+      <path d="M0 0 L20 0 L20 5 L0 5 Z" fill="#FFD700"/>
+      <path d="M0 5 L20 5 L20 10 L0 10 Z" fill="#FFA500"/>
+      <path d="M0 10 L20 10 L20 15 L0 15 Z" fill="#FFD700"/>
+      <path d="M0 15 L20 15 L20 20 L0 20 Z" fill="#FFA500"/>
     </pattern>
   `,
   
   mountains: (id: string) => `
-    <pattern id="mountains-${id}" patternUnits="userSpaceOnUse" width="24" height="24">
-      <rect width="24" height="24" fill="#696969"/>
-      <path d="M0 24 L6 12 L12 24 Z" fill="#808080"/>
-      <path d="M12 24 L18 8 L24 24 Z" fill="#808080"/>
-      <path d="M0 24 L4 18 L8 24 Z" fill="#A9A9A9"/>
-      <path d="M16 24 L20 16 L24 24 Z" fill="#A9A9A9"/>
-      <circle cx="6" cy="18" r="1" fill="#C0C0C0"/>
-      <circle cx="18" cy="14" r="1" fill="#C0C0C0"/>
+    <pattern id="mountains-${id}" patternUnits="userSpaceOnUse" width="20" height="20">
+      <rect width="20" height="20" fill="#696969"/>
+      <path d="M0 20 L5 10 L10 20 Z" fill="#808080"/>
+      <path d="M5 20 L10 8 L15 20 Z" fill="#A9A9A9"/>
+      <path d="M10 20 L15 12 L20 20 Z" fill="#808080"/>
+      <path d="M0 20 L3 15 L6 20 Z" fill="#DCDCDC"/>
+      <path d="M14 20 L17 14 L20 20 Z" fill="#DCDCDC"/>
     </pattern>
   `,
   
   desert: (id: string) => `
-    <pattern id="desert-${id}" patternUnits="userSpaceOnUse" width="18" height="18">
-      <rect width="18" height="18" fill="#F4A460"/>
-      <path d="M0 9 Q4.5 6 9 9 Q13.5 12 18 9 L18 18 L0 18 Z" fill="#DEB887"/>
-      <path d="M0 0 Q4.5 3 9 0 Q13.5 -3 18 0 L18 9 Q13.5 12 9 9 Q4.5 6 0 9 Z" fill="#F5DEB3"/>
-      <circle cx="5" cy="5" r="0.5" fill="#D2691E"/>
-      <circle cx="13" cy="5" r="0.5" fill="#D2691E"/>
-      <circle cx="9" cy="13" r="0.5" fill="#D2691E"/>
-      <circle cx="3" cy="15" r="0.5" fill="#D2691E"/>
-      <circle cx="15" cy="15" r="0.5" fill="#D2691E"/>
+    <pattern id="desert-${id}" patternUnits="userSpaceOnUse" width="20" height="20">
+      <rect width="20" height="20" fill="#F4A460"/>
+      <path d="M0 15 Q10 10 20 15 L20 20 L0 20 Z" fill="#DEB887"/>
+      <path d="M0 10 Q10 5 20 10 L20 15 Q10 10 0 15 Z" fill="#F5DEB3"/>
+      <path d="M0 5 Q10 0 20 5 L20 10 Q10 5 0 10 Z" fill="#FAEBD7"/>
     </pattern>
   `,
   

@@ -85,6 +85,7 @@ function generateMapCoordinates(config: GameConfiguration): CubeCoordinate[] {
       return generateHexagonalMap(mapRadius);
     
     case 'cities-knights':
+      // Cities & Knights uses standard hexagonal layout, not random edge tiles
       if (isUsingExtension) {
         return generateHexagonalMapWithExtension(mapRadius);
       }

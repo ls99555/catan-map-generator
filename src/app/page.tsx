@@ -119,7 +119,7 @@ export default function Home() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Controls Sidebar */}
+          {/* Controls Sidebar - Mobile/Desktop */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">
@@ -133,15 +133,17 @@ export default function Home() {
               />
             </div>
 
-            {/* Statistics Panel */}
-            {mapStats && (
-              <div className="mt-6 bg-white rounded-lg shadow-lg p-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">
-                  Map Statistics
-                </h2>
-                <MapStatisticsPanel stats={mapStats} config={config} />
-              </div>
-            )}
+            {/* Statistics Panel - Mobile Only */}
+            <div className="lg:hidden">
+              {mapStats && (
+                <div className="mt-6 bg-white rounded-lg shadow-lg p-6">
+                  <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                    Map Statistics
+                  </h2>
+                  <MapStatisticsPanel stats={mapStats} config={config} />
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Map Display */}
@@ -179,6 +181,18 @@ export default function Home() {
                   </div>
                 )}
               </div>
+            </div>
+
+            {/* Statistics Panel - Desktop Only (below map) */}
+            <div className="hidden lg:block lg:col-span-3">
+              {mapStats && (
+                <div className="mt-6 bg-white rounded-lg shadow-lg p-6">
+                  <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                    Map Statistics
+                  </h2>
+                  <MapStatisticsPanel stats={mapStats} config={config} />
+                </div>
+              )}
             </div>
           </div>
         </div>
