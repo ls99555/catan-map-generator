@@ -15,7 +15,6 @@ import {
   generateHexagonalMapWithExtension,
   generateRectangularMap, 
   generateIslandMap,
-  getEdgePositions,
   getNeighbors
 } from './hexGrid';
 import { v4 as uuidv4 } from 'uuid';
@@ -318,13 +317,8 @@ function generateHarbors(hexes: Hex[], config: GameConfiguration): Hex[] {
     return hexes;
   }
   
-  // Get edge positions for harbors
-  const edgePositions = getEdgePositions(hexes.map(h => h.position));
-  const edgeHexes = hexes.filter(hex => 
-    edgePositions.some(pos => 
-      pos.q === hex.position.q && pos.r === hex.position.r && pos.s === hex.position.s
-    )
-  );
+  // Get land tiles that are adjacent to sea tiles (valid harbor positions)
+  const validHarborPositions = getValidHarborPositions(hexes);
   
   // Create harbor pool
   const harborPool: HarborType[] = [];
@@ -349,20 +343,67 @@ function generateHarbors(hexes: Hex[], config: GameConfiguration): Hex[] {
     }
   }
   
-  // Shuffle and assign harbors
+  // Shuffle and assign harbors to valid positions
   const shuffledHarbors = shuffle(harborPool);
-  const shuffledEdges = shuffle(edgeHexes);
+  const shuffledPositions = shuffle(validHarborPositions);
   
   return hexes.map(hex => {
-    const edgeIndex = shuffledEdges.findIndex(edge => edge.id === hex.id);
-    if (edgeIndex !== -1 && edgeIndex < shuffledHarbors.length) {
+    const positionIndex = shuffledPositions.findIndex(pos => pos.id === hex.id);
+    if (positionIndex !== -1 && positionIndex < shuffledHarbors.length) {
       return {
         ...hex,
-        harbor: shuffledHarbors[edgeIndex]
+        harbor: shuffledHarbors[positionIndex]
       };
     }
     return hex;
   });
+}
+
+// Get valid harbor positions (land tiles adjacent to sea tiles or map edge)
+function getValidHarborPositions(hexes: Hex[]): Hex[] {
+  const validPositions: Hex[] = [];
+  
+  // Check if this expansion uses sea tiles
+  const hasSeaTiles = hexes.some(hex => hex.terrain === 'sea');
+  
+  for (const hex of hexes) {
+    // Skip if this is not a land tile
+    if (hex.terrain === 'sea') {
+      continue;
+    }
+    
+    let isValidHarborPosition = false;
+    
+    if (hasSeaTiles) {
+      // For expansions with sea tiles: check if this land tile is adjacent to any sea tile
+      const neighbors = getNeighbors(hex.position);
+      isValidHarborPosition = neighbors.some(neighborPos => {
+        const neighborHex = hexes.find(h => 
+          h.position.q === neighborPos.q && 
+          h.position.r === neighborPos.r && 
+          h.position.s === neighborPos.s
+        );
+        return neighborHex && neighborHex.terrain === 'sea';
+      });
+    } else {
+      // For base game without sea tiles: check if this land tile is on the map edge
+      const neighbors = getNeighbors(hex.position);
+      isValidHarborPosition = neighbors.some(neighborPos => {
+        const neighborHex = hexes.find(h => 
+          h.position.q === neighborPos.q && 
+          h.position.r === neighborPos.r && 
+          h.position.s === neighborPos.s
+        );
+        return !neighborHex; // No hex at this position = edge of map
+      });
+    }
+    
+    if (isValidHarborPosition) {
+      validPositions.push(hex);
+    }
+  }
+  
+  return validPositions;
 }
 
 // Place robber on desert tile

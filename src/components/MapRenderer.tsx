@@ -285,8 +285,8 @@ export function MapRenderer({ map }: MapRendererProps) {
           <rect
             x="0"
             y="0"
-            width="140"
-            height="70"
+            width="200"
+            height="120"
             fill="#FFFFFF"
             stroke="#000000"
             strokeWidth="2"
@@ -296,17 +296,33 @@ export function MapRenderer({ map }: MapRendererProps) {
           <text x="8" y="15" className="text-xs font-bold" fill="#000000" fontSize="12">
             Legend
           </text>
-          <text x="8" y="28" className="text-xs" fill="#000000" fontSize="11">
-            Red numbers = High prob
+          
+          {/* Tiles */}
+          <text x="8" y="28" className="text-xs font-bold" fill="#000000" fontSize="11">
+            Tiles:
           </text>
-          <text x="8" y="40" className="text-xs" fill="#000000" fontSize="11">
-            Dots = Roll frequency
+          <text x="8" y="40" className="text-xs" fill="#000000" fontSize="10">
+            🏔️ Hills (Brick) • 🌲 Forest (Lumber)
           </text>
-          <text x="8" y="52" className="text-xs" fill="#000000" fontSize="11">
-            R = Robber, P = Pirate
+          <text x="8" y="52" className="text-xs" fill="#000000" fontSize="10">
+            🐑 Pasture (Wool) • 🌾 Fields (Grain)
           </text>
-          <text x="8" y="64" className="text-xs" fill="#000000" fontSize="11">
-            🏠 = Harbor
+          <text x="8" y="64" className="text-xs" fill="#000000" fontSize="10">
+            ⛰️ Mountains (Ore) • 🏜️ Desert (None)
+          </text>
+          <text x="8" y="76" className="text-xs" fill="#000000" fontSize="10">
+            🌊 Sea • 🏺 Gold • 🐟 Fish
+          </text>
+          
+          {/* Numbers */}
+          <text x="8" y="92" className="text-xs" fill="#000000" fontSize="11">
+            Red numbers = High probability (6,8)
+          </text>
+          <text x="8" y="104" className="text-xs" fill="#000000" fontSize="11">
+            Dots = Roll frequency • R = Robber • P = Pirate
+          </text>
+          <text x="8" y="116" className="text-xs" fill="#000000" fontSize="11">
+            🏠 = Harbor (3:1 or 2:1 trade)
           </text>
         </g>
       </svg>

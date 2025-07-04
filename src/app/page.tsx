@@ -118,84 +118,64 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Controls Sidebar - Mobile/Desktop */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">
-                Map Configuration
-              </h2>
-              <MapControls
-                config={config}
-                onChange={handleConfigChange}
-                onGenerate={handleGenerateMap}
-                isGenerating={isGenerating}
-              />
-            </div>
+        {/* Map Configuration - Top Section */}
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            Map Configuration
+          </h2>
+          <MapControls
+            config={config}
+            onChange={handleConfigChange}
+            onGenerate={handleGenerateMap}
+            isGenerating={isGenerating}
+          />
+        </div>
 
-            {/* Statistics Panel - Mobile Only */}
-            <div className="lg:hidden">
-              {mapStats && (
-                <div className="mt-6 bg-white rounded-lg shadow-lg p-6">
-                  <h2 className="text-lg font-semibold text-gray-900 mb-4">
-                    Map Statistics
-                  </h2>
-                  <MapStatisticsPanel stats={mapStats} config={config} />
-                </div>
-              )}
+        {/* Map Display - Full Width */}
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-lg font-semibold text-gray-900">
+              Generated Map
+            </h2>
+            <div className="flex space-x-2">
+              <button
+                onClick={() => handleExportMap('image')}
+                className="px-3 py-1 text-sm bg-green-100 text-green-800 rounded hover:bg-green-200 transition-colors"
+                disabled={!gameMap}
+              >
+                Export Image
+              </button>
             </div>
           </div>
 
-          {/* Map Display */}
-          <div className="lg:col-span-3">
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-lg font-semibold text-gray-900">
-                  Generated Map
-                </h2>
-                <div className="flex space-x-2">
-                  <button
-                    onClick={() => handleExportMap('image')}
-                    className="px-3 py-1 text-sm bg-green-100 text-green-800 rounded hover:bg-green-200 transition-colors"
-                    disabled={!gameMap}
-                  >
-                    Export Image
-                  </button>
+          {/* Map Renderer */}
+          <div className="relative">
+            {isGenerating ? (
+              <div className="flex items-center justify-center h-96 bg-gray-50 rounded-lg">
+                <div className="text-center">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+                  <p className="text-gray-600">Generating your Catan map...</p>
                 </div>
               </div>
-
-              {/* Map Renderer */}
-              <div className="relative">
-                {isGenerating ? (
-                  <div className="flex items-center justify-center h-96 bg-gray-50 rounded-lg">
-                    <div className="text-center">
-                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
-                      <p className="text-gray-600">Generating your Catan map...</p>
-                    </div>
-                  </div>
-                ) : gameMap ? (
-                  <MapRenderer map={gameMap} />
-                ) : (
-                  <div className="flex items-center justify-center h-96 bg-gray-50 rounded-lg">
-                    <p className="text-gray-600">Click &quot;Generate Map&quot; to create your Catan board</p>
-                  </div>
-                )}
+            ) : gameMap ? (
+              <MapRenderer map={gameMap} />
+            ) : (
+              <div className="flex items-center justify-center h-96 bg-gray-50 rounded-lg">
+                <p className="text-gray-600">Click &quot;Generate Map&quot; to create your Catan board</p>
               </div>
-            </div>
-
-            {/* Statistics Panel - Desktop Only (below map) */}
-            <div className="hidden lg:block lg:col-span-3">
-              {mapStats && (
-                <div className="mt-6 bg-white rounded-lg shadow-lg p-6">
-                  <h2 className="text-lg font-semibold text-gray-900 mb-4">
-                    Map Statistics
-                  </h2>
-                  <MapStatisticsPanel stats={mapStats} config={config} />
-                </div>
-              )}
-            </div>
+            )}
           </div>
         </div>
+
+        {/* Statistics Panel - Full Width on Desktop, Below Map on Mobile */}
+        {mapStats && (
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+              Map Statistics
+            </h2>
+            <MapStatisticsPanel stats={mapStats} config={config} />
+          </div>
+        )}
       </main>
 
       {/* Bottom Ad */}

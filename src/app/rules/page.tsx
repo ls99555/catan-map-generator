@@ -221,6 +221,39 @@ export default function RulesPage() {
             </div>
           </section>
 
+          {/* Scenario Rules */}
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Scenario Rules</h2>
+            <div className="bg-yellow-50 rounded-lg p-6">
+              <h3 className="text-lg font-medium text-yellow-800 mb-3">Important: Scenarios Have Different Rules</h3>
+              <div className="mb-4">
+                <p className="text-yellow-700 mb-3">
+                  <strong>Each scenario modifies the standard rules in unique ways:</strong>
+                </p>
+                <ul className="space-y-2 text-yellow-700">
+                  <li>• <strong>Victory Points:</strong> Some scenarios require different points to win (8, 12, 13, or 14 points)</li>
+                  <li>• <strong>Setup Rules:</strong> Different initial placement rules, starting resources, or special pieces</li>
+                  <li>• <strong>Resource Production:</strong> Modified dice rules, event cards, or special production triggers</li>
+                  <li>• <strong>Building Rules:</strong> New building types, modified costs, or special building restrictions</li>
+                  <li>• <strong>Trading Rules:</strong> Different harbor types, special trading opportunities, or modified ratios</li>
+                  <li>• <strong>Special Actions:</strong> Unique mechanics like moving ships, catching fish, or mission cards</li>
+                </ul>
+              </div>
+              <div className="bg-yellow-100 rounded-lg p-4">
+                <h4 className="font-medium text-yellow-800 mb-2">Victory Point Examples:</h4>
+                <ul className="text-sm text-yellow-700 space-y-1">
+                  <li>• <strong>Seafarers &quot;Heading to New Shores&quot;:</strong> 12 victory points</li>
+                  <li>• <strong>Cities & Knights &quot;Barbarian Invasion&quot;:</strong> 13 victory points</li>
+                  <li>• <strong>Traders & Barbarians &quot;Great River&quot;:</strong> 12 victory points</li>
+                  <li>• <strong>Explorers & Pirates &quot;Land Ho!&quot;:</strong> 10 victory points + mission cards</li>
+                </ul>
+              </div>
+              <div className="mt-4 p-3 bg-yellow-100 rounded-lg">
+                <p className="text-sm text-yellow-800"><strong>Always check the specific scenario rules</strong> in your expansion rulebook before playing, as they override base game rules.</p>
+              </div>
+            </div>
+          </section>
+
           {/* Map Generation Tips */}
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">Map Generation Tips</h2>
