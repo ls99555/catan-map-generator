@@ -46,7 +46,6 @@ export const SEAFARERS_CONFIG: ExpansionConfig = {
     { terrain: 'desert', count: 2, resource: 'desert' },
     { terrain: 'sea', count: 19, resource: 'desert' },
     { terrain: 'gold', count: 2, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'gold' },
-    { terrain: 'fishery', count: 8, numbers: [4, 5, 6, 8, 9, 10], resource: 'fish' },
   ],
   harborDistribution: [
     { type: 'generic', count: 5 },
@@ -57,12 +56,11 @@ export const SEAFARERS_CONFIG: ExpansionConfig = {
     { type: 'ore', count: 1 },
   ],
   supportedPlayerCounts: [3, 4, 5, 6],
-  supportedScenarios: ['heading-new-shores', 'four-islands', 'fog-islands', 'through-desert', 'forgotten-tribe', 'cloth-for-catan', 'wonders-of-catan'],
+  supportedScenarios: ['heading-new-shores', 'four-islands', 'fog-islands', 'through-desert', 'forgotten-tribe', 'cloth-for-catan', 'wonders-of-catan', 'fishermen-of-catan', 'fish-for-catan'],
   additionalRules: [
     'Ships can be built (1 lumber + 1 wool) and moved on water',
     'Pirate replaces robber on water tiles and can be moved',
     'Gold fields produce any resource when rolled',
-    'Fish tokens can be caught and traded for development cards',
     'Discover new islands for additional victory points',
     'Ships can be repositioned (front ships of shipping routes)',
     'Some scenarios have special victory conditions',

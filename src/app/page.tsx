@@ -153,13 +153,6 @@ export default function Home() {
                 </h2>
                 <div className="flex space-x-2">
                   <button
-                    onClick={() => handleExportMap('json')}
-                    className="px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded hover:bg-blue-200 transition-colors"
-                    disabled={!gameMap}
-                  >
-                    Export JSON
-                  </button>
-                  <button
                     onClick={() => handleExportMap('image')}
                     className="px-3 py-1 text-sm bg-green-100 text-green-800 rounded hover:bg-green-200 transition-colors"
                     disabled={!gameMap}

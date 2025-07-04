@@ -105,7 +105,7 @@ export function MapControls({ config, onChange, onGenerate, isGenerating }: MapC
         <select
           value={config.rules.expansion}
           onChange={(e) => handleExpansionChange(e.target.value as ExpansionType)}
-          className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent"
+          className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-gray-900 font-medium"
           aria-label="Game Expansion"
         >
           <option value="base">Base Game</option>
@@ -182,7 +182,36 @@ export function MapControls({ config, onChange, onGenerate, isGenerating }: MapC
                     )}
                   </ul>
                   <p className="mt-2 text-xs">
-                    Victory points: {config.rules.expansion === 'cities-knights' ? '13' : '10'} points to win
+                    Victory points: {(() => {
+                      let basePoints = 10;
+                      if (config.rules.expansion === 'cities-knights') {
+                        basePoints = 13;
+                      }
+                      
+                      // Some scenarios require additional victory points
+                      if (config.rules.scenario) {
+                        const scenarioAdjustments: Record<string, number> = {
+                          'heading-new-shores': 2,
+                          'four-islands': 2,
+                          'fog-islands': 2,
+                          'wonders-of-catan': 2,
+                          'barbarian-invasion': 0,
+                          'fishermen-of-catan': 0,
+                          'rivers-of-catan': 0,
+                          'great-river': 0,
+                          'fishermen-lake': 0,
+                          'explorers-pirates': 1,
+                          'into-unknown': 1,
+                          'pirate-islands': 1,
+                          'wonders-world': 2,
+                          'treasure-islands': 2,
+                        };
+                        
+                        basePoints += scenarioAdjustments[config.rules.scenario] || 0;
+                      }
+                      
+                      return basePoints;
+                    })()} points to win
                   </p>
                 </div>
               </div>
@@ -200,7 +229,7 @@ export function MapControls({ config, onChange, onGenerate, isGenerating }: MapC
           <select
             value={config.rules.scenario || ''}
             onChange={(e) => handleScenarioChange(e.target.value as ScenarioType || undefined)}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white text-gray-900 font-medium"
             aria-label="Scenario Selection"
           >
             <option value="">Standard Game</option>
@@ -218,8 +247,16 @@ export function MapControls({ config, onChange, onGenerate, isGenerating }: MapC
           {config.rules.scenario && (
             <div className="mt-3 p-3 bg-purple-50 border border-purple-200 rounded-md">
               <h4 className="text-sm font-medium text-purple-800 mb-2">Scenario Rules</h4>
-              <div className="text-sm text-purple-700">
+              <div className="text-sm text-purple-700 mb-3">
                 {getScenarioDescription(config.rules.scenario)}
+              </div>
+              <div className="text-xs text-purple-600">
+                <div className="font-medium mb-1">Base Game Rules Also Apply:</div>
+                <div className="space-y-1">
+                  {currentExpansion?.additionalRules?.slice(0, 3).map((rule, index) => (
+                    <div key={index}>• {rule}</div>
+                  ))}
+                </div>
               </div>
             </div>
           )}

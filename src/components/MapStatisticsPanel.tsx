@@ -60,7 +60,36 @@ export function MapStatisticsPanel({ stats, config }: MapStatisticsPanelProps) {
           <div className="flex justify-between">
             <span className="text-blue-700">Victory Points:</span>
             <span className="font-medium text-blue-900">
-              {config.rules.expansion === 'cities-knights' ? '13' : '10'} points
+              {(() => {
+                let basePoints = 10;
+                if (config.rules.expansion === 'cities-knights') {
+                  basePoints = 13;
+                }
+                
+                // Some scenarios require additional victory points
+                if (config.rules.scenario) {
+                  const scenarioAdjustments: Record<string, number> = {
+                    'heading-new-shores': 2,
+                    'four-islands': 2,
+                    'fog-islands': 2,
+                    'wonders-of-catan': 2,
+                    'barbarian-invasion': 0,
+                    'fishermen-of-catan': 0,
+                    'rivers-of-catan': 0,
+                    'great-river': 0,
+                    'fishermen-lake': 0,
+                    'explorers-pirates': 1,
+                    'into-unknown': 1,
+                    'pirate-islands': 1,
+                    'wonders-world': 2,
+                    'treasure-islands': 2,
+                  };
+                  
+                  basePoints += scenarioAdjustments[config.rules.scenario] || 0;
+                }
+                
+                return basePoints;
+              })()} points
             </span>
           </div>
           {isUsingExtension && (
@@ -187,22 +216,22 @@ export function MapStatisticsPanel({ stats, config }: MapStatisticsPanelProps) {
         <h3 className="text-sm font-medium text-gray-900 mb-2">Balance Score</h3>
         <div className="space-y-1">
           <div className="flex justify-between text-sm">
-            <span className="text-gray-600">Resource Balance</span>
-            <span className="font-medium">
+            <span className="text-gray-600 flex-1">Resource Balance</span>
+            <span className="font-medium text-gray-900 ml-2">
               {Math.max(0, 100 - (Object.values(stats.resourceBalance).reduce((acc, val, i, arr) => 
                 acc + Math.abs(val - arr.reduce((sum, v) => sum + v, 0) / arr.length), 0
               ) * 10)).toFixed(0)}%
             </span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-gray-600">Number Spread</span>
-            <span className="font-medium">
+            <span className="text-gray-600 flex-1">Number Spread</span>
+            <span className="font-medium text-gray-900 ml-2">
               {(stats.probabilitySpread * 100).toFixed(0)}%
             </span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-gray-600">Layout Quality</span>
-            <span className="font-medium">
+            <span className="text-gray-600 flex-1">Layout Quality</span>
+            <span className="font-medium text-gray-900 ml-2">
               {Math.max(0, 100 - (stats.adjacentSameNumbers * 20)).toFixed(0)}%
             </span>
           </div>

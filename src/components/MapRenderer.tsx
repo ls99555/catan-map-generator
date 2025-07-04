@@ -23,10 +23,10 @@ export function MapRenderer({ map }: MapRendererProps) {
     if (map.hexes.length === 0) return { width: 800, height: 600, minX: 0, minY: 0 };
     
     const positions = map.hexes.map(hex => cubeToPixel(hex.position, layout));
-    const minX = Math.min(...positions.map(p => p.x)) - layout.size * 2;
-    const maxX = Math.max(...positions.map(p => p.x)) + layout.size * 2;
-    const minY = Math.min(...positions.map(p => p.y)) - layout.size * 2;
-    const maxY = Math.max(...positions.map(p => p.y)) + layout.size * 2;
+    const minX = Math.min(...positions.map(p => p.x)) - layout.size * 2.5;
+    const maxX = Math.max(...positions.map(p => p.x)) + layout.size * 2.5;
+    const minY = Math.min(...positions.map(p => p.y)) - layout.size * 2.5;
+    const maxY = Math.max(...positions.map(p => p.y)) + layout.size * 2.5;
     
     return {
       width: maxX - minX,
@@ -62,7 +62,7 @@ export function MapRenderer({ map }: MapRendererProps) {
     <div className="w-full overflow-auto bg-blue-50 rounded-lg border border-blue-200">
       <svg
         viewBox={`${minX} ${minY} ${width} ${height}`}
-        className="w-full h-auto min-h-[400px] max-h-[600px] max-w-full"
+        className="w-full h-auto min-h-[400px] max-h-[700px] max-w-full"
       >
         {/* Define patterns for terrain types */}
         <defs>
@@ -74,6 +74,16 @@ export function MapRenderer({ map }: MapRendererProps) {
           {/* Tile patterns */}
           <g dangerouslySetInnerHTML={{ __html: generateTilePatterns() }} />
         </defs>
+        
+        {/* Water background around entire map */}
+        <rect
+          x={minX}
+          y={minY}
+          width={width}
+          height={height}
+          fill="url(#water-pattern)"
+          opacity="0.3"
+        />
         
         {/* Render hexes */}
         {map.hexes.map((hex) => {
@@ -92,15 +102,17 @@ export function MapRenderer({ map }: MapRendererProps) {
                 opacity={hex.terrain === 'desert' ? 0.8 : 1}
               />
               
-              {/* Resource icon */}
-              <text
-                x={center.x}
-                y={center.y - 8}
-                textAnchor="middle"
-                className="text-lg select-none pointer-events-none"
-              >
-                {resourceIcons[hex.resource]}
-              </text>
+              {/* Resource icon for land tiles only */}
+              {!isWater && (
+                <text
+                  x={center.x}
+                  y={center.y - 8}
+                  textAnchor="middle"
+                  className="text-lg select-none pointer-events-none"
+                >
+                  {resourceIcons[hex.resource]}
+                </text>
+              )}
               
               {/* Number token */}
               {hex.number && (
@@ -183,31 +195,6 @@ export function MapRenderer({ map }: MapRendererProps) {
                 </g>
               )}
               
-              {/* Harbor */}
-              {hex.harbor && (
-                <g>
-                  <rect
-                    x={center.x - 15}
-                    y={center.y + 15}
-                    width="30"
-                    height="12"
-                    fill="#FFF"
-                    stroke="#2F2F2F"
-                    strokeWidth="1"
-                    rx="2"
-                  />
-                  <text
-                    x={center.x}
-                    y={center.y + 24}
-                    textAnchor="middle"
-                    className="text-xs font-bold select-none pointer-events-none"
-                    fill="#2F2F2F"
-                  >
-                    {harborDisplay[hex.harbor]}
-                  </text>
-                </g>
-              )}
-              
               {/* Hex coordinates (for debugging) */}
               {process.env.NODE_ENV === 'development' && (
                 <text
@@ -224,30 +211,61 @@ export function MapRenderer({ map }: MapRendererProps) {
           );
         })}
         
+        {/* Render harbors on hexes */}
+        {map.hexes.filter(hex => hex.harbor).map((hex) => {
+          const center = cubeToPixel(hex.position, layout);
+          return (
+            <g key={`hex-harbor-${hex.id}`}>
+              <rect
+                x={center.x - 15}
+                y={center.y + 15}
+                width="30"
+                height="12"
+                fill="#FFF"
+                stroke="#2F2F2F"
+                strokeWidth="1"
+                rx="2"
+              />
+              <text
+                x={center.x}
+                y={center.y + 24}
+                textAnchor="middle"
+                className="text-xs font-bold select-none pointer-events-none"
+                fill="#2F2F2F"
+              >
+                {harborDisplay[hex.harbor!]}
+              </text>
+            </g>
+          );
+        })}
+        
         {/* Legend */}
         <g transform={`translate(${minX + 10}, ${minY + 10})`}>
           <rect
             x="0"
             y="0"
-            width="120"
-            height="60"
+            width="140"
+            height="70"
             fill="#FFF"
             stroke="#2F2F2F"
             strokeWidth="1"
             rx="4"
             opacity="0.9"
           />
-          <text x="10" y="15" className="text-xs font-bold" fill="#2F2F2F">
+          <text x="8" y="15" className="text-xs font-bold fill-current" fill="#2F2F2F">
             Legend
           </text>
-          <text x="10" y="30" className="text-xs" fill="#2F2F2F">
-            Red numbers = High probability
+          <text x="8" y="28" className="text-xs fill-current" fill="#2F2F2F">
+            Red numbers = High prob
           </text>
-          <text x="10" y="42" className="text-xs" fill="#2F2F2F">
+          <text x="8" y="40" className="text-xs fill-current" fill="#2F2F2F">
             Dots = Roll frequency
           </text>
-          <text x="10" y="54" className="text-xs" fill="#2F2F2F">
+          <text x="8" y="52" className="text-xs fill-current" fill="#2F2F2F">
             R = Robber, P = Pirate
+          </text>
+          <text x="8" y="64" className="text-xs fill-current" fill="#2F2F2F">
+            🏠 = Harbor
           </text>
         </g>
       </svg>

@@ -126,6 +126,14 @@ function generateTerrain(coordinates: CubeCoordinate[], config: GameConfiguratio
   for (const distribution of expansionConfig.tileDistributions) {
     let count = distribution.count;
     
+    // Skip fishery tiles unless in a fish-related scenario
+    if (distribution.terrain === 'fishery') {
+      const fishScenarios = ['fishermen-of-catan', 'fishermen-lake', 'fish-for-catan'];
+      if (!config.rules.scenario || !fishScenarios.includes(config.rules.scenario)) {
+        continue; // Skip fishery tiles
+      }
+    }
+    
     // Add tiles for player extensions (5-6 players)
     if (playerCount > 4) {
       const extensionConfig = PLAYER_EXTENSION_CONFIG[expansion as keyof typeof PLAYER_EXTENSION_CONFIG];

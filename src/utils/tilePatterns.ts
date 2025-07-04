@@ -73,8 +73,6 @@ export const TILE_PATTERNS = {
       <rect width="20" height="20" fill="#4169E1"/>
       <path d="M0 10 Q5 7 10 10 Q15 13 20 10 L20 20 L0 20 Z" fill="#1E90FF"/>
       <path d="M0 0 Q5 3 10 0 Q15 -3 20 0 L20 10 Q15 13 10 10 Q5 7 0 10 Z" fill="#6495ED"/>
-      <circle cx="7" cy="7" r="1" fill="#87CEEB" opacity="0.7"/>
-      <circle cx="13" cy="13" r="1" fill="#87CEEB" opacity="0.7"/>
     </pattern>
   `,
   
