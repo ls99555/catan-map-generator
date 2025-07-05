@@ -13,7 +13,10 @@ import {
 } from '../config/expansions/index';
 import { 
   BASE_GAME_NUMBERS_3_4, 
-  BASE_GAME_NUMBERS_5_6 
+  BASE_GAME_NUMBERS_5_6,
+  BASE_GAME_HARBOR_POSITIONS_3_4,
+  BASE_GAME_HARBOR_POSITIONS_5_6,
+  HarborPosition
 } from '../config/expansions/base-game';
 import { 
   CubeCoordinate, 
@@ -425,6 +428,7 @@ function balanceResourceDistribution(hexes: Hex[]): Hex[] {
 }
 
 // Generate and place harbors (base game only)
+// Creates water hexes around the perimeter and places harbors on them
 function generateHarbors(hexes: Hex[], config: GameConfiguration): Hex[] {
   const { rules } = config;
   const { playerCount } = rules;
@@ -438,10 +442,10 @@ function generateHarbors(hexes: Hex[], config: GameConfiguration): Hex[] {
     return hexes;
   }
   
-  // Get land tiles that are at the map edge (valid harbor positions for base game)
-  const validHarborPositions = getValidHarborPositions(hexes);
+  // Use fixed harbor positions for base game
+  const fixedHarborPositions = isUsingExtension ? BASE_GAME_HARBOR_POSITIONS_5_6 : BASE_GAME_HARBOR_POSITIONS_3_4;
   
-  // Create harbor pool
+  // Create harbor pool with randomized resource types
   const harborPool: HarborType[] = [];
   for (const harbor of expansionConfig.harborDistribution) {
     const count = harbor.count;
@@ -451,49 +455,29 @@ function generateHarbors(hexes: Hex[], config: GameConfiguration): Hex[] {
     }
   }
   
-  // Shuffle and assign harbors to valid positions
+  // Shuffle only the harbor types, not the positions
   const shuffledHarbors = shuffle(harborPool);
-  const shuffledPositions = shuffle(validHarborPositions);
   
-  return hexes.map(hex => {
-    const positionIndex = shuffledPositions.findIndex(pos => pos.id === hex.id);
-    if (positionIndex !== -1 && positionIndex < shuffledHarbors.length) {
-      return {
-        ...hex,
-        harbor: shuffledHarbors[positionIndex]
-      };
+  // Create water hexes with harbors
+  const waterHexes: Hex[] = [];
+  fixedHarborPositions.forEach((harborPos: HarborPosition, index: number) => {
+    if (index < shuffledHarbors.length) {
+      waterHexes.push({
+        id: uuidv4(),
+        position: { q: harborPos.q, r: harborPos.r, s: harborPos.s },
+        terrain: 'water',
+        resource: 'desert', // Use 'desert' as a placeholder for water hexes
+        number: undefined,
+        harbor: shuffledHarbors[index],
+        adjacentLand: harborPos.adjacentLand, // Store which land hex this harbor borders
+        iconOffset: harborPos.iconOffset, // Store icon positioning within hex
+        iconRotation: harborPos.iconRotation, // Store icon rotation
+      });
     }
-    return hex;
   });
-}
-
-// Get valid harbor positions (land tiles at map edge for base game)
-function getValidHarborPositions(hexes: Hex[]): Hex[] {
-  const validPositions: Hex[] = [];
   
-  for (const hex of hexes) {
-    // Skip if this is a desert tile
-    if (hex.terrain === 'desert') {
-      continue;
-    }
-    
-    // Check if this land tile is on the map edge
-    const neighbors = getNeighbors(hex.position);
-    const isValidHarborPosition = neighbors.some(neighborPos => {
-      const neighborHex = hexes.find(h => 
-        h.position.q === neighborPos.q && 
-        h.position.r === neighborPos.r && 
-        h.position.s === neighborPos.s
-      );
-      return !neighborHex; // No hex at this position = edge of map
-    });
-    
-    if (isValidHarborPosition) {
-      validPositions.push(hex);
-    }
-  }
-  
-  return validPositions;
+  // Return both land hexes and water hexes with harbors
+  return [...hexes, ...waterHexes];
 }
 
 // Calculate map statistics (base game only)
@@ -505,6 +489,7 @@ function calculateMapStatistics(hexes: Hex[]): MapStatistics {
     grain: 0,
     ore: 0,
     desert: 0,
+    harbor: 0,
   };
   
   const numberDistribution: Record<DiceNumber, number> = {

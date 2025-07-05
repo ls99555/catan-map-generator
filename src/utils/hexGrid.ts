@@ -5,6 +5,14 @@ export interface CubeCoordinate {
   s: number;
 }
 
+// Harbor position type for validation
+export interface HarborPosition {
+  q: number;
+  r: number;
+  s: number;
+  adjacentLand: { q: number; r: number; s: number };
+}
+
 // Offset coordinates for easier grid generation
 export interface OffsetCoordinate {
   col: number;
@@ -294,4 +302,61 @@ export function getHexPath(cube: CubeCoordinate, layout: HexLayout): string {
   path += ' Z';
   
   return path;
+}
+
+// Get water hex positions adjacent to land hexes for harbor placement
+export function getAdjacentWaterPositions(landHexes: CubeCoordinate[]): CubeCoordinate[] {
+  const waterPositions: CubeCoordinate[] = [];
+  const usedPositions = new Set<string>();
+  
+  // For each land hex, find all neighboring positions that are NOT land
+  landHexes.forEach(landHex => {
+    const neighbors = getNeighbors(landHex);
+    
+    neighbors.forEach(neighbor => {
+      const neighborKey = `${neighbor.q},${neighbor.r},${neighbor.s}`;
+      
+      // If this position is not a land hex and not already used, it's a water position
+      const isLandHex = landHexes.some(land => 
+        land.q === neighbor.q && land.r === neighbor.r && land.s === neighbor.s
+      );
+      
+      if (!isLandHex && !usedPositions.has(neighborKey)) {
+        waterPositions.push(neighbor);
+        usedPositions.add(neighborKey);
+      }
+    });
+  });
+  
+  return waterPositions;
+}
+
+// Validate harbor positions against actual land hex coordinates
+export function validateHarborPositions(landHexes: CubeCoordinate[], harborPositions: HarborPosition[]): void {
+  console.log('Validating harbor positions...');
+  console.log('Land hexes:', landHexes);
+  
+  harborPositions.forEach((harbor, index) => {
+    const landHex = landHexes.find(hex => 
+      hex.q === harbor.adjacentLand.q && 
+      hex.r === harbor.adjacentLand.r && 
+      hex.s === harbor.adjacentLand.s
+    );
+    
+    if (!landHex) {
+      console.warn(`Harbor ${index} references non-existent land hex:`, harbor.adjacentLand);
+    }
+    
+    // Check if water hex is adjacent to land hex
+    if (landHex) {
+      const neighbors = getNeighbors(landHex);
+      const isAdjacent = neighbors.some(neighbor => 
+        neighbor.q === harbor.q && neighbor.r === harbor.r && neighbor.s === harbor.s
+      );
+      
+      if (!isAdjacent) {
+        console.warn(`Harbor ${index} is not adjacent to its land hex:`, harbor);
+      }
+    }
+  });
 }

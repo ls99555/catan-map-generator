@@ -218,6 +218,25 @@ export const TILE_PATTERNS = {
       <circle cx="22" cy="12" r="0.5" fill="#F0F8FF" opacity="0.6"/>
     </pattern>
   `,
+  
+  water: (id: string) => `
+    <pattern id="water-${id}" patternUnits="userSpaceOnUse" width="24" height="24">
+      <rect width="24" height="24" fill="#4169E1"/>
+      <!-- Ocean waves -->
+      <path d="M0 12 Q6 8 12 12 Q18 16 24 12 L24 24 L0 24 Z" fill="#1E90FF"/>
+      <path d="M0 0 Q6 4 12 0 Q18 -4 24 0 L24 12 Q18 16 12 12 Q6 8 0 12 Z" fill="#6495ED"/>
+      <!-- Wave crests -->
+      <path d="M0 12 Q6 8 12 12 Q18 16 24 12" stroke="#87CEEB" stroke-width="2" opacity="0.7"/>
+      <path d="M0 6 Q6 2 12 6 Q18 10 24 6" stroke="#87CEEB" stroke-width="2" opacity="0.7"/>
+      <path d="M0 18 Q6 14 12 18 Q18 22 24 18" stroke="#87CEEB" stroke-width="2" opacity="0.7"/>
+      <!-- Water foam -->
+      <circle cx="4" cy="10" r="1" fill="#F0F8FF" opacity="0.6"/>
+      <circle cx="8" cy="14" r="0.5" fill="#F0F8FF" opacity="0.6"/>
+      <circle cx="12" cy="8" r="0.8" fill="#F0F8FF" opacity="0.6"/>
+      <circle cx="16" cy="16" r="0.6" fill="#F0F8FF" opacity="0.6"/>
+      <circle cx="20" cy="12" r="0.7" fill="#F0F8FF" opacity="0.6"/>
+    </pattern>
+  `,
 };
 
 // Generate all pattern definitions

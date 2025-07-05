@@ -41,6 +41,7 @@ export const RESOURCE_BALANCE_TARGETS: Record<ResourceType, number> = {
   grain: 4,
   ore: 3,
   desert: 0,
+  harbor: 0
 };
 
 // Helper functions for base game logic

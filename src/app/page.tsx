@@ -18,8 +18,8 @@ export default function Home() {
     rules: {
       playerCount: 4,
       expansion: 'base',
-      useRandomNumbers: false,
-      balancedResources: true,
+      useRandomNumbers: true, // Default: numbers ticked
+      balancedResources: false, // Default: resources unticked
       customRules: {
         allowAdjacentSameNumbers: false,
         requireHarbors: true,

@@ -1,5 +1,5 @@
 // Types for Catan game elements - Base Game Only
-export type ResourceType = 'brick' | 'lumber' | 'wool' | 'grain' | 'ore' | 'desert';
+export type ResourceType = 'brick' | 'lumber' | 'wool' | 'grain' | 'ore' | 'desert' | 'harbor';
 
 export type TerrainType = 
   | 'hills'      // Brick
@@ -7,7 +7,9 @@ export type TerrainType =
   | 'pasture'    // Wool
   | 'fields'     // Grain
   | 'mountains'  // Ore
-  | 'desert';    // Desert
+  | 'desert'     // Desert
+  | 'water'      // Water (for harbors, not used as resource)
+  | 'harbor';    // Harbor tile (for harbor hexes)
 
 export type HarborType = 
   | 'generic'    // 3:1
@@ -26,6 +28,9 @@ export interface Hex {
   number?: DiceNumber;
   harbor?: HarborType;
   position: { q: number; r: number; s: number }; // Cube coordinates
+  adjacentLand?: { q: number; r: number; s: number }; // For water hexes with harbors
+  iconOffset?: { x: number; y: number }; // Harbor icon positioning within hex
+  iconRotation?: number; // Harbor icon rotation in degrees
 }
 
 export interface GameMap {

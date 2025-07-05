@@ -9,52 +9,38 @@ import { generateTilePatterns, getPatternUrl } from '@/utils/tilePatterns';
 import { useMemo } from 'react';
 import styles from '../styles/MapRenderer.module.scss';
 
-// Calculate harbor position based on map edge (base game only)
-function calculateHarborPosition(hex: Hex, allHexes: Hex[], layout: HexLayout): { x: number; y: number; direction: number } {
-  const center = cubeToPixel(hex.position, layout);
-  const neighbors = getNeighbors(hex.position);
+// Calculate harbor position for water hexes (base game only)
+function calculateHarborPosition(waterHex: Hex, allHexes: Hex[], layout: HexLayout): { x: number; y: number; direction: number } {
+  const center = cubeToPixel(waterHex.position, layout);
   
-  // Find the direction to place the harbor (base game looks for map edge)
-  let harborDirection = 0;
-  let targetDirection = { x: 0, y: 0 };
+  // Use icon offset if provided, otherwise default to bottom center
+  const iconOffset = waterHex.iconOffset || { x: 0, y: 0.5 };
   
-  for (let i = 0; i < neighbors.length; i++) {
-    const neighborPos = neighbors[i];
-    const neighborHex = allHexes.find(h => 
-      h.position.q === neighborPos.q && 
-      h.position.r === neighborPos.r && 
-      h.position.s === neighborPos.s
-    );
+  // Calculate harbor position using icon offset
+  const harborX = center.x + (iconOffset.x * layout.size);
+  const harborY = center.y + (iconOffset.y * layout.size);
+  
+  // Calculate direction from water hex to land hex for base orientation
+  let direction = 0;
+  if (waterHex.adjacentLand) {
+    const landCenter = cubeToPixel(waterHex.adjacentLand, layout);
     
-    // For base game: look for map edge (no neighbor hex)
-    if (!neighborHex) {
-      // Calculate direction towards the missing neighbor
-      const edgeCenter = cubeToPixel(neighborPos, layout);
-      targetDirection = {
-        x: edgeCenter.x - center.x,
-        y: edgeCenter.y - center.y
-      };
-      harborDirection = i;
-      break;
-    }
+    // Calculate direction from water hex to land hex for orientation
+    const directionVector = {
+      x: landCenter.x - center.x,
+      y: landCenter.y - center.y
+    };
+    
+    // Calculate angle for harbor orientation (point towards land)
+    direction = Math.atan2(directionVector.y, directionVector.x) * 180 / Math.PI;
   }
   
-  // Normalize direction and calculate harbor position
-  const length = Math.sqrt(targetDirection.x * targetDirection.x + targetDirection.y * targetDirection.y);
-  if (length > 0) {
-    targetDirection.x /= length;
-    targetDirection.y /= length;
+  // Add manual rotation if specified
+  if (waterHex.iconRotation) {
+    direction += waterHex.iconRotation;
   }
   
-  // For flat-top hexes, calculate the position on the hex edge
-  // The hex edge is at 86.6% of the hex size from center (cos(30°) * size)
-  const hexEdgeDistance = layout.size * 0.866; // cos(30°) for flat-top hex
-  const edgeX = center.x + targetDirection.x * hexEdgeDistance;
-  const edgeY = center.y + targetDirection.y * hexEdgeDistance;
-  
-  // Position the harbor so its base sits exactly on the hex edge
-  // The harbor base should be ON the edge, not offset from it
-  return { x: edgeX, y: edgeY, direction: harborDirection };
+  return { x: harborX, y: harborY, direction };
 }
 
 interface MapRendererProps {
@@ -122,9 +108,8 @@ export function MapRenderer({ map }: MapRendererProps) {
   // Create harbor icon based on type
   const createHarborIcon = (type: HarborType, x: number, y: number, direction: number = 0) => {
     const color = harborColors[type];
-    // Calculate rotation angle to point toward the sea/edge
-    // The harbor should point away from the hex center toward the sea
-    const rotationAngle = direction * 60; // 60 degrees per hex edge
+    // Use the direction angle directly (it's already in degrees)
+    const rotationAngle = direction;
     const transform = `rotate(${rotationAngle} ${x} ${y})`;
     
     return (
@@ -179,49 +164,17 @@ export function MapRenderer({ map }: MapRendererProps) {
           >
             {/* Define patterns for terrain types */}
             <defs>
-              <pattern id="water-pattern" patternUnits="userSpaceOnUse" width="8" height="8">
-                <rect width="8" height="8" fill="#4682B4" />
-                <path d="M0,4 Q2,2 4,4 Q6,6 8,4" stroke="#5F9EA0" strokeWidth="1" fill="none"/>
-                <path d="M0,0 Q2,-2 4,0 Q6,2 8,0" stroke="#87CEEB" strokeWidth="1" fill="none"/>
-              </pattern>
-              
-              {/* Blue sea corners pattern */}
-              <pattern id="sea-corner-pattern" patternUnits="userSpaceOnUse" width="12" height="12">
-                <rect width="12" height="12" fill="#4169E1" />
-                <circle cx="3" cy="3" r="1" fill="#1E90FF" opacity="0.7"/>
-                <circle cx="9" cy="9" r="1" fill="#1E90FF" opacity="0.7"/>
-                <circle cx="9" cy="3" r="0.5" fill="#87CEEB" opacity="0.5"/>
-                <circle cx="3" cy="9" r="0.5" fill="#87CEEB" opacity="0.5"/>
-              </pattern>
-              
               {/* Tile patterns */}
               <g dangerouslySetInnerHTML={{ __html: generateTilePatterns() }} />
             </defs>
-            
-            {/* Water background around entire map with blue sea corners */}
-            <rect
-              x={minX}
-              y={minY}
-              width={width}
-              height={height}
-              fill="url(#sea-corner-pattern)"
-              opacity="0.8"
-            />
-            
-            {/* Additional water border for cleaner look */}
-            <rect
-              x={minX + 20}
-              y={minY + 20}
-              width={width - 40}
-              height={height - 40}
-              fill="url(#water-pattern)"
-              opacity="0.6"
-            />
             
             {/* Render hexes */}
             {map.hexes.map((hex) => {
               const center = cubeToPixel(hex.position, layout);
               const path = getHexPath(hex.position, layout);
+              
+              // Determine if this is a water hex
+              const isWaterHex = hex.terrain === 'water';
               
               return (
                 <g key={hex.id}>
@@ -230,12 +183,12 @@ export function MapRenderer({ map }: MapRendererProps) {
                     d={path}
                     fill={getPatternUrl(hex.terrain)}
                     stroke="#2F2F2F"
-                    strokeWidth="2"
-                    opacity={hex.terrain === 'desert' ? 0.8 : 1}
+                    strokeWidth={isWaterHex ? "1" : "2"}
+                    opacity={hex.terrain === 'desert' ? 0.8 : isWaterHex ? 0.7 : 1}
                   />
                   
-                  {/* Number token at center */}
-                  {hex.number && (
+                  {/* Number token at center (only for land hexes) */}
+                  {hex.number && !isWaterHex && (
                     <g>
                       {/* Number token circle at hex center */}
                       <circle
@@ -256,24 +209,23 @@ export function MapRenderer({ map }: MapRendererProps) {
                       >
                         {hex.number}
                       </text>
-                      
-
                     </g>
                   )}
 
+                  {/* Harbor on water hex */}
+                  {hex.harbor && isWaterHex && (
+                    <g>
+                      {(() => {
+                        const { x: harborX, y: harborY, direction } = calculateHarborPosition(hex, map.hexes, layout);
+                        return createHarborIcon(hex.harbor, harborX, harborY, direction);
+                      })()}
+                    </g>
+                  )}
                 </g>
               );
             })}
             
-            {/* Render harbors on hexes */}
-            {map.hexes.filter(hex => hex.harbor).map((hex) => {
-              const { x: harborX, y: harborY, direction } = calculateHarborPosition(hex, map.hexes, layout);
-              return (
-                <g key={`hex-harbor-${hex.id}`}>
-                  {createHarborIcon(hex.harbor!, harborX, harborY, direction)}
-                </g>
-              );
-            })}
+            {/* Background water pattern removed since we now have water hexes */}
           </svg>
         </div>
 
@@ -288,15 +240,17 @@ export function MapRenderer({ map }: MapRendererProps) {
               <div className={styles.legendText}>
                 <div>Hills (Brick) • Forest (Lumber) • Pasture (Wool)</div>
                 <div>Fields (Grain) • Mountains (Ore) • Desert (No Resource)</div>
+                <div>Water (Harbors) • 5-6 Player Extensions Available</div>
               </div>
             </div>
             
-            {/* Game Elements */}
+            {/* Harbor Types */}
             <div className={styles.legendSection}>
-              <h4>Game Elements:</h4>
+              <h4>Harbor Types:</h4>
               <div className={styles.legendText}>
-                <div>🏠 = Harbor (3:1 or 2:1 trade)</div>
-                <div>Harbors positioned towards sea/map edge</div>
+                <div>� Generic (3:1 Trade) • 🧱 Brick (2:1) • 🌲 Lumber (2:1)</div>
+                <div>🐑 Wool (2:1) • 🌾 Grain (2:1) • ⛰️ Ore (2:1)</div>
+                <div>Harbors are placed on water hexes adjacent to land</div>
               </div>
             </div>
           </div>
@@ -315,8 +269,12 @@ export function MapRenderer({ map }: MapRendererProps) {
             <span className={styles.mapInfoValue}>{map.playerCount}</span>
           </div>
           <div className={styles.mapInfoItem}>
-            <span className={styles.mapInfoLabel}>Tiles:</span>
-            <span className={styles.mapInfoValue}>{map.hexes.length}</span>
+            <span className={styles.mapInfoLabel}>Land Tiles:</span>
+            <span className={styles.mapInfoValue}>{map.hexes.filter(hex => hex.terrain !== 'water').length}</span>
+          </div>
+          <div className={styles.mapInfoItem}>
+            <span className={styles.mapInfoLabel}>Harbors:</span>
+            <span className={styles.mapInfoValue}>{map.hexes.filter(hex => hex.harbor).length}</span>
           </div>
         </div>
       </div>
