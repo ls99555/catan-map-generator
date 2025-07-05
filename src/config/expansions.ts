@@ -276,13 +276,167 @@ export const PLAYER_EXTENSION_CONFIG = {
   },
 };
 
-// All expansion configurations
+// Combined expansion configurations
+// These combine resources and rules from multiple expansions based on official Catan rules
+
+// Seafarers + Cities & Knights combination
+export const SEAFARERS_CITIES_KNIGHTS_CONFIG: ExpansionConfig = {
+  name: 'seafarers-cities-knights',
+  displayName: 'Seafarers + Cities & Knights',
+  tileDistributions: [
+    { terrain: 'hills', count: 4, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'brick' },
+    { terrain: 'forest', count: 5, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'lumber' },
+    { terrain: 'pasture', count: 5, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'wool' },
+    { terrain: 'fields', count: 5, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'grain' },
+    { terrain: 'mountains', count: 4, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'ore' },
+    { terrain: 'desert', count: 2, resource: 'desert' },
+    { terrain: 'sea', count: 19, resource: 'desert' },
+    { terrain: 'gold', count: 2, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'gold' },
+  ],
+  harborDistribution: [
+    { type: 'generic', count: 5 },
+    { type: 'brick', count: 1 },
+    { type: 'lumber', count: 1 },
+    { type: 'wool', count: 1 },
+    { type: 'grain', count: 1 },
+    { type: 'ore', count: 1 },
+  ],
+  supportedPlayerCounts: [3, 4, 5, 6],
+  supportedScenarios: ['standard', 'heading-new-shores', 'four-islands', 'barbarian-invasion'],
+  additionalRules: [
+    'Victory condition: First to 13 victory points wins',
+    'Ships can be built to travel between islands',
+    'Knights protect against barbarian attacks',
+    'Commodities (cloth, coin, paper) can be produced by cities',
+    'Metropolises can be built with 4 city improvements of same type',
+    'Progress cards provide special abilities',
+    'Ships cost 1 lumber + 1 wool to build',
+    'Knights cost 1 ore + 1 wool to activate',
+  ],
+};
+
+// Seafarers + Traders & Barbarians combination
+export const SEAFARERS_TRADERS_BARBARIANS_CONFIG: ExpansionConfig = {
+  name: 'seafarers-traders-barbarians',
+  displayName: 'Seafarers + Traders & Barbarians',
+  tileDistributions: [
+    { terrain: 'hills', count: 4, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'brick' },
+    { terrain: 'forest', count: 5, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'lumber' },
+    { terrain: 'pasture', count: 5, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'wool' },
+    { terrain: 'fields', count: 5, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'grain' },
+    { terrain: 'mountains', count: 4, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'ore' },
+    { terrain: 'desert', count: 2, resource: 'desert' },
+    { terrain: 'sea', count: 19, resource: 'desert' },
+    { terrain: 'gold', count: 2, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'gold' },
+    { terrain: 'fishery', count: 4, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'fish' },
+  ],
+  harborDistribution: [
+    { type: 'generic', count: 5 },
+    { type: 'brick', count: 1 },
+    { type: 'lumber', count: 1 },
+    { type: 'wool', count: 1 },
+    { type: 'grain', count: 1 },
+    { type: 'ore', count: 1 },
+  ],
+  supportedPlayerCounts: [3, 4, 5, 6],
+  supportedScenarios: ['standard', 'heading-new-shores', 'fishermen-of-catan', 'rivers-of-catan'],
+  additionalRules: [
+    'Victory condition: First to 10 victory points wins',
+    'Ships can be built to travel between islands',
+    'Trade goods can be transported for bonuses',
+    'Fishermen can catch fish for additional resources',
+    'Rivers provide special building opportunities',
+    'Barbarians can attack settlements and cities',
+    'Great caravan can be moved for trading advantages',
+  ],
+};
+
+// Cities & Knights + Traders & Barbarians combination
+export const CITIES_KNIGHTS_TRADERS_BARBARIANS_CONFIG: ExpansionConfig = {
+  name: 'cities-knights-traders-barbarians',
+  displayName: 'Cities & Knights + Traders & Barbarians',
+  tileDistributions: [
+    { terrain: 'hills', count: 4, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'brick' },
+    { terrain: 'forest', count: 5, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'lumber' },
+    { terrain: 'pasture', count: 5, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'wool' },
+    { terrain: 'fields', count: 5, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'grain' },
+    { terrain: 'mountains', count: 4, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'ore' },
+    { terrain: 'desert', count: 1, resource: 'desert' },
+    { terrain: 'fishery', count: 4, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'fish' },
+  ],
+  harborDistribution: [
+    { type: 'generic', count: 4 },
+    { type: 'brick', count: 1 },
+    { type: 'lumber', count: 1 },
+    { type: 'wool', count: 1 },
+    { type: 'grain', count: 1 },
+    { type: 'ore', count: 1 },
+  ],
+  supportedPlayerCounts: [3, 4, 5, 6],
+  supportedScenarios: ['standard', 'barbarian-invasion', 'fishermen-of-catan', 'traders-barbarians'],
+  additionalRules: [
+    'Victory condition: First to 13 victory points wins',
+    'Knights protect against barbarian attacks',
+    'Commodities (cloth, coin, paper) can be produced by cities',
+    'Metropolises can be built with 4 city improvements of same type',
+    'Progress cards provide special abilities',
+    'Trade goods can be transported for bonuses',
+    'Fishermen can catch fish for additional resources',
+    'Great caravan can be moved for trading advantages',
+  ],
+};
+
+// Triple combination: Seafarers + Cities & Knights + Traders & Barbarians
+export const SEAFARERS_CITIES_KNIGHTS_TRADERS_BARBARIANS_CONFIG: ExpansionConfig = {
+  name: 'seafarers-cities-knights-traders-barbarians',
+  displayName: 'Seafarers + Cities & Knights + Traders & Barbarians',
+  tileDistributions: [
+    { terrain: 'hills', count: 5, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'brick' },
+    { terrain: 'forest', count: 6, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'lumber' },
+    { terrain: 'pasture', count: 6, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'wool' },
+    { terrain: 'fields', count: 6, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'grain' },
+    { terrain: 'mountains', count: 5, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'ore' },
+    { terrain: 'desert', count: 2, resource: 'desert' },
+    { terrain: 'sea', count: 24, resource: 'desert' },
+    { terrain: 'gold', count: 2, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'gold' },
+    { terrain: 'fishery', count: 6, numbers: [3, 4, 5, 6, 8, 9, 10, 11], resource: 'fish' },
+  ],
+  harborDistribution: [
+    { type: 'generic', count: 6 },
+    { type: 'brick', count: 1 },
+    { type: 'lumber', count: 1 },
+    { type: 'wool', count: 1 },
+    { type: 'grain', count: 1 },
+    { type: 'ore', count: 1 },
+  ],
+  supportedPlayerCounts: [3, 4, 5, 6],
+  supportedScenarios: ['standard', 'heading-new-shores', 'barbarian-invasion', 'fishermen-of-catan'],
+  additionalRules: [
+    'Victory condition: First to 13 victory points wins',
+    'Ships can be built to travel between islands',
+    'Knights protect against barbarian attacks',
+    'Commodities (cloth, coin, paper) can be produced by cities',
+    'Metropolises can be built with 4 city improvements of same type',
+    'Progress cards provide special abilities',
+    'Trade goods can be transported for bonuses',
+    'Fishermen can catch fish for additional resources',
+    'Rivers provide special building opportunities',
+    'Great caravan can be moved for trading advantages',
+    'Most complex official Catan combination',
+  ],
+};
+
+// Update the main export to include combined expansions
 export const EXPANSION_CONFIGS: Record<string, ExpansionConfig> = {
-  'base': BASE_GAME_CONFIG,
-  'seafarers': SEAFARERS_CONFIG,
+  base: BASE_GAME_CONFIG,
+  seafarers: SEAFARERS_CONFIG,
   'cities-knights': CITIES_KNIGHTS_CONFIG,
   'traders-barbarians': TRADERS_BARBARIANS_CONFIG,
   'explorers-pirates': EXPLORERS_PIRATES_CONFIG,
+  'seafarers-cities-knights': SEAFARERS_CITIES_KNIGHTS_CONFIG,
+  'seafarers-traders-barbarians': SEAFARERS_TRADERS_BARBARIANS_CONFIG,
+  'cities-knights-traders-barbarians': CITIES_KNIGHTS_TRADERS_BARBARIANS_CONFIG,
+  'seafarers-cities-knights-traders-barbarians': SEAFARERS_CITIES_KNIGHTS_TRADERS_BARBARIANS_CONFIG,
 };
 
 // Number distributions for balanced gameplay

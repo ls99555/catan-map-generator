@@ -47,7 +47,10 @@ export type ExpansionType =
   | 'cities-knights'
   | 'traders-barbarians'
   | 'explorers-pirates'
-  | 'combined';
+  | 'seafarers-cities-knights'
+  | 'seafarers-traders-barbarians'
+  | 'cities-knights-traders-barbarians'
+  | 'seafarers-cities-knights-traders-barbarians';
 
 export type ScenarioType =
   // Base scenarios

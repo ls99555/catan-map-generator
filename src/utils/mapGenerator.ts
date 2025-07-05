@@ -29,6 +29,28 @@ function shuffle<T>(array: T[]): T[] {
   return shuffled;
 }
 
+// IMPORTANT: Resource uniqueness rule - DO NOT CHANGE THIS LOGIC
+// Each hex can only have ONE resource type assigned to it
+// This prevents conflicts and maintains game balance
+function validateResourceUniqueness(hexes: Hex[]): Hex[] {
+  const resourceCounts: Record<string, number> = {};
+  
+  // Count resources per hex (should always be 1)
+  hexes.forEach(hex => {
+    const key = `${hex.position.q},${hex.position.r},${hex.position.s}`;
+    resourceCounts[key] = (resourceCounts[key] || 0) + 1;
+  });
+  
+  // Verify no hex has multiple resources
+  Object.entries(resourceCounts).forEach(([key, count]) => {
+    if (count > 1) {
+      console.warn(`WARNING: Hex at ${key} has ${count} resources assigned!`);
+    }
+  });
+  
+  return hexes;
+}
+
 // Generate map coordinates based on player count and expansion (following official rules)
 function generateMapCoordinates(config: GameConfiguration): CubeCoordinate[] {
   const { rules } = config;
@@ -522,6 +544,9 @@ export function generateMap(config: GameConfiguration): GameMap {
   
   // Place robber
   hexes = placeRobber(hexes);
+  
+  // Validate resource uniqueness
+  hexes = validateResourceUniqueness(hexes);
   
   return {
     hexes,
