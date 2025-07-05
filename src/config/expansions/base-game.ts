@@ -158,24 +158,28 @@ export const BASE_GAME_HARBOR_POSITIONS_3_4: HarborPosition[] = [
 ];
 
 // Fixed harbor positions for base game (5-6 players)
-// Based on official Catan 5-6 player layout with 11 harbors around perimeter
+// Based on user specifications for exact harbor placement
 export const BASE_GAME_HARBOR_POSITIONS_5_6: HarborPosition[] = [
-  // Top edge harbors (3 harbors)
-  { q: 1, r: -4, s: 3, adjacentLand: { q: 1, r: -3, s: 2 }, iconOffset: { x: 0.4, y: 0.7 }, iconRotation: -30 },
-  { q: 2, r: -4, s: 2, adjacentLand: { q: 2, r: -3, s: 1 }, iconOffset: { x: 0, y: 0.7 }, iconRotation: -30 },
-  { q: 4, r: -3, s: -1, adjacentLand: { q: 3, r: -3, s: 0 }, iconOffset: { x: -0.4, y: 0.6 }, iconRotation: -30 },
-  
-  // Right edge harbors (3 harbors)
-  { q: 4, r: -1, s: -3, adjacentLand: { q: 3, r: -1, s: -2 }, iconOffset: { x: -0.7, y: 0.3 }, iconRotation: -90 },
+  // Row 0 first tile (1,-3,2) top left - H1 directly above
+  { q: 1, r: -4, s: 3, adjacentLand: { q: 1, r: -3, s: 2 }, iconOffset: { x: -0.2, y: 0.2 }, iconRotation: -90 },
+  // Row 0 second tile (2,-3,1) top right - H2 diagonal top-right
+  { q: 3, r: -4, s: 1, adjacentLand: { q: 2, r: -3, s: 1 }, iconOffset: { x: -0.4, y: 0.7 }, iconRotation: -30 },
+  // Row 1 fourth tile (3,-2,-1) top right - H3 top right corner
+  { q: 4, r: -3, s: -1, adjacentLand: { q: 3, r: -2, s: -1 }, iconOffset: { x: -0.4, y: 0.6 }, iconRotation: -90 },
+  // Row 2 first tile (-1,-1,2) left hand side - H4 left side
+  { q: -2, r: -1, s: 3, adjacentLand: { q: -1, r: -1, s: 2 }, iconOffset: { x: 0.7, y: 0 }, iconRotation: 90 },
+  // Row 3 tile 6 (3,0,-3) right hand side - H5 right side
   { q: 4, r: 0, s: -4, adjacentLand: { q: 3, r: 0, s: -3 }, iconOffset: { x: -0.7, y: 0 }, iconRotation: -90 },
-  { q: 2, r: 2, s: -4, adjacentLand: { q: 2, r: 1, s: -3 }, iconOffset: { x: -0.4, y: -0.6 }, iconRotation: -90 },
-  
-  // Bottom edge harbors (3 harbors)
-  { q: 1, r: 3, s: -4, adjacentLand: { q: 1, r: 2, s: -3 }, iconOffset: { x: -0.4, y: -0.6 }, iconRotation: -150 },
+  // Row 3 first tile (-2,0,2) bottom left - H6 bottom left
+  { q: -3, r: 1, s: 2, adjacentLand: { q: -2, r: 0, s: 2 }, iconOffset: { x: 0.4, y: -0.6 }, iconRotation: 150 },
+  // Row 4 tile 5 (2,1,-3) bottom right - H7 bottom side
+  { q: 2, r: 2, s: -4, adjacentLand: { q: 2, r: 1, s: -3 }, iconOffset: { x: 0, y: -0.7 }, iconRotation: -150 },
+  // Row 5 tile 1 (-2,2,0) left hand side - H8 left side  
+  { q: -3, r: 2, s: 1, adjacentLand: { q: -2, r: 2, s: 0 }, iconOffset: { x: 0.7, y: 0 }, iconRotation: 90 },
+  // Row 6 tile 1 (-2,3,-1) bottom left - H9 bottom left
+  { q: -3, r: 4, s: -1, adjacentLand: { q: -2, r: 3, s: -1 }, iconOffset: { x: 0.4, y: -0.7 }, iconRotation: 150 },
+  // Row 6 second tile (-1,3,-2) bottom - H10 bottom side
   { q: -1, r: 4, s: -3, adjacentLand: { q: -1, r: 3, s: -2 }, iconOffset: { x: 0, y: -0.7 }, iconRotation: -150 },
-  { q: -3, r: 4, s: -1, adjacentLand: { q: -2, r: 3, s: -1 }, iconOffset: { x: 0.4, y: -0.7 }, iconRotation: -150 },
-  
-  // Left edge harbors (2 harbors)
-  { q: -3, r: 2, s: 1, adjacentLand: { q: -2, r: 2, s: 0 }, iconOffset: { x: 0.7, y: -0.3 }, iconRotation: 150 },
-  { q: -3, r: 0, s: 3, adjacentLand: { q: -2, r: 0, s: 2 }, iconOffset: { x: 0.7, y: 0 }, iconRotation: 90 },
+  // Row 6 3rd tile (0,3,-3) right hand side - H11 right side
+  { q: 1, r: 3, s: -4, adjacentLand: { q: 0, r: 3, s: -3 }, iconOffset: { x: -0.7, y: 0 }, iconRotation: -90 },
 ];
