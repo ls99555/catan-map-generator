@@ -2,8 +2,7 @@ import { GameMap, HarborType, Hex } from '@/types/game';
 import { 
   cubeToPixel, 
   getHexPath, 
-  HexLayout,
-  getNeighbors
+  HexLayout
 } from '@/utils/hexGrid';
 import { generateTilePatterns, getPatternUrl } from '@/utils/tilePatterns';
 import { useMemo } from 'react';
@@ -55,12 +54,8 @@ export function MapRenderer({ map }: MapRendererProps) {
   }), []);
 
   // Calculate SVG dimensions based on hex positions with proper margins
-  const { width, height, minX, minY, viewBox } = useMemo(() => {
+  const { viewBox } = useMemo(() => {
     if (map.hexes.length === 0) return { 
-      width: 800, 
-      height: 600, 
-      minX: 0, 
-      minY: 0, 
       viewBox: '0 0 800 600'
     };
     
@@ -77,11 +72,7 @@ export function MapRenderer({ map }: MapRendererProps) {
     const viewBox = `${minX} ${minY} ${width} ${height}`;
     
     return {
-      width,
-      height,
-      minX,
-      minY,
-      viewBox,
+      viewBox
     };
   }, [map.hexes, layout]); // Removed map.expansion and map.scenario as they're not actually used in the calculation
 
