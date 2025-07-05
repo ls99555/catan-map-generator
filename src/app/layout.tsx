@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Catan Map Generator - All Expansions & Extensions",
-  description: "Generate balanced Catan maps for all expansions including Seafarers, Cities & Knights, Traders & Barbarians, and Explorers & Pirates. Mobile-friendly with all game modes and scenarios.",
-  keywords: "Catan, Settlers of Catan, map generator, board game, Seafarers, Cities & Knights, Traders & Barbarians, Explorers & Pirates, game tool",
+  description: "Generate balanced Catan maps for the base game with 3-4 and 5-6 player support. Mobile-friendly map generator with statistical analysis.",
+  keywords: "Catan, Settlers of Catan, map generator, board game, base game, 5-6 player extension, game tool",
   authors: [{ name: "Catan Map Generator" }],
   creator: "Catan Map Generator",
   publisher: "Catan Map Generator",

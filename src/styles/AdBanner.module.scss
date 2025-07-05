@@ -1,0 +1,77 @@
+@use './variables' as *;
+
+.adBanner {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: $spacing-md;
+  background-color: $color-gray-50;
+  border: 1px solid $color-gray-200;
+  border-radius: $border-radius-md;
+  
+  &--top {
+    margin-bottom: $spacing-lg;
+  }
+  
+  &--bottom {
+    margin-top: $spacing-lg;
+  }
+  
+  &--sidebar {
+    margin: $spacing-md 0;
+  }
+}
+
+.adContent {
+  color: $color-gray-600;
+  font-size: $font-size-sm;
+  text-align: center;
+  font-weight: 500;
+  
+  &:hover {
+    color: $color-gray-800;
+  }
+}
+
+.adPlaceholder {
+  padding: $spacing-xl;
+  background-color: $color-gray-100;
+  border: 2px dashed $color-gray-300;
+  border-radius: $border-radius-md;
+  color: $color-gray-500;
+  font-size: $font-size-sm;
+  text-align: center;
+  
+  &:hover {
+    background-color: $color-gray-200;
+    border-color: $color-gray-400;
+  }
+}
+
+// Responsive ad sizes
+.adBanner {
+  @media (max-width: 768px) {
+    padding: $spacing-sm;
+    
+    .adContent {
+      font-size: $font-size-xs;
+    }
+  }
+}
+
+// Ad size variations
+.adLeaderboard {
+  min-height: 90px;
+  max-width: 728px;
+}
+
+.adRectangle {
+  min-height: 250px;
+  max-width: 300px;
+}
+
+.adMobileBanner {
+  min-height: 50px;
+  max-width: 320px;
+}

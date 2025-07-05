@@ -1,5 +1,6 @@
 import { MapStatistics, GameConfiguration } from '@/types/game';
-import { DICE_PROBABILITIES } from '@/config/expansions';
+import { DICE_PROBABILITIES } from '@/config/expansions/index';
+// import styles from '../styles/MapStatisticsPanel.module.scss';
 
 interface MapStatisticsPanelProps {
   stats: MapStatistics;
@@ -22,7 +23,7 @@ export function MapStatisticsPanel({ stats, config }: MapStatisticsPanelProps) {
   const numberProbabilities = Object.entries(stats.numberDistribution).map(([number, count]) => ({
     number: parseInt(number),
     count,
-    probability: DICE_PROBABILITIES[parseInt(number)] * 100,
+    probability: DICE_PROBABILITIES[parseInt(number) as keyof typeof DICE_PROBABILITIES] * 100,
   }));
 
   // Resource colors for display
@@ -35,6 +36,7 @@ export function MapStatisticsPanel({ stats, config }: MapStatisticsPanelProps) {
     desert: 'bg-yellow-200',
     gold: 'bg-yellow-500',
     fish: 'bg-blue-500',
+    sea: 'bg-blue-400',
   };
 
   return (
@@ -49,54 +51,17 @@ export function MapStatisticsPanel({ stats, config }: MapStatisticsPanelProps) {
           </div>
           <div className="flex justify-between">
             <span className="text-blue-700">Expansion:</span>
-            <span className="font-medium text-blue-900">{config.rules.expansion.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>
+            <span className="font-medium text-blue-900">Base Game</span>
           </div>
-          {config.rules.scenario && (
-            <div className="flex justify-between">
-              <span className="text-blue-700">Scenario:</span>
-              <span className="font-medium text-blue-900">{config.rules.scenario.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>
-            </div>
-          )}
           <div className="flex justify-between">
             <span className="text-blue-700">Victory Points:</span>
-            <span className="font-medium text-blue-900">
-              {(() => {
-                let basePoints = 10;
-                if (config.rules.expansion === 'cities-knights') {
-                  basePoints = 13;
-                }
-                
-                // Some scenarios require additional victory points
-                if (config.rules.scenario) {
-                  const scenarioAdjustments: Record<string, number> = {
-                    'heading-new-shores': 2,
-                    'four-islands': 2,
-                    'fog-islands': 2,
-                    'wonders-of-catan': 2,
-                    'barbarian-invasion': 0,
-                    'fishermen-of-catan': 0,
-                    'rivers-of-catan': 0,
-                    'great-river': 0,
-                    'fishermen-lake': 0,
-                    'explorers-pirates': 1,
-                    'into-unknown': 1,
-                    'pirate-islands': 1,
-                    'wonders-world': 2,
-                    'treasure-islands': 2,
-                  };
-                  
-                  basePoints += scenarioAdjustments[config.rules.scenario] || 0;
-                }
-                
-                return basePoints;
-              })()} points
-            </span>
+            <span className="font-medium text-blue-900">10 points</span>
           </div>
           {isUsingExtension && (
             <div className="mt-2 p-2 bg-blue-100 rounded">
               <div className="text-blue-800 font-medium">5-6 Player Extension</div>
               <div className="text-blue-700 text-xs">Using official extended board layout</div>
-              <div className="text-blue-700 text-xs">Additional numbers: 2, 12</div>
+              <div className="text-blue-700 text-xs">Extra numbers: 2, 3, 4, 5, 6, 8, 9, 10, 11, 12</div>
               <div className="text-blue-700 text-xs">Special building phase active</div>
             </div>
           )}

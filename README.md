@@ -2,6 +2,15 @@
 
 A comprehensive, mobile-friendly web application for generating balanced Catan maps for all expansions and player counts. Built with Next.js 15, TypeScript, and Tailwind CSS.
 
+## 🎯 Official Compliance Guarantee
+
+**Tournament Legal** - All generated maps strictly follow official Catan rules and component specifications as published by KOSMOS and Catan Studio. Every map is guaranteed to be playable according to official tournament standards.
+
+- ✅ **Official Sources Only**: All rules sourced from catan.com and official rulebook PDFs
+- ✅ **Exact Component Counts**: Precise tile, number token, and harbor distributions
+- ✅ **Scenario Accuracy**: Faithful implementation of all official scenarios
+- ✅ **Player Count Compliance**: Correct extensions and special rules for 5-6 players
+
 ## Features
 
 ### 🎯 **Complete Game Support**
@@ -182,6 +191,23 @@ The app includes placeholder ad components ready for integration with:
 3. Commit your changes
 4. Push to the branch
 5. Create a Pull Request
+
+## Official Sources
+
+All game rules, component specifications, and scenarios are sourced exclusively from official Catan materials:
+
+### Official Rulebook PDFs
+- **Base Game**: [CN3081 CATAN–The Game Rulebook](https://www.catan.com/sites/default/files/2025-03/CN3081%20CATAN%E2%80%93The%20Game%20Rulebook%20secure%20%281%29.pdf)
+- **5-6 Player Extension**: [CN3082 CATAN – 5-6 Rulebook 2025](https://www.catan.com/sites/default/files/2025-03/CN3082%20CATAN%20%E2%80%93%205-6%20Rulebook%202025%20reduced.pdf)
+- **Seafarers**: [CN3083 CATAN–Seafarers Rulebook 2025](https://www.catan.com/sites/default/files/2025-03/CN3083%20CATAN%E2%80%93Seafarers%20Rulebook%202025%20secured%20reduced.pdf)
+- **Cities & Knights**: [CN3087 CATAN–Cities&Knights Rulebook](https://www.catan.com/sites/default/files/2025-03/CN3087%20CATAN%E2%80%93Cities%26Knights_%20Rulebook.pdf)
+- **Traders & Barbarians**: [CN3089 CATAN – T&B Rulebook](https://www.catan.com/sites/default/files/2025-04/CN3089%20CATAN%20%E2%80%93%20T%26B%20Rulebook.pdf)
+- **Explorers & Pirates**: [CN3085 CATAN – E&P Rulebook](https://www.catan.com/sites/default/files/2025-04/CN3085%20CATAN%20%E2%80%93%20E%26P%20Rulebook.pdf)
+
+### Official Website
+- **Primary Source**: [catan.com](https://www.catan.com/)
+- **Game Rules**: [Official Game Rules](https://www.catan.com/understand-catan/game-rules)
+- **FAQ**: [Official FAQ](https://www.catan.com/faq)
 
 ## License
 

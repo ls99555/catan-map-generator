@@ -8,6 +8,7 @@ import { MapRenderer } from '../components/MapRenderer';
 import { MapControls } from '../components/MapControls';
 import { MapStatisticsPanel } from '../components/MapStatisticsPanel';
 import { AdBanner } from '../components/AdBanner';
+// import styles from '../styles/HomePage.module.scss';
 
 export default function Home() {
   const [gameMap, setGameMap] = useState<GameMap | null>(null);
@@ -98,7 +99,7 @@ export default function Home() {
                 Catan Map Generator
               </h1>
               <span className="ml-2 text-sm text-green-600 bg-green-100 px-2 py-1 rounded">
-                All Expansions
+                Base Game
               </span>
             </div>
             <div className="flex items-center space-x-4">
@@ -190,20 +191,20 @@ export default function Home() {
                 Catan Map Generator
               </h3>
               <p className="text-gray-600 text-sm">
-                Generate balanced and fair Catan maps for all expansions and player counts. 
+                Generate balanced and fair Catan maps for the base game with 3-4 and 5-6 player support. 
                 Perfect for competitive play and casual games.
               </p>
             </div>
             <div>
               <h4 className="text-md font-semibold text-gray-900 mb-4">
-                Supported Expansions
+                Supported Game Modes
               </h4>
               <ul className="text-sm text-gray-600 space-y-1">
-                <li>• Base Game</li>
-                <li>• Seafarers</li>
-                <li>• Cities & Knights</li>
-                <li>• Traders & Barbarians</li>
-                <li>• Explorers & Pirates</li>
+                <li>• Base Game (3-4 players)</li>
+                <li>• 5-6 Player Extension</li>
+                <li>• Balanced resource distribution</li>
+                <li>• Random number placement</li>
+                <li>• Harbor generation</li>
               </ul>
             </div>
             <div>
@@ -213,7 +214,7 @@ export default function Home() {
               <ul className="text-sm text-gray-600 space-y-1">
                 <li>• Mobile-friendly design</li>
                 <li>• Balanced resource distribution</li>
-                <li>• All game scenarios</li>
+                <li>• Standard base game rules</li>
                 <li>• Export capabilities</li>
                 <li>• Statistical analysis</li>
               </ul>

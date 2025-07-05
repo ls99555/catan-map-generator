@@ -1,0 +1,186 @@
+@use './variables' as *;
+
+.statisticsPanel {
+  background-color: $color-white;
+  border-radius: $border-radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-md;
+  
+  .title {
+    font-size: $font-size-lg;
+    font-weight: 600;
+    color: $color-gray-900;
+    margin-bottom: $spacing-md;
+  }
+  
+  .section {
+    margin-bottom: $spacing-lg;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  .sectionTitle {
+    font-size: $font-size-md;
+    font-weight: 500;
+    color: $color-gray-700;
+    margin-bottom: $spacing-sm;
+  }
+  
+  .statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: $spacing-md;
+    margin-bottom: $spacing-md;
+  }
+  
+  .statItem {
+    text-align: center;
+    padding: $spacing-sm;
+    background-color: $color-gray-50;
+    border-radius: $border-radius-sm;
+    
+    .statValue {
+      font-size: $font-size-xl;
+      font-weight: 700;
+      color: $color-primary;
+      display: block;
+    }
+    
+    .statLabel {
+      font-size: $font-size-xs;
+      color: $color-gray-600;
+      margin-top: $spacing-xs;
+    }
+  }
+  
+  .resourceBalance {
+    .resourceItem {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: $spacing-xs 0;
+      border-bottom: 1px solid $color-gray-200;
+      
+      &:last-child {
+        border-bottom: none;
+      }
+      
+      .resourceName {
+        font-size: $font-size-sm;
+        color: $color-gray-700;
+        text-transform: capitalize;
+      }
+      
+      .resourceCount {
+        font-size: $font-size-sm;
+        font-weight: 500;
+        color: $color-gray-900;
+      }
+    }
+  }
+  
+  .harborInfo {
+    .harborItem {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: $spacing-xs 0;
+      
+      .harborType {
+        font-size: $font-size-sm;
+        color: $color-gray-700;
+        text-transform: capitalize;
+        
+        &--generic {
+          color: $color-brown;
+        }
+        
+        &--brick {
+          color: $color-red;
+        }
+        
+        &--lumber {
+          color: $color-green;
+        }
+        
+        &--wool {
+          color: $color-yellow;
+        }
+        
+        &--grain {
+          color: $color-gold;
+        }
+        
+        &--ore {
+          color: $color-gray-700;
+        }
+      }
+      
+      .harborCount {
+        font-size: $font-size-sm;
+        font-weight: 500;
+        color: $color-gray-900;
+      }
+    }
+  }
+  
+  .gameInfo {
+    .infoItem {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: $spacing-xs 0;
+      
+      .infoLabel {
+        font-size: $font-size-sm;
+        color: $color-gray-600;
+      }
+      
+      .infoValue {
+        font-size: $font-size-sm;
+        font-weight: 500;
+        color: $color-gray-900;
+      }
+    }
+  }
+  
+  .extensionWarning {
+    background-color: $color-amber-50;
+    border: 1px solid $color-amber-200;
+    border-radius: $border-radius-sm;
+    padding: $spacing-sm;
+    margin-top: $spacing-md;
+    
+    .warningIcon {
+      color: $color-amber-600;
+      margin-right: $spacing-xs;
+    }
+    
+    .warningText {
+      font-size: $font-size-sm;
+      color: $color-amber-800;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .statisticsPanel {
+    padding: $spacing-md;
+    
+    .statsGrid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $spacing-sm;
+    }
+    
+    .statItem {
+      padding: $spacing-xs;
+      
+      .statValue {
+        font-size: $font-size-lg;
+      }
+    }
+  }
+}

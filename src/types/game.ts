@@ -1,5 +1,5 @@
-// Types for Catan game elements
-export type ResourceType = 'brick' | 'lumber' | 'wool' | 'grain' | 'ore' | 'desert' | 'gold' | 'fish';
+// Types for Catan game elements - Base Game Only
+export type ResourceType = 'brick' | 'lumber' | 'wool' | 'grain' | 'ore' | 'desert';
 
 export type TerrainType = 
   | 'hills'      // Brick
@@ -7,10 +7,7 @@ export type TerrainType =
   | 'pasture'    // Wool
   | 'fields'     // Grain
   | 'mountains'  // Ore
-  | 'desert'     // Desert
-  | 'sea'        // Water (Seafarers)
-  | 'gold'       // Gold field (Seafarers)
-  | 'fishery';   // Fish (Seafarers)
+  | 'desert';    // Desert
 
 export type HarborType = 
   | 'generic'    // 3:1
@@ -35,53 +32,12 @@ export interface Hex {
 
 export interface GameMap {
   hexes: Hex[];
+  framePieces?: { q: number; r: number; s: number }[]; // Separate frame pieces for border
   playerCount: number;
-  expansion: ExpansionType;
-  scenario?: ScenarioType;
+  expansion: 'base';
+  scenario?: undefined;
   mapSize: MapSize;
 }
-
-export type ExpansionType = 
-  | 'base'
-  | 'seafarers'
-  | 'cities-knights'
-  | 'traders-barbarians'
-  | 'explorers-pirates'
-  | 'seafarers-cities-knights'
-  | 'seafarers-traders-barbarians'
-  | 'cities-knights-traders-barbarians'
-  | 'seafarers-cities-knights-traders-barbarians';
-
-export type ScenarioType =
-  // Base scenarios
-  | 'standard'
-  // Seafarers scenarios
-  | 'heading-new-shores'
-  | 'four-islands'
-  | 'fog-islands'
-  | 'through-desert'
-  | 'forgotten-tribe'
-  | 'cloth-for-catan'
-  | 'wonders-of-catan'
-  // Cities & Knights scenarios
-  | 'barbarian-invasion'
-  // Traders & Barbarians scenarios
-  | 'fishermen-of-catan'
-  | 'rivers-of-catan'
-  | 'event-cards'
-  | 'barbarian-attack'
-  | 'traders-barbarians'
-  | 'great-river'
-  | 'fishermen-lake'
-  // Explorers & Pirates scenarios
-  | 'land-ho'
-  | 'spice-islands'
-  | 'fish-for-catan'
-  | 'explorers-pirates'
-  | 'into-unknown'
-  | 'pirate-islands'
-  | 'wonders-world'
-  | 'treasure-islands';
 
 export type MapSize = 'small' | 'medium' | 'large' | 'custom';
 
@@ -89,8 +45,8 @@ export type PlayerCount = 2 | 3 | 4 | 5 | 6;
 
 export interface GameRules {
   playerCount: PlayerCount;
-  expansion: ExpansionType;
-  scenario?: ScenarioType;
+  expansion: 'base';
+  scenario?: undefined;
   useRandomNumbers: boolean;
   balancedResources: boolean;
   customRules?: {
@@ -109,38 +65,6 @@ export interface GameConfiguration {
   };
 }
 
-// Development card types for Cities & Knights
-export type DevelopmentCard = 
-  | 'knight'
-  | 'victory-point'
-  | 'road-building'
-  | 'year-of-plenty'
-  | 'monopoly'
-  | 'progress-trade'
-  | 'progress-politics' 
-  | 'progress-science';
-
-// Commodity types for Cities & Knights
-export type CommodityType = 'cloth' | 'coin' | 'paper';
-
-// Building types
-export type BuildingType = 
-  | 'settlement'
-  | 'city'
-  | 'road'
-  | 'ship'
-  | 'city-wall'
-  | 'metropolis';
-
-// Trade good types for Traders & Barbarians
-export type TradeGood = 
-  | 'glass'
-  | 'tools'
-  | 'spice'
-  | 'silk'
-  | 'gold'
-  | 'marble';
-
 export interface TileDistribution {
   terrain: TerrainType;
   count: number;
@@ -154,7 +78,8 @@ export interface ExpansionConfig {
   tileDistributions: TileDistribution[];
   harborDistribution: { type: HarborType; count: number }[];
   supportedPlayerCounts: PlayerCount[];
-  supportedScenarios: ScenarioType[];
+  supportedScenarios: never[];
+  victoryPoints?: number;
   additionalRules?: string[];
 }
 

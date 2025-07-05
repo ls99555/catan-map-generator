@@ -1,0 +1,180 @@
+@use '../variables' as *;
+
+.mapContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $map-padding;
+  background: $map-background;
+  border: $map-border;
+  border-radius: $map-border-radius;
+  box-shadow: $shadow-lg;
+  margin: $spacing-4 0;
+
+  @media (max-width: $breakpoint-md) {
+    padding: $spacing-4;
+    margin: $spacing-2 0;
+  }
+}
+
+.mapSvg {
+  width: 100%;
+  height: auto;
+  max-width: 800px;
+  border-radius: $border-radius-base;
+  
+  @media (max-width: $breakpoint-sm) {
+    max-width: 100%;
+  }
+}
+
+.hexagon {
+  stroke-width: $hex-stroke-width;
+  transition: all $transition-fast;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+    stroke-width: $hex-stroke-width + 1;
+  }
+
+  // Base game terrain colors
+  &.hills {
+    fill: $base-brick;
+    stroke: darken($base-brick, 20%);
+  }
+
+  &.forest {
+    fill: $base-lumber;
+    stroke: darken($base-lumber, 20%);
+  }
+
+  &.pasture {
+    fill: $base-wool;
+    stroke: darken($base-wool, 20%);
+  }
+
+  &.fields {
+    fill: $base-grain;
+    stroke: darken($base-grain, 20%);
+  }
+
+  &.mountains {
+    fill: $base-ore;
+    stroke: darken($base-ore, 20%);
+  }
+
+  &.desert {
+    fill: $base-desert;
+    stroke: darken($base-desert, 20%);
+  }
+
+  // Seafarers terrain colors
+  &.sea {
+    fill: $seafarers-sea;
+    stroke: darken($seafarers-sea, 20%);
+  }
+
+  &.gold {
+    fill: $seafarers-gold;
+    stroke: darken($seafarers-gold, 20%);
+  }
+
+  &.fishery {
+    fill: $seafarers-fish;
+    stroke: darken($seafarers-fish, 20%);
+  }
+}
+
+.numberToken {
+  font-family: $font-family-base;
+  font-size: $hex-number-font-size;
+  font-weight: $hex-number-font-weight;
+  text-anchor: middle;
+  dominant-baseline: central;
+  fill: $text-dark;
+  pointer-events: none;
+
+  // High probability numbers (6, 8) in red
+  &.highProbability {
+    fill: $error-red;
+    font-weight: 900;
+  }
+
+  // Low probability numbers (2, 12) in smaller text
+  &.lowProbability {
+    font-size: $hex-number-font-size - 2;
+    fill: $text-medium;
+  }
+}
+
+.robber {
+  fill: $text-dark;
+  stroke: $background-white;
+  stroke-width: 2;
+}
+
+.pirate {
+  fill: $explorers-pirate;
+  stroke: $background-white;
+  stroke-width: 2;
+}
+
+.harbor {
+  font-family: $font-family-base;
+  font-size: 10px;
+  font-weight: $font-weight-semibold;
+  text-anchor: middle;
+  dominant-baseline: central;
+  fill: $primary-blue;
+  pointer-events: none;
+}
+
+.harborIcon {
+  fill: $primary-blue;
+  stroke: $background-white;
+  stroke-width: 1;
+}
+
+// Loading state
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  background: $background-light;
+  border-radius: $border-radius-lg;
+  color: $text-medium;
+  font-size: $font-size-lg;
+}
+
+// Error state
+.error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  background: lighten($error-red, 40%);
+  border: 2px solid $error-red;
+  border-radius: $border-radius-lg;
+  color: $error-red;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  text-align: center;
+  padding: $spacing-4;
+}
+
+// Responsive adjustments
+@media (max-width: $breakpoint-sm) {
+  .numberToken {
+    font-size: $hex-number-font-size - 2;
+  }
+
+  .harbor {
+    font-size: 8px;
+  }
+
+  .hexagon {
+    stroke-width: $hex-stroke-width - 0.5;
+  }
+}

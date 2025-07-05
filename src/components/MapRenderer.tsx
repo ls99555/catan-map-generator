@@ -2,21 +2,19 @@ import { GameMap, HarborType, Hex } from '@/types/game';
 import { 
   cubeToPixel, 
   getHexPath, 
+  getFramePath,
   HexLayout,
   getNeighbors
 } from '@/utils/hexGrid';
 import { generateTilePatterns, getPatternUrl } from '@/utils/tilePatterns';
 import { useMemo } from 'react';
 
-// Calculate harbor position based on adjacent sea tiles or map edge
+// Calculate harbor position based on map edge (base game only)
 function calculateHarborPosition(hex: Hex, allHexes: Hex[], layout: HexLayout): { x: number; y: number; direction: number } {
   const center = cubeToPixel(hex.position, layout);
   const neighbors = getNeighbors(hex.position);
   
-  // Check if this expansion uses sea tiles
-  const hasSeaTiles = allHexes.some(h => h.terrain === 'sea');
-  
-  // Find the direction to place the harbor
+  // Find the direction to place the harbor (base game looks for map edge)
   let harborDirection = 0;
   let targetDirection = { x: 0, y: 0 };
   
@@ -28,29 +26,16 @@ function calculateHarborPosition(hex: Hex, allHexes: Hex[], layout: HexLayout): 
       h.position.s === neighborPos.s
     );
     
-    if (hasSeaTiles) {
-      // For expansions with sea tiles: look for adjacent sea tiles
-      if (neighborHex && neighborHex.terrain === 'sea') {
-        const neighborCenter = cubeToPixel(neighborPos, layout);
-        targetDirection = {
-          x: neighborCenter.x - center.x,
-          y: neighborCenter.y - center.y
-        };
-        harborDirection = i;
-        break;
-      }
-    } else {
-      // For base game: look for map edge (no neighbor hex)
-      if (!neighborHex) {
-        // Calculate direction towards the missing neighbor
-        const edgeCenter = cubeToPixel(neighborPos, layout);
-        targetDirection = {
-          x: edgeCenter.x - center.x,
-          y: edgeCenter.y - center.y
-        };
-        harborDirection = i;
-        break;
-      }
+    // For base game: look for map edge (no neighbor hex)
+    if (!neighborHex) {
+      // Calculate direction towards the missing neighbor
+      const edgeCenter = cubeToPixel(neighborPos, layout);
+      targetDirection = {
+        x: edgeCenter.x - center.x,
+        y: edgeCenter.y - center.y
+      };
+      harborDirection = i;
+      break;
     }
   }
   
@@ -80,26 +65,39 @@ export function MapRenderer({ map }: MapRendererProps) {
   const layout: HexLayout = useMemo(() => ({
     size: 35,
     origin: { x: 400, y: 300 },
-    orientation: 'flat' as const,
+    orientation: 'pointy' as const,
   }), []);
 
-  // Calculate SVG dimensions based on hex positions
-  const { width, height, minX, minY } = useMemo(() => {
-    if (map.hexes.length === 0) return { width: 800, height: 600, minX: 0, minY: 0 };
+  // Calculate SVG dimensions based on hex positions with proper margins
+  const { width, height, minX, minY, viewBox } = useMemo(() => {
+    if (map.hexes.length === 0) return { 
+      width: 800, 
+      height: 600, 
+      minX: 0, 
+      minY: 0, 
+      viewBox: '0 0 800 600'
+    };
     
     const positions = map.hexes.map(hex => cubeToPixel(hex.position, layout));
-    const minX = Math.min(...positions.map(p => p.x)) - layout.size * 2.5;
-    const maxX = Math.max(...positions.map(p => p.x)) + layout.size * 2.5;
-    const minY = Math.min(...positions.map(p => p.y)) - layout.size * 2.5;
-    const maxY = Math.max(...positions.map(p => p.y)) + layout.size * 2.5;
+    const margin = layout.size * 3; // Increased margin for better view
+    
+    const minX = Math.min(...positions.map(p => p.x)) - margin;
+    const maxX = Math.max(...positions.map(p => p.x)) + margin;
+    const minY = Math.min(...positions.map(p => p.y)) - margin;
+    const maxY = Math.max(...positions.map(p => p.y)) + margin;
+    
+    const width = maxX - minX;
+    const height = maxY - minY;
+    const viewBox = `${minX} ${minY} ${width} ${height}`;
     
     return {
-      width: maxX - minX,
-      height: maxY - minY,
+      width,
+      height,
       minX,
       minY,
+      viewBox,
     };
-  }, [map.hexes, layout]);
+  }, [map.hexes, layout]); // Removed map.expansion and map.scenario as they're not actually used in the calculation
 
   // Harbor display
   const harborDisplay: Record<HarborType, string> = {
@@ -176,8 +174,9 @@ export function MapRenderer({ map }: MapRendererProps) {
         {/* Map SVG */}
         <div className="flex-1 overflow-auto bg-blue-50 rounded-lg border border-blue-200">
           <svg
-            viewBox={`${minX} ${minY} ${width} ${height}`}
+            viewBox={viewBox}
             className="w-full h-auto min-h-[400px] max-h-[700px] max-w-full"
+            preserveAspectRatio="xMidYMid meet"
           >
             {/* Define patterns for terrain types */}
             <defs>
@@ -185,6 +184,17 @@ export function MapRenderer({ map }: MapRendererProps) {
                 <rect width="8" height="8" fill="#4682B4" />
                 <path d="M0,4 Q2,2 4,4 Q6,6 8,4" stroke="#5F9EA0" strokeWidth="1" fill="none"/>
                 <path d="M0,0 Q2,-2 4,0 Q6,2 8,0" stroke="#87CEEB" strokeWidth="1" fill="none"/>
+              </pattern>
+              
+              {/* Enhanced frame pattern for puzzle-like appearance */}
+              <pattern id="frame-pattern" patternUnits="userSpaceOnUse" width="12" height="12">
+                <rect width="12" height="12" fill="#1E90FF" />
+                <rect x="0" y="0" width="6" height="6" fill="#4682B4" />
+                <rect x="6" y="6" width="6" height="6" fill="#4682B4" />
+                <path d="M0,6 Q3,3 6,6 Q9,9 12,6" stroke="#5F9EA0" strokeWidth="1" fill="none"/>
+                <path d="M6,0 Q9,3 12,0" stroke="#87CEEB" strokeWidth="1" fill="none"/>
+                <circle cx="3" cy="3" r="1" fill="#6495ED" opacity="0.7"/>
+                <circle cx="9" cy="9" r="1" fill="#6495ED" opacity="0.7"/>
               </pattern>
               
               {/* Blue sea corners pattern */}
@@ -224,7 +234,8 @@ export function MapRenderer({ map }: MapRendererProps) {
             {map.hexes.map((hex) => {
               const center = cubeToPixel(hex.position, layout);
               const path = getHexPath(hex.position, layout);
-              const isWater = hex.terrain === 'sea' || hex.terrain === 'fishery';
+              // Base game only - no water terrain
+              const isWater = false;
               
               return (
                 <g key={hex.id}>
@@ -327,6 +338,35 @@ export function MapRenderer({ map }: MapRendererProps) {
               );
             })}
             
+            {/* Render frame pieces (separate from hexes) */}
+            {map.framePieces && map.framePieces.map((framePiece, index) => {
+              const framePath = getFramePath(framePiece, layout);
+              
+              return (
+                <g key={`frame-${index}`}>
+                  <path
+                    d={framePath}
+                    fill="url(#frame-pattern)"
+                    stroke="#4682B4"
+                    strokeWidth="3"
+                    opacity="0.95"
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                  />
+                  {/* Add subtle inner shadow effect */}
+                  <path
+                    d={framePath}
+                    fill="none"
+                    stroke="#1E90FF"
+                    strokeWidth="1"
+                    opacity="0.6"
+                    strokeLinejoin="round"
+                    strokeDasharray="2,2"
+                  />
+                </g>
+              );
+            })}
+            
             {/* Render harbors on hexes */}
             {map.hexes.filter(hex => hex.harbor).map((hex) => {
               const { x: harborX, y: harborY, direction } = calculateHarborPosition(hex, map.hexes, layout);
@@ -373,22 +413,11 @@ export function MapRenderer({ map }: MapRendererProps) {
       <div className="mt-6 p-4 bg-white border border-gray-200 rounded-lg">
         <div className="flex flex-wrap gap-4 text-sm text-gray-600">
           <div>
-            <span className="font-medium">Expansion:</span> {
-              map.expansion.includes('-') 
-                ? map.expansion.split('-').map(part => 
-                    part.charAt(0).toUpperCase() + part.slice(1).replace('knights', 'Knights').replace('barbarians', 'Barbarians')
-                  ).join(' + ')
-                : map.expansion.charAt(0).toUpperCase() + map.expansion.slice(1).replace('-', ' & ')
-            }
+            <span className="font-medium">Expansion:</span> Base Game
           </div>
           <div>
             <span className="font-medium">Players:</span> {map.playerCount}
           </div>
-          {map.scenario && (
-            <div>
-              <span className="font-medium">Scenario:</span> {map.scenario.replace('-', ' ')}
-            </div>
-          )}
           <div>
             <span className="font-medium">Tiles:</span> {map.hexes.length}
           </div>
