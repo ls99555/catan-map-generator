@@ -31,7 +31,6 @@ export const BASE_GAME_3_4_CONFIG: ExpansionConfig = {
   victoryPoints: 10,
   additionalRules: [
     'Initial placement: Each player places 2 settlements and 2 roads',
-    'Robber starts on desert tile and blocks resource production',
     'Victory condition: First to 10 victory points wins',
     'Trade: 4:1 with bank, 3:1 with generic harbors, 2:1 with specific harbors',
     'Longest Road: minimum 5 road pieces, worth 2 victory points',
@@ -56,10 +55,9 @@ export const BASE_GAME_5_6_CONFIG: ExpansionConfig = {
     { type: 'generic', count: 5 },
     { type: 'brick', count: 1 },
     { type: 'lumber', count: 1 },
-    { type: 'wool', count: 1 },
+    { type: 'wool', count: 2 },
     { type: 'grain', count: 1 },
     { type: 'ore', count: 1 },
-    { type: 'generic', count: 1 }, // Additional generic harbor for 5-6 players
   ],
   supportedPlayerCounts: [5, 6],
   supportedScenarios: [],
@@ -69,7 +67,7 @@ export const BASE_GAME_5_6_CONFIG: ExpansionConfig = {
     'Special building phase: After each player\'s turn (except the player who just rolled)',
     'Building phase: Players can build roads, settlements, cities, and buy development cards',
     'No trading during special building phase',
-    'Frame pieces extend the board for 5-6 players',
+    'Extended layout for 5-6 players',
   ],
 };
 
@@ -86,14 +84,13 @@ export const BASE_GAME_NUMBERS_5_6 = [
 // Tile counts validation
 export const BASE_GAME_TILE_COUNTS = {
   '3-4': {
-    total: 19, // 19 land tiles with 6 frame pieces attached to edge hexes
+    total: 19, // 19 land tiles for 3-4 players
     resource: 18,
     desert: 1,
-    frame: 6, // Frame pieces attached to edge hexes
     numbers: 18,
     harbors: 9,
     pattern: [3, 4, 5, 4, 3], // Official tile placement pattern (top to bottom)
-    description: 'Standard 3-4-5-4-3 hexagonal layout with 19 land tiles + 6 frame pieces attached to edges',
+    description: 'Standard 3-4-5-4-3 hexagonal layout with 19 land tiles',
   },
   '5-6': {
     total: 30, // Full 5-6 player set as per config
@@ -101,7 +98,7 @@ export const BASE_GAME_TILE_COUNTS = {
     desert: 2,
     numbers: 28,
     harbors: 11,
-    pattern: [3, 4, 5, 4, 3], // Base pattern, but uses more tiles total
+    pattern: [3, 4, 5, 6, 5, 4, 3], // Base pattern, but uses more tiles total
     description: 'Extended layout with additional tiles for 5-6 players',
   },
 };
@@ -111,15 +108,15 @@ export const BASE_GAME_LAYOUT = {
   '3-4': {
     radius: 2,
     hexCount: 19,
-    layout: 'hexagonal-3-4-5-4-3', // Official Catan layout pattern
+    layout: 'hexagonal-base', // Official Catan layout pattern
     pattern: [3, 4, 5, 4, 3], // Tiles per row (top to bottom)
     description: '3 tiles in top row, 4 in second row, 5 in middle row, 4 in fourth row, 3 in bottom row',
   },
   '5-6': {
     radius: 2,
     hexCount: 30,
-    layout: 'hexagonal-with-frame',
-    pattern: [3, 4, 5, 4, 3], // Base pattern + frame tiles
-    description: 'Base 3-4-5-4-3 pattern with additional frame tiles for 5-6 players',
+    layout: 'hexagonal-base-expansion',
+    pattern: [3, 4, 5, 6, 5, 4, 3], // Extended pattern for 5-6 players
+    description: 'Extended 3-4-5-6-5-4-3 pattern for 5-6 players',
   },
 };

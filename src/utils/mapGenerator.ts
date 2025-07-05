@@ -9,8 +9,7 @@ import {
   MapStatistics
 } from '../types/game';
 import { 
-  EXPANSION_CONFIGS, 
-  DICE_PROBABILITIES
+  EXPANSION_CONFIGS
 } from '../config/expansions/index';
 import { 
   BASE_GAME_NUMBERS_3_4, 
@@ -18,9 +17,8 @@ import {
 } from '../config/expansions/base-game';
 import { 
   CubeCoordinate, 
-  generateHexagonalMapWithExtension,
   generateBaseGameLayout,
-  generateFramePieces,
+  generateBaseGame56Layout,
   getNeighbors
 } from './hexGrid';
 import { v4 as uuidv4 } from 'uuid';
@@ -64,8 +62,8 @@ function generateMapCoordinates(config: GameConfiguration): CubeCoordinate[] {
   
   // Base game only - use official layouts
   if (playerCount > 4) {
-    // Use the official 5-6 player layout with frame extension
-    return generateHexagonalMapWithExtension(2);
+    // Use the new 5-6 player layout following [3, 4, 5, 6, 5, 4, 3] pattern
+    return generateBaseGame56Layout();
   }
   
   // Use the official 3-4-5-4-3 pattern for base game
@@ -137,8 +135,6 @@ function generateTerrain(coordinates: CubeCoordinate[], config: GameConfiguratio
         terrain: 'desert' as const,
         resource: 'desert' as const,
         position: coord,
-        hasRobber: false,
-        hasPirate: false,
       };
     }
     
@@ -147,8 +143,6 @@ function generateTerrain(coordinates: CubeCoordinate[], config: GameConfiguratio
       terrain: tile.terrain,
       resource: tile.resource,
       position: coord,
-      hasRobber: false,
-      hasPirate: false,
     };
   });
 }
@@ -502,19 +496,6 @@ function getValidHarborPositions(hexes: Hex[]): Hex[] {
   return validPositions;
 }
 
-// Place robber on desert tile
-function placeRobber(hexes: Hex[]): Hex[] {
-  const desertTiles = hexes.filter(hex => hex.terrain === 'desert');
-  if (desertTiles.length > 0) {
-    const robberTile = desertTiles[0];
-    return hexes.map(hex => ({
-      ...hex,
-      hasRobber: hex.id === robberTile.id
-    }));
-  }
-  return hexes;
-}
-
 // Calculate map statistics (base game only)
 function calculateMapStatistics(hexes: Hex[]): MapStatistics {
   const resourceBalance: Record<ResourceType, number> = {
@@ -539,7 +520,6 @@ function calculateMapStatistics(hexes: Hex[]): MapStatistics {
     ore: 0,
   };
   
-  let probabilitySpread = 0;
   let adjacentSameNumbers = 0;
   let desertPlacement: 'center' | 'edge' | 'corner' = 'center';
   
@@ -549,7 +529,6 @@ function calculateMapStatistics(hexes: Hex[]): MapStatistics {
     
     if (hex.number) {
       numberDistribution[hex.number]++;
-      probabilitySpread += DICE_PROBABILITIES[hex.number];
     }
     
     if (hex.harbor) {
@@ -594,7 +573,6 @@ function calculateMapStatistics(hexes: Hex[]): MapStatistics {
     resourceBalance,
     numberDistribution,
     harborDistribution,
-    probabilitySpread,
     adjacentSameNumbers,
     desertPlacement,
   };
@@ -625,21 +603,11 @@ export function generateMap(config: GameConfiguration): GameMap {
   // Generate harbors
   hexes = generateHarbors(hexes, config);
   
-  // Place robber
-  hexes = placeRobber(hexes);
-  
   // Validate resource uniqueness
   hexes = validateResourceUniqueness(hexes);
   
-  // Generate frame pieces for base game (3-4 players only)
-  let framePieces: { q: number; r: number; s: number }[] | undefined;
-  if (config.rules.playerCount <= 4) {
-    framePieces = generateFramePieces();
-  }
-  
   return {
     hexes,
-    framePieces,
     playerCount: config.rules.playerCount,
     expansion: 'base',
     scenario: undefined,
@@ -655,12 +623,6 @@ export function validateMap(map: GameMap): { valid: boolean; errors: string[] } 
   const resourceTiles = map.hexes.filter(hex => hex.resource !== 'desert' && hex.terrain !== 'desert');
   if (resourceTiles.length < 12) {
     errors.push('Map has too few resource tiles');
-  }
-  
-  // Check for robber placement
-  const robberTiles = map.hexes.filter(hex => hex.hasRobber);
-  if (robberTiles.length !== 1) {
-    errors.push('Map must have exactly one robber');
   }
   
   // Check number distribution

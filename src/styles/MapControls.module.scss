@@ -1,5 +1,292 @@
-@use '../variables' as *;
+@use 'variables' as *;
 
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.gameInfo {
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  
+  h3 {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #15803d;
+    margin-bottom: 0.5rem;
+  }
+  
+  .infoText {
+    font-size: 0.875rem;
+    color: #166534;
+    
+    p {
+      margin: 0;
+      
+      &:not(:last-child) {
+        margin-bottom: 0.25rem;
+      }
+    }
+  }
+}
+
+.playerCountSection {
+  .sectionLabel {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+  }
+  
+  .playerCountOptions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .playerCountGroup {
+    h4 {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #4b5563;
+      margin-bottom: 0.5rem;
+    }
+  }
+  
+  .playerCountButton {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+    border: 1px solid #d1d5db;
+    background-color: white;
+    color: #374151;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    
+    &:hover {
+      background-color: #f9fafb;
+    }
+    
+    &.selected {
+      background-color: #dcfce7;
+      border-color: #22c55e;
+      color: #15803d;
+    }
+    
+    &.extension {
+      background-color: #fef3c7;
+      border-color: #f59e0b;
+      color: #92400e;
+    }
+    
+    .buttonTitle {
+      font-weight: 500;
+    }
+    
+    .buttonSubtitle {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+  }
+}
+
+.extensionNotice {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background-color: #fef3c7;
+  border: 1px solid #fbbf24;
+  border-radius: 0.375rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  
+  .noticeIcon {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #f59e0b;
+  }
+  
+  .noticeContent {
+    h3 {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #92400e;
+      margin-bottom: 0.25rem;
+    }
+    
+    .noticeDescription {
+      font-size: 0.875rem;
+      color: #b45309;
+      
+      p {
+        margin: 0;
+        
+        &:not(:last-child) {
+          margin-bottom: 0.25rem;
+        }
+      }
+      
+      ul {
+        margin: 0.25rem 0;
+        padding-left: 1.25rem;
+        
+        li {
+          margin: 0;
+        }
+      }
+      
+      .victoryPoints {
+        margin-top: 0.5rem;
+        font-size: 0.75rem;
+      }
+    }
+  }
+}
+
+.mapInfo {
+  background-color: #eff6ff;
+  border: 1px solid #93c5fd;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  
+  h3 {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #1e40af;
+    margin-bottom: 0.5rem;
+  }
+  
+  .infoGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.875rem;
+    color: #1e40af;
+    
+    .infoRow {
+      display: flex;
+      justify-content: space-between;
+      
+      .infoLabel {
+        font-weight: normal;
+      }
+      
+      .infoValue {
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.ruleOptions {
+  .sectionLabel {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+  }
+  
+  .optionsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .optionItem {
+    .optionLabel {
+      display: flex;
+      align-items: center;
+      
+      input[type="checkbox"] {
+        border-radius: 0.25rem;
+        border: 1px solid #d1d5db;
+        color: #059669;
+        margin-right: 0.5rem;
+        
+        &:focus {
+          box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.5);
+        }
+      }
+      
+      .optionText {
+        font-size: 0.875rem;
+        color: #374151;
+      }
+    }
+    
+    .optionDescription {
+      margin-left: 1.5rem;
+      font-size: 0.75rem;
+      color: #6b7280;
+      margin-top: 0.25rem;
+    }
+  }
+}
+
+.generateButton {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: #059669;
+  color: white;
+  border-radius: 0.375rem;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: #047857;
+  }
+  
+  &:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+  }
+}
+
+.rulesInfo {
+  background-color: #f9fafb;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  
+  h4 {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #111827;
+    margin-bottom: 0.5rem;
+  }
+  
+  .rulesText {
+    font-size: 0.75rem;
+    color: #4b5563;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    
+    .rule {
+      margin: 0;
+      
+      &.extensionRule {
+        color: #2563eb;
+      }
+    }
+    
+    .extensionTitle {
+      margin-top: 0.75rem;
+      margin-bottom: 0.25rem;
+      font-weight: 500;
+      color: #374151;
+    }
+  }
+}
+
+// Legacy styles for backwards compatibility
 .controlsContainer {
   background: $controls-background;
   border: 1px solid $controls-border;
@@ -94,35 +381,6 @@
 
   @media (max-width: $breakpoint-sm) {
     flex-direction: column;
-  }
-}
-
-.generateButton {
-  background: $primary-blue;
-  color: $background-white;
-  border: none;
-  padding: $spacing-3 $spacing-6;
-  border-radius: $border-radius-base;
-  font-size: $font-size-base;
-  font-weight: $font-weight-semibold;
-  cursor: pointer;
-  transition: all $transition-fast;
-  min-width: 160px;
-
-  &:hover:not(:disabled) {
-    background: $primary-blue-hover;
-    transform: translateY(-1px);
-    box-shadow: $shadow-base;
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-
-  &:disabled {
-    background: $secondary-gray;
-    cursor: not-allowed;
-    transform: none;
   }
 }
 

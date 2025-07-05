@@ -157,24 +157,6 @@ export function generateHexagonalMap(radius: number): CubeCoordinate[] {
   return getHexesInRadius({ q: 0, r: 0, s: 0 }, radius);
 }
 
-// Generate a hexagonal map with 5-6 player extension frame
-export function generateHexagonalMapWithExtension(radius: number): CubeCoordinate[] {
-  const baseHexes = generateHexagonalMap(radius);
-  
-  // Add the 6 frame tiles for 5-6 player extension
-  // These are positioned around the outer edge of the radius-2 hexagon
-  const extensionHexes: CubeCoordinate[] = [
-    { q: 0, r: -3, s: 3 },   // top
-    { q: 3, r: -3, s: 0 },   // top-right
-    { q: 3, r: 0, s: -3 },   // bottom-right
-    { q: 0, r: 3, s: -3 },   // bottom
-    { q: -3, r: 3, s: 0 },   // bottom-left
-    { q: -3, r: 0, s: 3 },   // top-left
-  ];
-  
-  return [...baseHexes, ...extensionHexes];
-}
-
 // Generate a rectangular map shape
 export function generateRectangularMap(width: number, height: number): CubeCoordinate[] {
   const results: CubeCoordinate[] = [];
@@ -205,62 +187,57 @@ export function generateBaseGameLayout(): CubeCoordinate[] {
   return rotatedHexes;
 }
 
-// Generate frame piece coordinates that form a hexagonal border around the map
-export function generateFramePieces(): CubeCoordinate[] {
-  // Get the base game layout to determine the actual edge tiles
-  const baseGameTiles = generateBaseGameLayout();
-  
-  // Find the outermost tiles in each direction
-  const edgeTiles = [
-    baseGameTiles.find(tile => tile.q === 2 && tile.r === -2), // Top-right edge
-    baseGameTiles.find(tile => tile.q === 2 && tile.r === 0),  // Bottom-right edge
-    baseGameTiles.find(tile => tile.q === 0 && tile.r === 2),  // Bottom edge
-    baseGameTiles.find(tile => tile.q === -2 && tile.r === 2), // Bottom-left edge
-    baseGameTiles.find(tile => tile.q === -2 && tile.r === 0), // Top-left edge
-    baseGameTiles.find(tile => tile.q === 0 && tile.r === -2), // Top edge
-  ];
-  
-  // Frame pieces are positioned one step outward from each edge tile
-  const framePieces: CubeCoordinate[] = [];
-  
-  // Top-right frame (next to top-right edge tile)
-  if (edgeTiles[0]) {
-    framePieces.push({ q: edgeTiles[0].q + 1, r: edgeTiles[0].r, s: edgeTiles[0].s - 1 });
-  }
-  
-  // Bottom-right frame (next to bottom-right edge tile)
-  if (edgeTiles[1]) {
-    framePieces.push({ q: edgeTiles[1].q, r: edgeTiles[1].r + 1, s: edgeTiles[1].s - 1 });
-  }
-  
-  // Bottom frame (next to bottom edge tile)
-  if (edgeTiles[2]) {
-    framePieces.push({ q: edgeTiles[2].q - 1, r: edgeTiles[2].r + 1, s: edgeTiles[2].s });
-  }
-  
-  // Bottom-left frame (next to bottom-left edge tile)
-  if (edgeTiles[3]) {
-    framePieces.push({ q: edgeTiles[3].q - 1, r: edgeTiles[3].r, s: edgeTiles[3].s + 1 });
-  }
-  
-  // Top-left frame (next to top-left edge tile)
-  if (edgeTiles[4]) {
-    framePieces.push({ q: edgeTiles[4].q, r: edgeTiles[4].r - 1, s: edgeTiles[4].s + 1 });
-  }
-  
-  // Top frame (next to top edge tile)
-  if (edgeTiles[5]) {
-    framePieces.push({ q: edgeTiles[5].q + 1, r: edgeTiles[5].r - 1, s: edgeTiles[5].s });
-  }
-  
-  return framePieces.filter(piece => piece != null);
-}
-
-// Generate the base game 5-6 player layout (uses all 30 tiles from config)
+// Generate the base game 5-6 player layout (30 tiles in [3, 4, 5, 6, 5, 4, 3] pattern)
+// WARNING: DO NOT MODIFY THIS FUNCTION - Coordinates are precisely aligned
 export function generateBaseGame56Layout(): CubeCoordinate[] {
-  // For 5-6 players, we need to accommodate 30 tiles
-  // This uses a larger hexagonal pattern to fit all tiles
-  return generateHexagonalMap(2.5); // Slightly larger radius to fit 30 tiles
+  // Perfectly symmetrical hexagonal layout centered at origin
+  const coordinates: CubeCoordinate[] = [];
+  
+  // Row 0 (top): 3 hexes - centered
+  coordinates.push({ q: 1, r: -3, s: 2 });
+  coordinates.push({ q: 2, r: -3, s: 1 });
+  coordinates.push({ q: 3, r: -3, s: 0 });
+  
+  // Row 1: 4 hexes - expanding symmetrically
+  coordinates.push({ q: 0, r: -2, s: 2 });
+  coordinates.push({ q: 1, r: -2, s: 1 });
+  coordinates.push({ q: 2, r: -2, s: 0 });
+  coordinates.push({ q: 3, r: -2, s: -1 });
+  
+  // Row 2: 5 hexes - expanding further
+  coordinates.push({ q: -1, r: -1, s: 2 });
+  coordinates.push({ q: 0, r: -1, s: 1 });
+  coordinates.push({ q: 1, r: -1, s: 0 });
+  coordinates.push({ q: 2, r: -1, s: -1 });
+  coordinates.push({ q: 3, r: -1, s: -2 });
+  
+  // Row 3: 6 hexes - widest row, perfectly centered
+  coordinates.push({ q: -2, r: 0, s: 2 });
+  coordinates.push({ q: -1, r: 0, s: 1 });
+  coordinates.push({ q: 0, r: 0, s: 0 });
+  coordinates.push({ q: 1, r: 0, s: -1 });
+  coordinates.push({ q: 2, r: 0, s: -2 });
+  coordinates.push({ q: 3, r: 0, s: -3 });
+  
+  // Row 4: 5 hexes - contracting symmetrically
+  coordinates.push({ q: -2, r: 1, s: 1 });
+  coordinates.push({ q: -1, r: 1, s: 0 });
+  coordinates.push({ q: 0, r: 1, s: -1 });
+  coordinates.push({ q: 1, r: 1, s: -2 });
+  coordinates.push({ q: 2, r: 1, s: -3 });
+  
+  // Row 5: 4 hexes - contracting further
+  coordinates.push({ q: -2, r: 2, s: 0 });
+  coordinates.push({ q: -1, r: 2, s: -1 });
+  coordinates.push({ q: 0, r: 2, s: -2 });
+  coordinates.push({ q: 1, r: 2, s: -3 });
+  
+  // Row 6 (bottom): 3 hexes - perfectly centered
+  coordinates.push({ q: -2, r: 3, s: -1 });
+  coordinates.push({ q: -1, r: 3, s: -2 });
+  coordinates.push({ q: 0, r: 3, s: -3 });
+  
+  return coordinates;
 }
 
 // Check if a coordinate is valid for a given map shape
@@ -317,64 +294,4 @@ export function getHexPath(cube: CubeCoordinate, layout: HexLayout): string {
   path += ' Z';
   
   return path;
-}
-
-// Generate SVG path for a frame piece (interlocking border segment)
-export function getFramePath(position: CubeCoordinate, layout: HexLayout): string {
-  // Frame pieces form a complete hexagonal border around the entire map
-  // They are positioned to touch the outer vertices of the outermost land tiles
-  const mapCenter = cubeToPixel({ q: 0, r: 0, s: 0 }, layout);
-  const size = layout.size;
-  
-  const { q, r } = position;
-  
-  // Determine which side of the hexagon this frame piece represents
-  let sideIndex = 0;
-  if (q === 3 && r === -2) sideIndex = 0;      // Top-right side
-  else if (q === 2 && r === 1) sideIndex = 1;  // Bottom-right side
-  else if (q === -1 && r === 3) sideIndex = 2; // Bottom side
-  else if (q === -3 && r === 2) sideIndex = 3; // Bottom-left side
-  else if (q === -2 && r === -1) sideIndex = 4; // Top-left side
-  else if (q === 1 && r === -3) sideIndex = 5; // Top side
-  
-  // Calculate the frame border distances from map center
-  // For pointy-top hexes, we need the frame to be pushed out by 1/2 tile from the outer edges
-  // The distance from map center to outer tile centers is: 2 * size * sqrt(3)
-  // The distance from tile center to hex edge (not vertex) is: size * sqrt(3) / 2
-  // Additional 1/2 tile push: size * sqrt(3) / 2
-  const mapCenterToOuterTileCenter = 2 * size * Math.sqrt(3);
-  const tileCenterToEdge = size * Math.sqrt(3) / 2;
-  const frameSpacing = size * Math.sqrt(3) / 2; // 1/2 tile spacing
-  const innerRadius = mapCenterToOuterTileCenter + tileCenterToEdge + frameSpacing;
-  const outerRadius = innerRadius + size * 0.5; // Frame thickness
-  
-  // For pointy-top hexagons, the vertices are at the points (30°, 90°, 150°, 210°, 270°, 330°)
-  const vertexAngles = Array.from({ length: 6 }, (_, i) => (i * 60 + 30) * Math.PI / 180);
-  
-  // Calculate all vertices of the inner and outer hexagons
-  const innerVertices = vertexAngles.map(angle => ({
-    x: mapCenter.x + innerRadius * Math.cos(angle),
-    y: mapCenter.y + innerRadius * Math.sin(angle)
-  }));
-  
-  const outerVertices = vertexAngles.map(angle => ({
-    x: mapCenter.x + outerRadius * Math.cos(angle),
-    y: mapCenter.y + outerRadius * Math.sin(angle)
-  }));
-  
-  // Get the vertices for this specific frame piece
-  const nextSide = (sideIndex + 1) % 6;
-  
-  const innerStart = innerVertices[sideIndex];
-  const innerEnd = innerVertices[nextSide];
-  const outerStart = outerVertices[sideIndex];
-  const outerEnd = outerVertices[nextSide];
-  
-  // Create the frame piece as a trapezoid with straight edges
-  // This ensures perfect interlocking between adjacent pieces
-  return `M ${innerStart.x} ${innerStart.y} 
-          L ${outerStart.x} ${outerStart.y}
-          L ${outerEnd.x} ${outerEnd.y}
-          L ${innerEnd.x} ${innerEnd.y}
-          Z`;
 }

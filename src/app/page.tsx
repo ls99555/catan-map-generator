@@ -8,7 +8,7 @@ import { MapRenderer } from '../components/MapRenderer';
 import { MapControls } from '../components/MapControls';
 import { MapStatisticsPanel } from '../components/MapStatisticsPanel';
 import { AdBanner } from '../components/AdBanner';
-// import styles from '../styles/HomePage.module.scss';
+import styles from '../styles/HomePage.module.scss';
 
 export default function Home() {
   const [gameMap, setGameMap] = useState<GameMap | null>(null);
@@ -183,49 +183,59 @@ export default function Home() {
       <AdBanner position="bottom" />
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                Catan Map Generator
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Generate balanced and fair Catan maps for the base game with 3-4 and 5-6 player support. 
-                Perfect for competitive play and casual games.
-              </p>
-            </div>
-            <div>
-              <h4 className="text-md font-semibold text-gray-900 mb-4">
-                Supported Game Modes
-              </h4>
-              <ul className="text-sm text-gray-600 space-y-1">
-                <li>• Base Game (3-4 players)</li>
-                <li>• 5-6 Player Extension</li>
-                <li>• Balanced resource distribution</li>
-                <li>• Random number placement</li>
-                <li>• Harbor generation</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-md font-semibold text-gray-900 mb-4">
-                Features
-              </h4>
-              <ul className="text-sm text-gray-600 space-y-1">
-                <li>• Mobile-friendly design</li>
-                <li>• Balanced resource distribution</li>
-                <li>• Standard base game rules</li>
-                <li>• Export capabilities</li>
-                <li>• Statistical analysis</li>
-              </ul>
-            </div>
-          </div>
-          <div className="mt-8 pt-8 border-t border-gray-200 text-center text-sm text-gray-600">
-            <p>
-              © 2024 Catan Map Generator. This is an unofficial tool for Settlers of Catan. 
-              Catan is a trademark of Catan Studio.
+      <footer className={styles.footer}>
+        <div className={styles.footerContent}>
+          <div className={styles.footerSection}>
+            <h3 className={styles.footerTitle}>Catan Map Generator</h3>
+            <p className={styles.footerText}>
+              Generate balanced and fair Catan maps for the base game with 3-4 and 5-6 player support. 
+              Perfect for competitive play and casual games.
             </p>
           </div>
+          
+          <div className={styles.footerSection}>
+            <h4 className={styles.footerSubtitle}>Legal</h4>
+            <div className={styles.footerLinks}>
+              <Link href="/legal/privacy" className={styles.footerLink}>
+                Privacy Policy
+              </Link>
+              <Link href="/legal/terms" className={styles.footerLink}>
+                Terms of Service
+              </Link>
+              <Link href="/legal/disclaimer" className={styles.footerLink}>
+                Disclaimer
+              </Link>
+            </div>
+          </div>
+          
+          <div className={styles.footerSection}>
+            <h4 className={styles.footerSubtitle}>Game Modes</h4>
+            <ul className={styles.footerList}>
+              <li>Base Game (3-4 players)</li>
+              <li>5-6 Player Extension</li>
+              <li>Balanced resource distribution</li>
+              <li>Random number placement</li>
+              <li>Harbor generation</li>
+            </ul>
+          </div>
+          
+          <div className={styles.footerSection}>
+            <h4 className={styles.footerSubtitle}>Features</h4>
+            <ul className={styles.footerList}>
+              <li>Mobile-friendly design</li>
+              <li>Balanced resource distribution</li>
+              <li>Standard base game rules</li>
+              <li>Export capabilities</li>
+              <li>Statistical analysis</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div className={styles.footerBottom}>
+          <p className={styles.copyright}>
+            © {new Date().getFullYear()} Catan Map Generator. This is an unofficial tool for Settlers of Catan. 
+            Catan is a trademark of Catan Studio.
+          </p>
         </div>
       </footer>
     </div>

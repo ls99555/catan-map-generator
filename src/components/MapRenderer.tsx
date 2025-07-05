@@ -2,12 +2,12 @@ import { GameMap, HarborType, Hex } from '@/types/game';
 import { 
   cubeToPixel, 
   getHexPath, 
-  getFramePath,
   HexLayout,
   getNeighbors
 } from '@/utils/hexGrid';
 import { generateTilePatterns, getPatternUrl } from '@/utils/tilePatterns';
 import { useMemo } from 'react';
+import styles from '../styles/MapRenderer.module.scss';
 
 // Calculate harbor position based on map edge (base game only)
 function calculateHarborPosition(hex: Hex, allHexes: Hex[], layout: HexLayout): { x: number; y: number; direction: number } {
@@ -153,29 +153,28 @@ export function MapRenderer({ map }: MapRendererProps) {
           stroke="#000"
           strokeWidth="1"
           rx="2"
-        />
-        <text
-          x={x}
-          y={y - 6}
-          textAnchor="middle"
-          className="text-xs font-bold select-none pointer-events-none"
-          fill="#000"
-          fontSize="10"
-        >
-          {harborDisplay[type]}
-        </text>
+        />                <text
+                  x={x}
+                  y={y - 6}
+                  textAnchor="middle"
+                  className={styles.harbor}
+                  fill="#000"
+                  fontSize="10"
+                >
+                  {harborDisplay[type]}
+                </text>
       </g>
     );
   };
 
   return (
-    <div className="w-full">
-      <div className="flex flex-col lg:flex-row gap-6">
+    <div className={styles.container}>
+      <div className={styles.layout}>
         {/* Map SVG */}
-        <div className="flex-1 overflow-auto bg-blue-50 rounded-lg border border-blue-200">
+        <div className={styles.mapContainer}>
           <svg
             viewBox={viewBox}
-            className="w-full h-auto min-h-[400px] max-h-[700px] max-w-full"
+            className={styles.mapSvg}
             preserveAspectRatio="xMidYMid meet"
           >
             {/* Define patterns for terrain types */}
@@ -184,17 +183,6 @@ export function MapRenderer({ map }: MapRendererProps) {
                 <rect width="8" height="8" fill="#4682B4" />
                 <path d="M0,4 Q2,2 4,4 Q6,6 8,4" stroke="#5F9EA0" strokeWidth="1" fill="none"/>
                 <path d="M0,0 Q2,-2 4,0 Q6,2 8,0" stroke="#87CEEB" strokeWidth="1" fill="none"/>
-              </pattern>
-              
-              {/* Enhanced frame pattern for puzzle-like appearance */}
-              <pattern id="frame-pattern" patternUnits="userSpaceOnUse" width="12" height="12">
-                <rect width="12" height="12" fill="#1E90FF" />
-                <rect x="0" y="0" width="6" height="6" fill="#4682B4" />
-                <rect x="6" y="6" width="6" height="6" fill="#4682B4" />
-                <path d="M0,6 Q3,3 6,6 Q9,9 12,6" stroke="#5F9EA0" strokeWidth="1" fill="none"/>
-                <path d="M6,0 Q9,3 12,0" stroke="#87CEEB" strokeWidth="1" fill="none"/>
-                <circle cx="3" cy="3" r="1" fill="#6495ED" opacity="0.7"/>
-                <circle cx="9" cy="9" r="1" fill="#6495ED" opacity="0.7"/>
               </pattern>
               
               {/* Blue sea corners pattern */}
@@ -234,27 +222,25 @@ export function MapRenderer({ map }: MapRendererProps) {
             {map.hexes.map((hex) => {
               const center = cubeToPixel(hex.position, layout);
               const path = getHexPath(hex.position, layout);
-              // Base game only - no water terrain
-              const isWater = false;
               
               return (
                 <g key={hex.id}>
                   {/* Hex background */}
                   <path
                     d={path}
-                    fill={isWater ? 'url(#water-pattern)' : getPatternUrl(hex.terrain)}
+                    fill={getPatternUrl(hex.terrain)}
                     stroke="#2F2F2F"
                     strokeWidth="2"
                     opacity={hex.terrain === 'desert' ? 0.8 : 1}
                   />
                   
-                  {/* Number token and odds */}
+                  {/* Number token at center */}
                   {hex.number && (
                     <g>
-                      {/* Number token at top */}
+                      {/* Number token circle at hex center */}
                       <circle
                         cx={center.x}
-                        cy={center.y - 10}
+                        cy={center.y}
                         r="14"
                         fill={hex.number === 6 || hex.number === 8 ? '#FF6B6B' : '#FFF'}
                         stroke="#2F2F2F"
@@ -262,107 +248,19 @@ export function MapRenderer({ map }: MapRendererProps) {
                       />
                       <text
                         x={center.x}
-                        y={center.y - 5}
+                        y={center.y + 5}
                         textAnchor="middle"
-                        className="text-base font-bold select-none pointer-events-none"
+                        className={styles.numberToken}
                         fill={hex.number === 6 || hex.number === 8 ? '#FFF' : '#2F2F2F'}
                         fontSize="16"
                       >
                         {hex.number}
                       </text>
                       
-                      {/* Probability dots at bottom */}
-                      <text
-                        x={center.x}
-                        y={center.y + 20}
-                        textAnchor="middle"
-                        className="text-sm select-none pointer-events-none"
-                        fill="#2F2F2F"
-                        fontSize="14"
-                      >
-                        {'•'.repeat(6 - Math.abs(hex.number - 7))}
-                      </text>
+
                     </g>
                   )}
-                  
-                  {/* Robber */}
-                  {hex.hasRobber && (
-                    <g>
-                      <circle
-                        cx={center.x}
-                        cy={center.y + 5}
-                        r="10"
-                        fill="#2F2F2F"
-                        stroke="#FFF"
-                        strokeWidth="2"
-                      />
-                      <text
-                        x={center.x}
-                        y={center.y + 10}
-                        textAnchor="middle"
-                        className="text-sm font-bold select-none pointer-events-none"
-                        fill="#FFF"
-                        fontSize="12"
-                      >
-                        R
-                      </text>
-                    </g>
-                  )}
-                  
-                  {/* Pirate */}
-                  {hex.hasPirate && (
-                    <g>
-                      <circle
-                        cx={center.x}
-                        cy={center.y + 5}
-                        r="10"
-                        fill="#8B4513"
-                        stroke="#FFF"
-                        strokeWidth="2"
-                      />
-                      <text
-                        x={center.x}
-                        y={center.y + 10}
-                        textAnchor="middle"
-                        className="text-sm font-bold select-none pointer-events-none"
-                        fill="#FFF"
-                        fontSize="12"
-                      >
-                        P
-                      </text>
-                    </g>
-                  )}
-                  
-                  {/* Hex coordinates (for debugging) - removed to avoid text under probability dots */}
-                </g>
-              );
-            })}
-            
-            {/* Render frame pieces (separate from hexes) */}
-            {map.framePieces && map.framePieces.map((framePiece, index) => {
-              const framePath = getFramePath(framePiece, layout);
-              
-              return (
-                <g key={`frame-${index}`}>
-                  <path
-                    d={framePath}
-                    fill="url(#frame-pattern)"
-                    stroke="#4682B4"
-                    strokeWidth="3"
-                    opacity="0.95"
-                    strokeLinejoin="round"
-                    strokeLinecap="round"
-                  />
-                  {/* Add subtle inner shadow effect */}
-                  <path
-                    d={framePath}
-                    fill="none"
-                    stroke="#1E90FF"
-                    strokeWidth="1"
-                    opacity="0.6"
-                    strokeLinejoin="round"
-                    strokeDasharray="2,2"
-                  />
+
                 </g>
               );
             })}
@@ -380,27 +278,23 @@ export function MapRenderer({ map }: MapRendererProps) {
         </div>
 
         {/* Legend Panel */}
-        <div className="w-full lg:w-80 bg-white rounded-lg border border-gray-200 p-4">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Legend</h3>
+        <div className={styles.legendPanel}>
+          <h3>Legend</h3>
           
-          <div className="space-y-4">
+          <div className={styles.legendSections}>
             {/* Terrain Types */}
-            <div>
-              <h4 className="text-sm font-bold text-gray-700 mb-2">Terrain Types:</h4>
-              <div className="text-xs text-gray-600 space-y-1">
+            <div className={styles.legendSection}>
+              <h4>Terrain Types:</h4>
+              <div className={styles.legendText}>
                 <div>Hills (Brick) • Forest (Lumber) • Pasture (Wool)</div>
                 <div>Fields (Grain) • Mountains (Ore) • Desert (No Resource)</div>
-                <div>Sea (Water) • Gold Fields (Any Resource) • Fishery (Fish)</div>
               </div>
             </div>
             
             {/* Game Elements */}
-            <div>
-              <h4 className="text-sm font-bold text-gray-700 mb-2">Game Elements:</h4>
-              <div className="text-xs text-gray-600 space-y-1">
-                <div>Red numbers = High probability (6,8)</div>
-                <div>Dots under numbers = Roll frequency</div>
-                <div>R = Robber • P = Pirate</div>
+            <div className={styles.legendSection}>
+              <h4>Game Elements:</h4>
+              <div className={styles.legendText}>
                 <div>🏠 = Harbor (3:1 or 2:1 trade)</div>
                 <div>Harbors positioned towards sea/map edge</div>
               </div>
@@ -410,16 +304,19 @@ export function MapRenderer({ map }: MapRendererProps) {
       </div>
       
       {/* Map Info */}
-      <div className="mt-6 p-4 bg-white border border-gray-200 rounded-lg">
-        <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-          <div>
-            <span className="font-medium">Expansion:</span> Base Game
+      <div className={styles.mapInfo}>
+        <div className={styles.mapInfoGrid}>
+          <div className={styles.mapInfoItem}>
+            <span className={styles.mapInfoLabel}>Expansion:</span>
+            <span className={styles.mapInfoValue}>Base Game</span>
           </div>
-          <div>
-            <span className="font-medium">Players:</span> {map.playerCount}
+          <div className={styles.mapInfoItem}>
+            <span className={styles.mapInfoLabel}>Players:</span>
+            <span className={styles.mapInfoValue}>{map.playerCount}</span>
           </div>
-          <div>
-            <span className="font-medium">Tiles:</span> {map.hexes.length}
+          <div className={styles.mapInfoItem}>
+            <span className={styles.mapInfoLabel}>Tiles:</span>
+            <span className={styles.mapInfoValue}>{map.hexes.length}</span>
           </div>
         </div>
       </div>

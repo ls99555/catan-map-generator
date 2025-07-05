@@ -24,15 +24,12 @@ export interface Hex {
   terrain: TerrainType;
   resource: ResourceType;
   number?: DiceNumber;
-  hasRobber?: boolean;
-  hasPirate?: boolean;
   harbor?: HarborType;
   position: { q: number; r: number; s: number }; // Cube coordinates
 }
 
 export interface GameMap {
   hexes: Hex[];
-  framePieces?: { q: number; r: number; s: number }[]; // Separate frame pieces for border
   playerCount: number;
   expansion: 'base';
   scenario?: undefined;
@@ -88,7 +85,6 @@ export interface MapStatistics {
   resourceBalance: Record<ResourceType, number>;
   numberDistribution: Record<DiceNumber, number>;
   harborDistribution: Record<HarborType, number>;
-  probabilitySpread: number;
   adjacentSameNumbers: number;
   desertPlacement: 'center' | 'edge' | 'corner';
 }

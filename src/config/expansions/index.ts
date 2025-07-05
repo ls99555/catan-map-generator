@@ -1,4 +1,4 @@
-import { ExpansionConfig, HarborType, ResourceType, TerrainType, DiceNumber } from '../../types/game';
+import { ExpansionConfig, HarborType, ResourceType, TerrainType } from '../../types/game';
 
 // Import base game configuration only
 import { BASE_GAME_3_4_CONFIG, BASE_GAME_5_6_CONFIG } from './base-game';
@@ -31,20 +31,6 @@ export const PLAYER_EXTENSION_CONFIG = {
       'Cannot win during special building phase',
     ],
   },
-};
-
-// Number distributions for balanced gameplay
-export const DICE_PROBABILITIES: Record<DiceNumber, number> = {
-  2: 1,
-  3: 2,
-  4: 3,
-  5: 4,
-  6: 5,
-  8: 5,
-  9: 4,
-  10: 3,
-  11: 2,
-  12: 1,
 };
 
 // Resource production rates for balancing (base game only)

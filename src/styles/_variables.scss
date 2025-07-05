@@ -1,9 +1,5 @@
-// SCSS Variables for Catan Map Generator
-// All design tokens and theme variables
-
-// === COLORS ===
-
-// Base Game Colors
+// ===== CATAN GAME COLORS =====
+// Base game resource colors
 $base-brick: #8B4513;
 $base-lumber: #228B22;
 $base-wool: #90EE90;
@@ -11,27 +7,13 @@ $base-grain: #FFD700;
 $base-ore: #708090;
 $base-desert: #F4A460;
 
-// Seafarers Colors
-$seafarers-sea: #1E90FF;
-$seafarers-gold: #FFD700;
+// Seafarers resources (for future use)
+$seafarers-water: #4169E1;
+$seafarers-sea: #4169E1;
 $seafarers-fish: #00CED1;
+$seafarers-gold: #FFD700;
 
-// Cities & Knights Colors
-$cities-knights-barbarian: #8B0000;
-$cities-knights-knight: #C0C0C0;
-$cities-knights-city: #2F4F4F;
-
-// Traders & Barbarians Colors
-$traders-river: #4682B4;
-$traders-oasis: #32CD32;
-$traders-castle: #696969;
-
-// Explorers & Pirates Colors
-$explorers-spice: #FF4500;
-$explorers-pirate: #2F2F2F;
-$explorers-harbor: #8A2BE2;
-
-// UI Colors
+// ===== CORE COLORS =====
 $primary-blue: #2563eb;
 $primary-blue-hover: #1d4ed8;
 $secondary-gray: #6b7280;
@@ -45,7 +27,7 @@ $success-green: #10b981;
 $warning-yellow: #f59e0b;
 $error-red: #ef4444;
 
-// Extended color palette
+// ===== COMPONENT COLORS =====
 $color-primary: $primary-blue;
 $color-white: #ffffff;
 $color-gray-50: #f9fafb;
@@ -80,7 +62,7 @@ $color-green: #16a34a;
 $color-gold: #f59e0b;
 $color-brown: #92400e;
 
-// === TYPOGRAPHY ===
+// ===== TYPOGRAPHY =====
 $font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
 $font-size-xs: 0.75rem;
 $font-size-sm: 0.875rem;
@@ -96,7 +78,7 @@ $font-weight-medium: 500;
 $font-weight-semibold: 600;
 $font-weight-bold: 700;
 
-// === SPACING ===
+// ===== SPACING =====
 $spacing-xs: 0.25rem;
 $spacing-sm: 0.5rem;
 $spacing-md: 0.75rem;
@@ -105,7 +87,7 @@ $spacing-xl: 1.25rem;
 $spacing-2xl: 1.5rem;
 $spacing-3xl: 2rem;
 
-// Legacy spacing (for consistency)
+// Numbered spacing (more comprehensive)
 $spacing-1: 0.25rem;
 $spacing-2: 0.5rem;
 $spacing-3: 0.75rem;
@@ -119,55 +101,61 @@ $spacing-16: 4rem;
 $spacing-20: 5rem;
 $spacing-24: 6rem;
 
-// === HEX MAP VARIABLES ===
-$hex-size-small: 30;
-$hex-size-medium: 40;
-$hex-size-large: 50;
-$hex-stroke-width: 2;
-$hex-number-font-size: 14px;
-$hex-number-font-weight: $font-weight-bold;
-
-// === LAYOUT ===
+// ===== LAYOUT =====
 $container-max-width: 1280px;
 $container-padding: $spacing-4;
+$border-radius-base: 0.375rem;
 $border-radius-sm: 0.25rem;
 $border-radius-md: 0.375rem;
 $border-radius-lg: 0.5rem;
 $border-radius-xl: 0.75rem;
 $border-radius-full: 9999px;
 
-// === SHADOWS ===
+// ===== BREAKPOINTS =====
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+
+// ===== SHADOWS =====
 $shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 $shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 $shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 
-// === TRANSITIONS ===
+// ===== TRANSITIONS =====
 $transition-fast: 150ms ease-in-out;
 $transition-base: 200ms ease-in-out;
 $transition-slow: 300ms ease-in-out;
 
-// === GAME-SPECIFIC VARIABLES ===
-
-// Base Game
-$base-hex-count-3-4: 19;
-$base-hex-count-5-6: 30;
-$base-number-tokens-3-4: 18;
-$base-number-tokens-5-6: 28;
-$base-harbors-3-4: 9;
-$base-harbors-5-6: 11;
-
-// Map Layout
-$map-padding: $spacing-8;
-$map-border-radius: $border-radius-lg;
-$map-background: $background-white;
-$map-border: 1px solid $border-gray;
-
-// Controls
+// ===== COMPONENT-SPECIFIC VARIABLES =====
+// Map Controls
 $controls-background: $background-light;
 $controls-border: $border-gray;
 $controls-padding: $spacing-6;
 
+// Map Renderer
+$map-background: $background-white;
+$map-border: 1px solid $border-gray;
+$map-border-radius: $border-radius-lg;
+$map-padding: $spacing-8;
+
+// Hex styling
+$hex-stroke-width: 2;
+$hex-number-font-size: 14px;
+$hex-number-font-weight: $font-weight-bold;
+
 // Statistics Panel
 $stats-background: $background-white;
 $stats-border: $border-gray;
-$stats-padding: $spacing-4;
+$stats-padding: $spacing-6;
+
+// Legend
+$legend-background: $background-white;
+$legend-border: $border-gray;
+$legend-padding: $spacing-4;
+
+// Ad Banner
+$ad-background: $background-light;
+$ad-border: $border-gray;
+$ad-padding: $spacing-4;
