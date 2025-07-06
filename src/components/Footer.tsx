@@ -71,7 +71,7 @@ export function Footer() {
             Catan is a trademark of Catan Studio.
           </p>
           <p className={styles.developer}>
-            Developed by <a href="https://ltevens.dev" target="_blank" rel="noopener noreferrer">ltevens.dev</a>
+            Developed by <a href="https://lstevens.dev" target="_blank" rel="noopener noreferrer">lstevens.dev</a>
           </p>
         </div>
       </div>
