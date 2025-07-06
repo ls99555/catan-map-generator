@@ -1,4 +1,5 @@
 @use 'variables' as *;
+@use 'sass:color';
 
 .container {
   width: 100%;
@@ -63,27 +64,27 @@
   // Base game terrain colors
   &.hills {
     fill: $base-brick;
-    stroke: darken($base-brick, 20%);
+    stroke: color.adjust($base-brick, $lightness: -20%);
   }
 
   &.forest {
     fill: $base-lumber;
-    stroke: darken($base-lumber, 20%);
+    stroke: color.adjust($base-lumber, $lightness: -20%);
   }
 
   &.pasture {
     fill: $base-wool;
-    stroke: darken($base-wool, 20%);
+    stroke: color.adjust($base-wool, $lightness: -20%);
   }
 
   &.fields {
     fill: $base-grain;
-    stroke: darken($base-grain, 20%);
+    stroke: color.adjust($base-grain, $lightness: -20%);
   }
 
   &.mountains {
     fill: $base-ore;
-    stroke: darken($base-ore, 20%);
+    stroke: color.adjust($base-ore, $lightness: -20%);
   }
 
   &.desert {
@@ -115,6 +116,32 @@
   text-anchor: middle;
   dominant-baseline: central;
   fill: $text-dark;
+  pointer-events: none;
+}
+
+.resourceSymbol {
+  font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+
+.resourceSymbolBackground {
+  font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+  opacity: 0.3;
+  fill: #FFF;
+  filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));
+}
+
+.desertText {
+  font-family: $font-family-base;
+  font-size: 10px;
+  font-weight: $font-weight-bold;
+  text-anchor: middle;
+  dominant-baseline: central;
   pointer-events: none;
 }
 
@@ -178,6 +205,41 @@
       div {
         margin: 0;
       }
+    }
+  }
+  
+  // Harbor color dots for legend - matching tile colors
+  .harborDot {
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+    border-radius: 50%;
+    margin-right: 0.25rem;
+    
+    &.generic {
+      color: #8B4513;
+    }
+    
+    &.brick {
+      color: #E74C3C;
+    }
+    
+    &.lumber {
+      color: #8B4513;
+    }
+    
+    &.wool {
+      color: #ECEFF1;
+      border: 1px solid #666;
+    }
+    
+    &.grain {
+      color: #FFFACD;
+      border: 1px solid #666;
+    }
+    
+    &.ore {
+      color: #607D8B;
     }
   }
 }

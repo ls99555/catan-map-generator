@@ -103,12 +103,9 @@ export default function Home() {
               </span>
             </div>
             <div className="flex items-center space-x-4">
-              <Link href="/rules" className="text-sm text-gray-600 hover:text-green-600">
+              <Link href="/rules" className="text-sm text-green-600 font-medium hover:text-green-700 transition-colors">
                 Rules & Guide
               </Link>
-              <span className="text-sm text-gray-600">
-                Free • Mobile Friendly • All Game Modes
-              </span>
             </div>
           </div>
         </div>

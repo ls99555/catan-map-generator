@@ -1,147 +1,166 @@
 // SVG tile patterns for Catan terrain types
 export const TILE_PATTERNS = {
   hills: (id: string) => `
-    <pattern id="hills-${id}" patternUnits="userSpaceOnUse" width="24" height="24">
-      <rect width="24" height="24" fill="#D2691E"/>
-      <!-- Rolling hills background -->
-      <path d="M0 18 Q6 12 12 18 Q18 24 24 18 L24 24 L0 24 Z" fill="#A0522D"/>
-      <path d="M0 12 Q6 6 12 12 Q18 18 24 12 L24 18 Q18 24 12 18 Q6 12 0 18 Z" fill="#CD853F"/>
-      <path d="M0 6 Q6 0 12 6 Q18 12 24 6 L24 12 Q18 18 12 12 Q6 6 0 12 Z" fill="#F4A460"/>
-      <!-- Brick-like texture -->
-      <rect x="2" y="2" width="8" height="4" fill="#B22222" opacity="0.7"/>
-      <rect x="12" y="2" width="8" height="4" fill="#B22222" opacity="0.7"/>
-      <rect x="2" y="8" width="8" height="4" fill="#CD5C5C" opacity="0.7"/>
-      <rect x="12" y="8" width="8" height="4" fill="#CD5C5C" opacity="0.7"/>
-      <rect x="2" y="14" width="8" height="4" fill="#B22222" opacity="0.7"/>
-      <rect x="12" y="14" width="8" height="4" fill="#B22222" opacity="0.7"/>
-      <!-- Mortar lines -->
-      <path d="M0 6 L24 6 M0 12 L24 12 M0 18 L24 18" stroke="#8B4513" stroke-width="1" opacity="0.5"/>
-      <path d="M10 0 L10 6 M10 12 L10 18 M10 24 L10 24" stroke="#8B4513" stroke-width="1" opacity="0.5"/>
-      <path d="M20 6 L20 12 M20 18 L20 24" stroke="#8B4513" stroke-width="1" opacity="0.5"/>
+    <pattern id="hills-${id}" patternUnits="userSpaceOnUse" width="20" height="20">
+      <rect width="20" height="20" fill="#E74C3C"/>
+      <!-- Enhanced brick pattern -->
+      <rect x="0" y="0" width="10" height="4" fill="#C0392B" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="10" y="0" width="10" height="4" fill="#DC143C" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="0" y="4" width="10" height="4" fill="#E74C3C" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="10" y="4" width="10" height="4" fill="#C0392B" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="0" y="8" width="10" height="4" fill="#DC143C" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="10" y="8" width="10" height="4" fill="#E74C3C" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="0" y="12" width="10" height="4" fill="#C0392B" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="10" y="12" width="10" height="4" fill="#DC143C" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="0" y="16" width="10" height="4" fill="#E74C3C" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="10" y="16" width="10" height="4" fill="#C0392B" stroke="#A93226" stroke-width="0.5"/>
+      <!-- Offset pattern for realistic brick look -->
+      <rect x="-5" y="2" width="10" height="4" fill="#CB4335" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="5" y="2" width="10" height="4" fill="#B03A2E" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="15" y="2" width="10" height="4" fill="#CB4335" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="-5" y="6" width="10" height="4" fill="#DC143C" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="5" y="6" width="10" height="4" fill="#CB4335" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="15" y="6" width="10" height="4" fill="#DC143C" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="-5" y="10" width="10" height="4" fill="#B03A2E" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="5" y="10" width="10" height="4" fill="#DC143C" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="15" y="10" width="10" height="4" fill="#B03A2E" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="-5" y="14" width="10" height="4" fill="#CB4335" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="5" y="14" width="10" height="4" fill="#B03A2E" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="15" y="14" width="10" height="4" fill="#CB4335" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="-5" y="18" width="10" height="4" fill="#DC143C" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="5" y="18" width="10" height="4" fill="#CB4335" stroke="#A93226" stroke-width="0.5"/>
+      <rect x="15" y="18" width="10" height="4" fill="#DC143C" stroke="#A93226" stroke-width="0.5"/>
     </pattern>
   `,
   
   forest: (id: string) => `
-    <pattern id="forest-${id}" patternUnits="userSpaceOnUse" width="24" height="24">
-      <rect width="24" height="24" fill="#228B22"/>
-      <!-- Forest floor -->
-      <path d="M0 18 Q12 12 24 18 L24 24 L0 24 Z" fill="#006400"/>
-      <path d="M0 12 Q12 6 24 12 L24 18 Q12 12 0 18 Z" fill="#32CD32"/>
-      <path d="M0 6 Q12 0 24 6 L24 12 Q12 6 0 12 Z" fill="#90EE90"/>
-      <!-- Tree trunks -->
-      <rect x="4" y="16" width="2" height="8" fill="#8B4513"/>
-      <rect x="10" y="14" width="2" height="10" fill="#8B4513"/>
-      <rect x="16" y="15" width="2" height="9" fill="#8B4513"/>
-      <rect x="20" y="17" width="2" height="7" fill="#8B4513"/>
-      <!-- Tree canopies -->
-      <circle cx="5" cy="14" r="4" fill="#228B22"/>
-      <circle cx="11" cy="12" r="5" fill="#006400"/>
-      <circle cx="17" cy="13" r="4" fill="#32CD32"/>
-      <circle cx="21" cy="15" r="3" fill="#228B22"/>
-      <!-- Wood grain effect -->
-      <path d="M4 16 Q5 18 4 20 Q5 22 4 24" stroke="#654321" stroke-width="0.5" opacity="0.7"/>
-      <path d="M10 14 Q11 16 10 18 Q11 20 10 22 Q11 23 10 24" stroke="#654321" stroke-width="0.5" opacity="0.7"/>
-      <path d="M16 15 Q17 17 16 19 Q17 21 16 23" stroke="#654321" stroke-width="0.5" opacity="0.7"/>
-      <path d="M20 17 Q21 19 20 21 Q21 22 20 24" stroke="#654321" stroke-width="0.5" opacity="0.7"/>
+    <pattern id="forest-${id}" patternUnits="userSpaceOnUse" width="20" height="20">
+      <rect width="20" height="20" fill="#8B4513"/>
+      <!-- Tree trunks - darker brown -->
+      <rect x="3" y="12" width="2" height="6" fill="#3E2723"/>
+      <rect x="8" y="11" width="2" height="7" fill="#3E2723"/>
+      <rect x="13" y="13" width="2" height="5" fill="#3E2723"/>
+      <rect x="17" y="10" width="2" height="8" fill="#3E2723"/>
+      <!-- Tree canopies - darker green -->
+      <circle cx="4" cy="10" r="3" fill="#1B5E20"/>
+      <circle cx="9" cy="9" r="3.5" fill="#2E7D32"/>
+      <circle cx="14" cy="11" r="3" fill="#1B5E20"/>
+      <circle cx="18" cy="8" r="3" fill="#388E3C"/>
+      <!-- Forest floor - brown -->
+      <path d="M0 16 Q5 14 10 16 Q15 18 20 16 L20 20 L0 20 Z" fill="#5D4037"/>
+      <!-- Leaves scattered -->
+      <circle cx="6" cy="15" r="0.5" fill="#2E7D32"/>
+      <circle cx="11" cy="17" r="0.5" fill="#4CAF50"/>
+      <circle cx="16" cy="14" r="0.5" fill="#388E3C"/>
+      <circle cx="2" cy="18" r="0.5" fill="#1B5E20"/>
     </pattern>
   `,
   
   pasture: (id: string) => `
-    <pattern id="pasture-${id}" patternUnits="userSpaceOnUse" width="24" height="24">
-      <rect width="24" height="24" fill="#9ACD32"/>
-      <!-- Rolling pasture -->
-      <path d="M0 18 Q12 12 24 18 L24 24 L0 24 Z" fill="#ADFF2F"/>
-      <path d="M0 12 Q12 6 24 12 L24 18 Q12 12 0 18 Z" fill="#7CFC00"/>
-      <path d="M0 6 Q12 0 24 6 L24 12 Q12 6 0 12 Z" fill="#CCFF99"/>
+    <pattern id="pasture-${id}" patternUnits="userSpaceOnUse" width="20" height="20">
+      <rect width="20" height="20" fill="#ECEFF1"/>
+      <!-- Rolling pasture hills - lighter/whiter -->
+      <path d="M0 12 Q5 8 10 12 Q15 16 20 12 L20 20 L0 20 Z" fill="#F5F5F5"/>
+      <path d="M0 8 Q5 4 10 8 Q15 12 20 8 L20 12 Q15 16 10 12 Q5 8 0 12 Z" fill="#E8F5E8"/>
       <!-- Grass tufts -->
-      <path d="M2 22 L2 18 L3 18 L3 22 M4 22 L4 19 L5 19 L5 22" stroke="#228B22" stroke-width="1" opacity="0.8"/>
-      <path d="M8 20 L8 16 L9 16 L9 20 M10 20 L10 17 L11 17 L11 20" stroke="#228B22" stroke-width="1" opacity="0.8"/>
-      <path d="M14 21 L14 17 L15 17 L15 21 M16 21 L16 18 L17 18 L17 21" stroke="#228B22" stroke-width="1" opacity="0.8"/>
-      <path d="M20 19 L20 15 L21 15 L21 19 M22 19 L22 16 L23 16 L23 19" stroke="#228B22" stroke-width="1" opacity="0.8"/>
-      <!-- Wool-like texture -->
-      <circle cx="6" cy="8" r="2" fill="#F0F8FF" opacity="0.4"/>
-      <circle cx="18" cy="10" r="2" fill="#F0F8FF" opacity="0.4"/>
-      <circle cx="12" cy="14" r="2" fill="#F0F8FF" opacity="0.4"/>
-      <circle cx="4" cy="12" r="1.5" fill="#F0F8FF" opacity="0.4"/>
-      <circle cx="20" cy="6" r="1.5" fill="#F0F8FF" opacity="0.4"/>
+      <path d="M2 16 L2 12 L3 12 L3 16" stroke="#4CAF50" stroke-width="1"/>
+      <path d="M4 17 L4 13 L5 13 L5 17" stroke="#4CAF50" stroke-width="1"/>
+      <path d="M7 15 L7 11 L8 11 L8 15" stroke="#4CAF50" stroke-width="1"/>
+      <path d="M9 18 L9 14 L10 14 L10 18" stroke="#4CAF50" stroke-width="1"/>
+      <path d="M12 16 L12 12 L13 12 L13 16" stroke="#4CAF50" stroke-width="1"/>
+      <path d="M15 17 L15 13 L16 13 L16 17" stroke="#4CAF50" stroke-width="1"/>
+      <path d="M18 15 L18 11 L19 11 L19 15" stroke="#4CAF50" stroke-width="1"/>
+      <!-- Sheep wool areas -->
+      <circle cx="5" cy="6" r="1.5" fill="#FFFFFF" opacity="0.8"/>
+      <circle cx="15" cy="7" r="1.5" fill="#FFFFFF" opacity="0.8"/>
+      <circle cx="10" cy="10" r="1.5" fill="#FFFFFF" opacity="0.8"/>
+      <circle cx="3" cy="9" r="1" fill="#FFFFFF" opacity="0.8"/>
+      <circle cx="17" cy="5" r="1" fill="#FFFFFF" opacity="0.8"/>
     </pattern>
   `,
   
   fields: (id: string) => `
-    <pattern id="fields-${id}" patternUnits="userSpaceOnUse" width="24" height="24">
-      <rect width="24" height="24" fill="#DAA520"/>
-      <!-- Wheat rows -->
-      <path d="M0 0 L24 0 L24 4 L0 4 Z" fill="#FFD700"/>
-      <path d="M0 4 L24 4 L24 8 L0 8 Z" fill="#FFA500"/>
-      <path d="M0 8 L24 8 L24 12 L0 12 Z" fill="#FFD700"/>
-      <path d="M0 12 L24 12 L24 16 L0 16 Z" fill="#FFA500"/>
-      <path d="M0 16 L24 16 L24 20 L0 20 Z" fill="#FFD700"/>
-      <path d="M0 20 L24 20 L24 24 L0 24 Z" fill="#FFA500"/>
+    <pattern id="fields-${id}" patternUnits="userSpaceOnUse" width="20" height="20">
+      <rect width="20" height="20" fill="#FFFACD"/>
+      <!-- Wheat field rows - light yellow -->
+      <rect x="0" y="0" width="20" height="3" fill="#FFFFE0"/>
+      <rect x="0" y="3" width="20" height="3" fill="#F0E68C"/>
+      <rect x="0" y="6" width="20" height="3" fill="#FFFFE0"/>
+      <rect x="0" y="9" width="20" height="3" fill="#F0E68C"/>
+      <rect x="0" y="12" width="20" height="3" fill="#FFFFE0"/>
+      <rect x="0" y="15" width="20" height="3" fill="#F0E68C"/>
+      <rect x="0" y="18" width="20" height="2" fill="#FFFFE0"/>
       <!-- Wheat stalks -->
-      <path d="M2 24 L2 20 Q2 18 3 18 Q4 18 4 20 L4 24" stroke="#B8860B" stroke-width="1" opacity="0.8"/>
-      <path d="M6 24 L6 20 Q6 18 7 18 Q8 18 8 20 L8 24" stroke="#B8860B" stroke-width="1" opacity="0.8"/>
-      <path d="M10 24 L10 20 Q10 18 11 18 Q12 18 12 20 L12 24" stroke="#B8860B" stroke-width="1" opacity="0.8"/>
-      <path d="M14 24 L14 20 Q14 18 15 18 Q16 18 16 20 L16 24" stroke="#B8860B" stroke-width="1" opacity="0.8"/>
-      <path d="M18 24 L18 20 Q18 18 19 18 Q20 18 20 20 L20 24" stroke="#B8860B" stroke-width="1" opacity="0.8"/>
-      <path d="M22 24 L22 20 Q22 18 23 18 Q24 18 24 20 L24 24" stroke="#B8860B" stroke-width="1" opacity="0.8"/>
+      <path d="M2 18 L2 14 Q2 12 3 12 Q4 12 4 14 L4 18" stroke="#B8860B" stroke-width="1"/>
+      <path d="M5 18 L5 14 Q5 12 6 12 Q7 12 7 14 L7 18" stroke="#B8860B" stroke-width="1"/>
+      <path d="M8 18 L8 14 Q8 12 9 12 Q10 12 10 14 L10 18" stroke="#B8860B" stroke-width="1"/>
+      <path d="M11 18 L11 14 Q11 12 12 12 Q13 12 13 14 L13 18" stroke="#B8860B" stroke-width="1"/>
+      <path d="M14 18 L14 14 Q14 12 15 12 Q16 12 16 14 L16 18" stroke="#B8860B" stroke-width="1"/>
+      <path d="M17 18 L17 14 Q17 12 18 12 Q19 12 19 14 L19 18" stroke="#B8860B" stroke-width="1"/>
       <!-- Grain heads -->
-      <ellipse cx="3" cy="17" rx="1" ry="3" fill="#DAA520"/>
-      <ellipse cx="7" cy="17" rx="1" ry="3" fill="#DAA520"/>
-      <ellipse cx="11" cy="17" rx="1" ry="3" fill="#DAA520"/>
-      <ellipse cx="15" cy="17" rx="1" ry="3" fill="#DAA520"/>
-      <ellipse cx="19" cy="17" rx="1" ry="3" fill="#DAA520"/>
-      <ellipse cx="23" cy="17" rx="1" ry="3" fill="#DAA520"/>
+      <ellipse cx="3" cy="11" rx="1" ry="2" fill="#DAA520"/>
+      <ellipse cx="6" cy="11" rx="1" ry="2" fill="#DAA520"/>
+      <ellipse cx="9" cy="11" rx="1" ry="2" fill="#DAA520"/>
+      <ellipse cx="12" cy="11" rx="1" ry="2" fill="#DAA520"/>
+      <ellipse cx="15" cy="11" rx="1" ry="2" fill="#DAA520"/>
+      <ellipse cx="18" cy="11" rx="1" ry="2" fill="#DAA520"/>
     </pattern>
   `,
   
   mountains: (id: string) => `
-    <pattern id="mountains-${id}" patternUnits="userSpaceOnUse" width="24" height="24">
-      <rect width="24" height="24" fill="#696969"/>
-      <!-- Mountain peaks -->
-      <path d="M0 24 L4 8 L8 24 Z" fill="#808080"/>
-      <path d="M6 24 L12 4 L18 24 Z" fill="#A9A9A9"/>
-      <path d="M16 24 L20 10 L24 24 Z" fill="#808080"/>
+    <pattern id="mountains-${id}" patternUnits="userSpaceOnUse" width="20" height="20">
+      <rect width="20" height="20" fill="#607D8B"/>
+      <!-- Mountain peaks - more realistic -->
+      <path d="M0 20 L3 8 L6 20 Z" fill="#546E7A"/>
+      <path d="M4 20 L8 4 L12 20 Z" fill="#78909C"/>
+      <path d="M10 20 L14 6 L18 20 Z" fill="#546E7A"/>
+      <path d="M16 20 L20 10 L24 20 Z" fill="#607D8B"/>
       <!-- Snow caps -->
-      <path d="M4 8 L2 12 L6 12 Z" fill="#F0F8FF"/>
-      <path d="M12 4 L10 8 L14 8 Z" fill="#F0F8FF"/>
-      <path d="M20 10 L18 14 L22 14 Z" fill="#F0F8FF"/>
+      <path d="M8 4 L6 8 L10 8 Z" fill="#FFFFFF"/>
+      <path d="M3 8 L1 12 L5 12 Z" fill="#FFFFFF"/>
+      <path d="M14 6 L12 10 L16 10 Z" fill="#FFFFFF"/>
+      <path d="M20 10 L18 14 L22 14 Z" fill="#FFFFFF"/>
       <!-- Rock texture -->
-      <path d="M2 20 L4 16 L6 20 Z" fill="#DCDCDC"/>
-      <path d="M8 18 L10 14 L12 18 Z" fill="#DCDCDC"/>
-      <path d="M14 22 L16 18 L18 22 Z" fill="#DCDCDC"/>
-      <path d="M18 16 L20 12 L22 16 Z" fill="#DCDCDC"/>
-      <!-- Ore veins -->
-      <path d="M3 20 Q5 18 7 20" stroke="#4169E1" stroke-width="1" opacity="0.6"/>
-      <path d="M10 22 Q12 20 14 22" stroke="#4169E1" stroke-width="1" opacity="0.6"/>
-      <path d="M17 18 Q19 16 21 18" stroke="#4169E1" stroke-width="1" opacity="0.6"/>
+      <path d="M2 16 L4 12 L6 16 Z" fill="#90A4AE"/>
+      <path d="M6 18 L8 14 L10 18 Z" fill="#90A4AE"/>
+      <path d="M10 16 L12 12 L14 16 Z" fill="#90A4AE"/>
+      <path d="M14 18 L16 14 L18 18 Z" fill="#90A4AE"/>
+      <!-- Ore veins - blue/metallic -->
+      <path d="M3 16 Q5 14 7 16" stroke="#1976D2" stroke-width="1.5" opacity="0.8"/>
+      <path d="M9 18 Q11 16 13 18" stroke="#1976D2" stroke-width="1.5" opacity="0.8"/>
+      <path d="M15 16 Q17 14 19 16" stroke="#1976D2" stroke-width="1.5" opacity="0.8"/>
       <!-- Metallic gleam -->
-      <circle cx="5" cy="19" r="1" fill="#C0C0C0" opacity="0.7"/>
-      <circle cx="12" cy="21" r="1" fill="#C0C0C0" opacity="0.7"/>
-      <circle cx="19" cy="17" r="1" fill="#C0C0C0" opacity="0.7"/>
+      <circle cx="5" cy="15" r="1" fill="#E3F2FD" opacity="0.9"/>
+      <circle cx="11" cy="17" r="1" fill="#E3F2FD" opacity="0.9"/>
+      <circle cx="17" cy="15" r="1" fill="#E3F2FD" opacity="0.9"/>
+      <circle cx="7" cy="13" r="0.5" fill="#FFFFFF" opacity="0.9"/>
+      <circle cx="13" cy="15" r="0.5" fill="#FFFFFF" opacity="0.9"/>
     </pattern>
   `,
   
   desert: (id: string) => `
-    <pattern id="desert-${id}" patternUnits="userSpaceOnUse" width="24" height="24">
-      <rect width="24" height="24" fill="#F4A460"/>
+    <pattern id="desert-${id}" patternUnits="userSpaceOnUse" width="20" height="20">
+      <rect width="20" height="20" fill="#F4A460"/>
       <!-- Sand dunes -->
-      <path d="M0 18 Q12 12 24 18 L24 24 L0 24 Z" fill="#DEB887"/>
-      <path d="M0 12 Q12 6 24 12 L24 18 Q12 12 0 18 Z" fill="#F5DEB3"/>
-      <path d="M0 6 Q12 0 24 6 L24 12 Q12 6 0 12 Z" fill="#FAEBD7"/>
+      <path d="M0 14 Q5 10 10 14 Q15 18 20 14 L20 20 L0 20 Z" fill="#DEB887"/>
+      <path d="M0 10 Q5 6 10 10 Q15 14 20 10 L20 14 Q15 18 10 14 Q5 10 0 14 Z" fill="#F5DEB3"/>
+      <path d="M0 6 Q5 2 10 6 Q15 10 20 6 L20 10 Q15 14 10 10 Q5 6 0 10 Z" fill="#FAEBD7"/>
       <!-- Sand ripples -->
-      <path d="M0 20 Q6 18 12 20 Q18 22 24 20" stroke="#CD853F" stroke-width="1" opacity="0.3"/>
-      <path d="M0 16 Q6 14 12 16 Q18 18 24 16" stroke="#CD853F" stroke-width="1" opacity="0.3"/>
-      <path d="M0 10 Q6 8 12 10 Q18 12 24 10" stroke="#CD853F" stroke-width="1" opacity="0.3"/>
-      <path d="M0 4 Q6 2 12 4 Q18 6 24 4" stroke="#CD853F" stroke-width="1" opacity="0.3"/>
-      <!-- Cactus silhouettes -->
-      <rect x="4" y="16" width="2" height="6" fill="#228B22" opacity="0.4"/>
-      <rect x="3" y="18" width="4" height="1" fill="#228B22" opacity="0.4"/>
-      <rect x="18" y="14" width="2" height="8" fill="#228B22" opacity="0.4"/>
-      <rect x="17" y="16" width="4" height="1" fill="#228B22" opacity="0.4"/>
-      <!-- Rock formations -->
-      <circle cx="10" cy="20" r="2" fill="#A0522D" opacity="0.5"/>
-      <circle cx="14" cy="18" r="1.5" fill="#A0522D" opacity="0.5"/>
-      <circle cx="20" cy="22" r="1" fill="#A0522D" opacity="0.5"/>
+      <path d="M0 16 Q5 14 10 16 Q15 18 20 16" stroke="#CD853F" stroke-width="1" opacity="0.4"/>
+      <path d="M0 12 Q5 10 10 12 Q15 14 20 12" stroke="#CD853F" stroke-width="1" opacity="0.4"/>
+      <path d="M0 8 Q5 6 10 8 Q15 10 20 8" stroke="#CD853F" stroke-width="1" opacity="0.4"/>
+      <path d="M0 4 Q5 2 10 4 Q15 6 20 4" stroke="#CD853F" stroke-width="1" opacity="0.4"/>
+      <!-- Small dunes -->
+      <ellipse cx="4" cy="16" rx="2" ry="1" fill="#DEB887" opacity="0.6"/>
+      <ellipse cx="12" cy="18" rx="3" ry="1.5" fill="#DEB887" opacity="0.6"/>
+      <ellipse cx="17" cy="15" rx="1.5" ry="1" fill="#DEB887" opacity="0.6"/>
+      <!-- Sand particles -->
+      <circle cx="3" cy="12" r="0.5" fill="#CD853F" opacity="0.5"/>
+      <circle cx="8" cy="14" r="0.5" fill="#CD853F" opacity="0.5"/>
+      <circle cx="14" cy="11" r="0.5" fill="#CD853F" opacity="0.5"/>
+      <circle cx="18" cy="13" r="0.5" fill="#CD853F" opacity="0.5"/>
+      <circle cx="6" cy="8" r="0.5" fill="#CD853F" opacity="0.5"/>
+      <circle cx="16" cy="9" r="0.5" fill="#CD853F" opacity="0.5"/>
     </pattern>
   `,
   

@@ -1,0 +1,15 @@
+{
+  "disable-hardware-acceleration": true,
+  "window.restoreWindows": "none",
+  "extensions.autoUpdate": false,
+  "typescript.surveys.enabled": false,
+  "git.decorations.enabled": false,
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/.next/**": true,
+    "**/dist/**": true,
+    "**/build/**": true
+  }
+}

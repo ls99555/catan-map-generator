@@ -76,69 +76,42 @@ export function MapRenderer({ map }: MapRendererProps) {
     };
   }, [map.hexes, layout]); // Removed map.expansion and map.scenario as they're not actually used in the calculation
 
-  // Harbor display
-  const harborDisplay: Record<HarborType, string> = {
-    generic: '3:1',
-    brick: '2:1',
-    lumber: '2:1',
-    wool: '2:1',
-    grain: '2:1',
-    ore: '2:1',
-  };
-
-  // Harbor colors
+  // Harbor colors - matching tile colors for consistency
   const harborColors: Record<HarborType, string> = {
-    generic: '#8B4513',
-    brick: '#B22222',
-    lumber: '#228B22',
-    wool: '#F5F5DC',
-    grain: '#DAA520',
-    ore: '#696969',
+    generic: '#8B4513', // Brown for generic 3:1
+    brick: '#E74C3C', // Matching brick/hills color
+    lumber: '#8B4513', // Matching forest color (dark brown)
+    wool: '#ECEFF1', // Matching pasture color (light gray/white)
+    grain: '#FFFACD', // Matching fields color (light yellow)
+    ore: '#607D8B', // Matching mountains color (blue-gray)
   };
 
-  // Create harbor icon based on type
+  // Create harbor icon based on type - now round
   const createHarborIcon = (type: HarborType, x: number, y: number, direction: number = 0) => {
     const color = harborColors[type];
-    // Use the direction angle directly (it's already in degrees)
-    const rotationAngle = direction;
-    const transform = `rotate(${rotationAngle} ${x} ${y})`;
+    const radius = 12;
     
     return (
-      <g transform={transform}>
-        {/* Harbor building - base positioned at y=0, tip pointing toward negative y */}
-        <path
-          d={`M ${x - 12} ${y} L ${x - 8} ${y - 16} L ${x + 8} ${y - 16} L ${x + 12} ${y} Z`}
+      <g>
+        {/* Round harbor - no background, just colored circle */}
+        <circle
+          cx={x}
+          cy={y}
+          r={radius}
           fill={color}
           stroke="#000"
-          strokeWidth="1"
+          strokeWidth="2"
         />
-        {/* Roof at the tip */}
-        <path
-          d={`M ${x - 10} ${y - 16} L ${x} ${y - 23} L ${x + 10} ${y - 16} Z`}
-          fill="#8B0000"
-          stroke="#000"
+        {/* Inner accent ring for better visibility */}
+        <circle
+          cx={x}
+          cy={y}
+          r={radius - 2}
+          fill="none"
+          stroke="#FFF"
           strokeWidth="1"
+          opacity="0.3"
         />
-        {/* Exchange rate in the middle */}
-        <rect
-          x={x - 8}
-          y={y - 11}
-          width="16"
-          height="8"
-          fill="#FFF"
-          stroke="#000"
-          strokeWidth="1"
-          rx="2"
-        />                <text
-                  x={x}
-                  y={y - 6}
-                  textAnchor="middle"
-                  className={styles.harbor}
-                  fill="#000"
-                  fontSize="10"
-                >
-                  {harborDisplay[type]}
-                </text>
       </g>
     );
   };
@@ -169,15 +142,17 @@ export function MapRenderer({ map }: MapRendererProps) {
               
               return (
                 <g key={hex.id}>
-                  {/* Hex background */}
-                  <path
-                    d={path}
-                    fill={getPatternUrl(hex.terrain)}
-                    stroke="#2F2F2F"
-                    strokeWidth={isWaterHex ? "1" : "2"}
-                    opacity={hex.terrain === 'desert' ? 0.8 : isWaterHex ? 0.7 : 1}
-                  />
-                  
+                  {/* Hex background - invisible for water hexes, patterns for land hexes */}
+                  {!isWaterHex && (
+                    <path
+                      d={path}
+                      fill={getPatternUrl(hex.terrain)}
+                      stroke="#2F2F2F"
+                      strokeWidth="2"
+                      opacity={hex.terrain === 'desert' ? 0.9 : 1}
+                    />
+                  )}
+
                   {/* Number token at center (only for land hexes) */}
                   {hex.number && !isWaterHex && (
                     <g>
@@ -192,13 +167,41 @@ export function MapRenderer({ map }: MapRendererProps) {
                       />
                       <text
                         x={center.x}
-                        y={center.y + 5}
+                        y={center.y}
                         textAnchor="middle"
                         className={styles.numberToken}
                         fill={hex.number === 6 || hex.number === 8 ? '#FFF' : '#2F2F2F'}
                         fontSize="16"
+                        dominantBaseline="central"
                       >
                         {hex.number}
+                      </text>
+                    </g>
+                  )}
+
+                  {/* Desert robber - only on ONE desert hex (first one found) */}
+                  {hex.terrain === 'desert' && hex.id === map.hexes.find(h => h.terrain === 'desert')?.id && (
+                    <g>
+                      {/* Desert robber */}
+                      <circle
+                        cx={center.x}
+                        cy={center.y}
+                        r="8"
+                        fill="#8B4513"
+                        stroke="#654321"
+                        strokeWidth="2"
+                        opacity="0.8"
+                      />
+                      <text
+                        x={center.x}
+                        y={center.y}
+                        textAnchor="middle"
+                        className={styles.desertText}
+                        fontSize="10"
+                        fill="#FFF"
+                        dominantBaseline="central"
+                      >
+                        R
                       </text>
                     </g>
                   )}
@@ -229,19 +232,27 @@ export function MapRenderer({ map }: MapRendererProps) {
             <div className={styles.legendSection}>
               <h4>Terrain Types:</h4>
               <div className={styles.legendText}>
-                <div>Hills (Brick) • Forest (Lumber) • Pasture (Wool)</div>
-                <div>Fields (Grain) • Mountains (Ore) • Desert (No Resource)</div>
-                <div>Water (Harbors) • 5-6 Player Extensions Available</div>
+                <div>🧱 Hills (Brick) • 🌲 Forest (Lumber) • 🐑 Pasture (Wool)</div>
+                <div>🌾 Fields (Grain) • ⛰️ Mountains (Ore) • 🏜️ Desert (Robber)</div>
+                <div>🌊 Water (Harbors) • 5-6 Player Extensions Available</div>
               </div>
             </div>
             
-            {/* Harbor Types */}
+            {/* Harbor Colors */}
             <div className={styles.legendSection}>
-              <h4>Harbor Types:</h4>
+              <h4>Harbor Colors:</h4>
               <div className={styles.legendText}>
-                <div>� Generic (3:1 Trade) • 🧱 Brick (2:1) • 🌲 Lumber (2:1)</div>
-                <div>🐑 Wool (2:1) • 🌾 Grain (2:1) • ⛰️ Ore (2:1)</div>
-                <div>Harbors are placed on water hexes adjacent to land</div>
+                <div>
+                  <span className={`${styles.harborDot} ${styles.generic}`}>●</span> Brown: Generic (3:1) • 
+                  <span className={`${styles.harborDot} ${styles.brick}`}>●</span> 🧱 Brick (2:1) • 
+                  <span className={`${styles.harborDot} ${styles.lumber}`}>●</span> 🌲 Lumber (2:1)
+                </div>
+                <div>
+                  <span className={`${styles.harborDot} ${styles.wool}`}>●</span> 🐑 Wool (2:1) • 
+                  <span className={`${styles.harborDot} ${styles.grain}`}>●</span> 🌾 Grain (2:1) • 
+                  <span className={`${styles.harborDot} ${styles.ore}`}>●</span> ⛰️ Ore (2:1)
+                </div>
+                <div>Round harbors placed on water hexes adjacent to land</div>
               </div>
             </div>
           </div>
