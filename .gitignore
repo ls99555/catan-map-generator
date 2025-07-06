@@ -39,3 +39,30 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Development and temporary files
+create-*.js
+test-*.js
+debug-*.js
+*.tmp
+*.temp
+DEVELOPMENT_NOTES.md
+FINAL_IMPLEMENTATION_SUMMARY.md
+HEX-BOARD-DESIGNER-REBRAND.md
+SEAFARERS_COMMIT_RULE.md
+
+# Ad-related files (removed functionality)
+**/Ad*.tsx
+**/Ad*.scss
+**/GoogleAd*.tsx
+**/GoogleAd*.scss
+
+# Offline/PWA files (removed functionality)
+**/offline/**
+**/*Offline*
+public/sw.js
+public/manifest.json
+public/favicon-generator.html
+
+# Test and config files
+test-config.ts

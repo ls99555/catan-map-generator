@@ -3,14 +3,10 @@
 .container {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 1rem;
-  
-  @media (min-width: 640px) {
-    padding: 0 1.5rem;
-  }
+  padding: 0 0.25rem;
   
   @media (min-width: 1024px) {
-    padding: 0 2rem;
+    padding: 0 0.5rem;
   }
 }
 
@@ -78,11 +74,12 @@
   border-radius: $border-radius-lg;
   box-shadow: $shadow-lg;
   border: 1px solid $color-slate-200;
-  padding: $spacing-6;
-  margin-bottom: $spacing-8;
+  padding: $spacing-3;
+  margin-bottom: $spacing-4;
   
-  @media (min-width: $breakpoint-md) {
-    padding: $spacing-8;
+  @media (min-width: 1024px) {
+    padding: $spacing-6;
+    margin-bottom: $spacing-6;
   }
 }
 
@@ -170,7 +167,10 @@
 
 .mapRenderer {
   position: relative;
-  min-height: 400px;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .loadingContainer {
@@ -330,4 +330,8 @@
   font-style: italic;
   text-align: center;
   margin-top: $spacing-4;
+}
+
+.mapSection {
+  padding: $spacing-1;
 }

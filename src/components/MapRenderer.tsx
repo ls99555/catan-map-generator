@@ -48,7 +48,7 @@ interface MapRendererProps {
 
 export function MapRenderer({ map }: MapRendererProps) {
   const layout: HexLayout = useMemo(() => ({
-    size: 35,
+    size: 150, // Even larger hex size
     origin: { x: 400, y: 300 },
     orientation: 'pointy' as const,
   }), []);
@@ -150,7 +150,7 @@ export function MapRenderer({ map }: MapRendererProps) {
 
   // Create harbor icon based on type - now round
   const createHarborIcon = (type: HarborType, x: number, y: number) => {
-    const radius = 12;
+    const radius = 28; // Even larger harbor icons
     
     if (type === 'generic') {
       // Generic harbor: black circle with white question mark
@@ -162,13 +162,13 @@ export function MapRenderer({ map }: MapRendererProps) {
             r={radius}
             fill="#000000"
             stroke="#FFF"
-            strokeWidth="2"
+            strokeWidth="4"
           />
           <text
             x={x}
             y={y}
             textAnchor="middle"
-            fontSize="14"
+            fontSize="26"
             fill="#FFFFFF"
             dominantBaseline="central"
             fontWeight="bold"
@@ -188,16 +188,16 @@ export function MapRenderer({ map }: MapRendererProps) {
             r={radius}
             fill={color}
             stroke="#000"
-            strokeWidth="2"
+            strokeWidth="4"
           />
           {/* Inner accent ring for better visibility */}
           <circle
             cx={x}
             cy={y}
-            r={radius - 2}
+            r={radius - 4}
             fill="none"
             stroke="#FFF"
-            strokeWidth="1"
+            strokeWidth="3"
             opacity="0.3"
           />
         </g>
@@ -249,10 +249,10 @@ export function MapRenderer({ map }: MapRendererProps) {
                       <circle
                         cx={center.x}
                         cy={center.y}
-                        r="14"
+                        r="32"
                         fill={hex.number === 6 || hex.number === 8 ? '#FF6B6B' : '#FFF'}
                         stroke="#2F2F2F"
-                        strokeWidth="2"
+                        strokeWidth="4"
                       />
                       <text
                         x={center.x}
@@ -260,7 +260,7 @@ export function MapRenderer({ map }: MapRendererProps) {
                         textAnchor="middle"
                         className={styles.numberToken}
                         fill={hex.number === 6 || hex.number === 8 ? '#FFF' : '#2F2F2F'}
-                        fontSize="16"
+                        fontSize="26"
                         dominantBaseline="central"
                       >
                         {hex.number}
@@ -275,10 +275,10 @@ export function MapRenderer({ map }: MapRendererProps) {
                       <circle
                         cx={center.x}
                         cy={center.y}
-                        r="8"
+                        r="22"
                         fill="#8B4513"
                         stroke="#654321"
-                        strokeWidth="2"
+                        strokeWidth="4"
                         opacity="0.8"
                       />
                       <text
@@ -286,7 +286,7 @@ export function MapRenderer({ map }: MapRendererProps) {
                         y={center.y}
                         textAnchor="middle"
                         className={styles.desertText}
-                        fontSize="10"
+                        fontSize="18"
                         fill="#FFF"
                         dominantBaseline="central"
                       >

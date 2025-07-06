@@ -23,30 +23,23 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: $map-padding;
+  justify-content: center;
+  padding: 0.25rem;
   border: $map-border;
   border-radius: $map-border-radius;
   box-shadow: $shadow-lg;
-  margin: $spacing-4 0;
-
-  @media (max-width: $breakpoint-md) {
-    padding: $spacing-4;
-    margin: $spacing-2 0;
-  }
+  margin: 0.25rem 0;
 }
 
 .mapSvg {
   width: 100%;
   height: auto;
-  min-height: 400px;
-  max-height: 700px;
+  min-height: 600px;
+  max-height: 1200px;
   max-width: 100%;
-  max-width: 800px;
   border-radius: $border-radius-base;
-  
-  @media (max-width: $breakpoint-sm) {
-    max-width: 100%;
-  }
+  display: block;
+  margin: 0 auto;
 }
 
 .hexagon {
@@ -109,7 +102,7 @@
 
 .numberToken {
   font-family: $font-family-base;
-  font-size: $hex-number-font-size;
+  font-size: 24px;
   font-weight: $hex-number-font-weight;
   text-anchor: middle;
   dominant-baseline: central;
@@ -122,6 +115,7 @@
   text-anchor: middle;
   dominant-baseline: central;
   pointer-events: none;
+  font-size: 32px;
 }
 
 .resourceSymbolBackground {
@@ -132,11 +126,12 @@
   opacity: 0.3;
   fill: #FFF;
   filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));
+  font-size: 32px;
 }
 
 .desertText {
   font-family: $font-family-base;
-  font-size: 10px;
+  font-size: 18px;
   font-weight: $font-weight-bold;
   text-anchor: middle;
   dominant-baseline: central;
@@ -146,7 +141,7 @@
 
 .harbor {
   font-family: $font-family-base;
-  font-size: 10px;
+  font-size: 18px;
   font-weight: $font-weight-semibold;
   text-anchor: middle;
   dominant-baseline: central;
@@ -157,7 +152,7 @@
 .harborIcon {
   fill: $primary-blue;
   stroke: $background-white;
-  stroke-width: 1;
+  stroke-width: 2;
 }
 
 // Additional classes for new styling

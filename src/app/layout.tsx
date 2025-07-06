@@ -16,26 +16,27 @@ const robotoSlab = Roboto_Slab({
 
 export const metadata: Metadata = {
   title: {
-    default: "Catan Map Builder - Generate Base Game Maps for 3-4 & 5-6 Players",
+    default: "Catan Map Builder - Free Online Board Game Map Generator",
     template: "%s | Catan Map Builder"
   },
-  description: "Free online Catan map builder for base game. Generate balanced maps for 3-4 or 5-6 players with statistical analysis, resource distribution, and number placement. Mobile-friendly with instant generation.",
+  description: "Create balanced Catan maps instantly with our free online map builder. Supports 3-4 and 5-6 players, mobile-friendly design, and statistical analysis. Perfect for competitive and casual gameplay.",
   keywords: [
+    "Catan map generator",
     "Catan map builder",
-    "Catan base game generator",
-    "3-4 player Catan maps",
-    "5-6 player Catan maps",
-    "Catan map generator free",
+    "Catan map builder 5-6",
     "Settlers of Catan",
     "board game map creator",
-    "balanced Catan maps",
+    "Catan board generator",
+    "free Catan maps",
+    "3-4 player Catan",
+    "5-6 player Catan",
     "mobile Catan generator",
-    "Catan statistical analysis",
-    "resource distribution",
-    "number placement",
-    "hex map builder",
-    "Catan board layout",
-    "game setup tool"
+    "balanced Catan maps",
+    "Catan game tool",
+    "hex map generator",
+    "seafarers",
+    "board game design",
+    "strategy games"
   ],
   authors: [{ name: "Luke Stevens", url: "https://lstevens.dev" }],
   creator: "Luke Stevens",
@@ -72,15 +73,15 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://catanmapgenerator.app',
-    siteName: 'Catan Map Builder',
-    title: 'Catan Map Builder - Generate Base Game Maps for 3-4 & 5-6 Players',
-    description: 'Free online Catan map builder for base game. Generate balanced maps for 3-4 or 5-6 players with statistical analysis, resource distribution, and number placement.',
+    siteName: 'Catan Map Generator',
+    title: 'Catan Map Generator - Free Online Board Game Map Creator',
+    description: 'Create balanced Catan maps instantly with our free online generator. Supports 3-4 and 5-6 players, mobile-friendly design, and statistical analysis.',
     images: [
       {
         url: '/og-image.svg',
         width: 1200,
         height: 630,
-        alt: 'Catan Map Builder - Generate base game maps with statistical analysis',
+        alt: 'Catan Map Generator - Create balanced board game maps',
       },
     ],
   },
@@ -120,8 +121,8 @@ export default function RootLayout({
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
-    name: 'Catan Map Builder',
-    description: 'Free online Catan map builder for base game. Generate balanced maps for 3-4 or 5-6 players with statistical analysis, resource distribution, and number placement.',
+    name: 'Catan Map Generator',
+    description: 'Create balanced Catan maps instantly with our free online generator. Supports 3-4 and 5-6 players, mobile-friendly design, and statistical analysis.',
     url: 'https://catanmapgenerator.app',
     applicationCategory: 'GameApplication',
     operatingSystem: 'Web Browser',
@@ -134,24 +135,16 @@ export default function RootLayout({
       '@type': 'Person',
       name: 'Luke Stevens',
       url: 'https://lstevens.dev',
+      email: 'luke@lstevens.dev',
     },
     about: {
       '@type': 'Game',
       name: 'Settlers of Catan',
       description: 'A popular board game about resource management and strategy',
     },
-    keywords: 'Catan map builder, base game generator, 3-4 players, 5-6 players, resource distribution, statistical analysis',
+    keywords: 'Catan, Settlers of Catan, map generator, board game, game tool',
     inLanguage: 'en-US',
     isAccessibleForFree: true,
-    featureList: [
-      'Generate balanced Catan base game maps',
-      'Support for 3-4 and 5-6 player modes',
-      'Statistical analysis of resource distribution',
-      'Number placement optimization',
-      'Mobile-friendly responsive design',
-      'Instant map generation',
-      'Resource balance visualization'
-    ],
   };
 
   return (
