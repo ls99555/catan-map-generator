@@ -103,7 +103,7 @@ export default function Home() {
               </span>
             </div>
             <div className="flex items-center space-x-4">
-              <Link href="/rules" className="text-sm text-green-600 font-medium hover:text-green-700 transition-colors">
+              <Link href="/rules" className="text-sm text-green-700 font-semibold hover:text-green-800 transition-colors">
                 Rules & Guide
               </Link>
             </div>
@@ -111,11 +111,11 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Ad Banner */}
-      <AdBanner position="top" />
-
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Ad Banner */}
+        <AdBanner position="top" />
+
         {/* Map Configuration - Top Section */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">
@@ -177,7 +177,9 @@ export default function Home() {
       </main>
 
       {/* Bottom Ad */}
-      <AdBanner position="bottom" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AdBanner position="bottom" />
+      </div>
 
       {/* Footer */}
       <footer className={styles.footer}>

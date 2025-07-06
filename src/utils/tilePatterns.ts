@@ -81,29 +81,35 @@ export const TILE_PATTERNS = {
   
   fields: (id: string) => `
     <pattern id="fields-${id}" patternUnits="userSpaceOnUse" width="20" height="20">
-      <rect width="20" height="20" fill="#FFFACD"/>
-      <!-- Wheat field rows - light yellow -->
-      <rect x="0" y="0" width="20" height="3" fill="#FFFFE0"/>
-      <rect x="0" y="3" width="20" height="3" fill="#F0E68C"/>
-      <rect x="0" y="6" width="20" height="3" fill="#FFFFE0"/>
-      <rect x="0" y="9" width="20" height="3" fill="#F0E68C"/>
-      <rect x="0" y="12" width="20" height="3" fill="#FFFFE0"/>
-      <rect x="0" y="15" width="20" height="3" fill="#F0E68C"/>
-      <rect x="0" y="18" width="20" height="2" fill="#FFFFE0"/>
-      <!-- Wheat stalks -->
-      <path d="M2 18 L2 14 Q2 12 3 12 Q4 12 4 14 L4 18" stroke="#B8860B" stroke-width="1"/>
-      <path d="M5 18 L5 14 Q5 12 6 12 Q7 12 7 14 L7 18" stroke="#B8860B" stroke-width="1"/>
-      <path d="M8 18 L8 14 Q8 12 9 12 Q10 12 10 14 L10 18" stroke="#B8860B" stroke-width="1"/>
-      <path d="M11 18 L11 14 Q11 12 12 12 Q13 12 13 14 L13 18" stroke="#B8860B" stroke-width="1"/>
-      <path d="M14 18 L14 14 Q14 12 15 12 Q16 12 16 14 L16 18" stroke="#B8860B" stroke-width="1"/>
-      <path d="M17 18 L17 14 Q17 12 18 12 Q19 12 19 14 L19 18" stroke="#B8860B" stroke-width="1"/>
-      <!-- Grain heads -->
-      <ellipse cx="3" cy="11" rx="1" ry="2" fill="#DAA520"/>
-      <ellipse cx="6" cy="11" rx="1" ry="2" fill="#DAA520"/>
-      <ellipse cx="9" cy="11" rx="1" ry="2" fill="#DAA520"/>
-      <ellipse cx="12" cy="11" rx="1" ry="2" fill="#DAA520"/>
-      <ellipse cx="15" cy="11" rx="1" ry="2" fill="#DAA520"/>
-      <ellipse cx="18" cy="11" rx="1" ry="2" fill="#DAA520"/>
+      <rect width="20" height="20" fill="#9ACD32"/>
+      <!-- Field background - bright green field -->
+      <rect x="0" y="0" width="20" height="20" fill="#7CB342"/>
+      <!-- Plowed field furrows -->
+      <path d="M0 2 L20 2" stroke="#6A9F3E" stroke-width="1"/>
+      <path d="M0 5 L20 5" stroke="#6A9F3E" stroke-width="1"/>
+      <path d="M0 8 L20 8" stroke="#6A9F3E" stroke-width="1"/>
+      <path d="M0 11 L20 11" stroke="#6A9F3E" stroke-width="1"/>
+      <path d="M0 14 L20 14" stroke="#6A9F3E" stroke-width="1"/>
+      <path d="M0 17 L20 17" stroke="#6A9F3E" stroke-width="1"/>
+      <!-- Wheat stalks - golden -->
+      <path d="M2 18 L2 10 Q2 8 3 8 Q4 8 4 10 L4 18" stroke="#FFD700" stroke-width="1" fill="none"/>
+      <path d="M5 18 L5 9 Q5 7 6 7 Q7 7 7 9 L7 18" stroke="#FFD700" stroke-width="1" fill="none"/>
+      <path d="M8 18 L8 11 Q8 9 9 9 Q10 9 10 11 L10 18" stroke="#FFD700" stroke-width="1" fill="none"/>
+      <path d="M11 18 L11 10 Q11 8 12 8 Q13 8 13 10 L13 18" stroke="#FFD700" stroke-width="1" fill="none"/>
+      <path d="M14 18 L14 9 Q14 7 15 7 Q16 7 16 9 L16 18" stroke="#FFD700" stroke-width="1" fill="none"/>
+      <path d="M17 18 L17 11 Q17 9 18 9 Q19 9 19 11 L19 18" stroke="#FFD700" stroke-width="1" fill="none"/>
+      <!-- Wheat heads - golden grain -->
+      <ellipse cx="3" cy="7" rx="1.5" ry="2" fill="#FFD700"/>
+      <ellipse cx="6" cy="6" rx="1.5" ry="2" fill="#FFA500"/>
+      <ellipse cx="9" cy="8" rx="1.5" ry="2" fill="#FFD700"/>
+      <ellipse cx="12" cy="7" rx="1.5" ry="2" fill="#FFA500"/>
+      <ellipse cx="15" cy="6" rx="1.5" ry="2" fill="#FFD700"/>
+      <ellipse cx="18" cy="8" rx="1.5" ry="2" fill="#FFA500"/>
+      <!-- Farm elements -->
+      <circle cx="1" cy="1" r="0.5" fill="#8B4513"/>
+      <circle cx="19" cy="19" r="0.5" fill="#8B4513"/>
+      <circle cx="4" cy="19" r="0.5" fill="#8B4513"/>
+      <circle cx="16" cy="1" r="0.5" fill="#8B4513"/>
     </pattern>
   `,
   

@@ -162,9 +162,14 @@ export function MapStatisticsPanel({ stats, config }: MapStatisticsPanelProps) {
           <div className={styles.balanceItem}>
             <span className={styles.balanceLabel}>Resource Balance</span>
             <span className={styles.balanceValue}>
-              {Math.max(0, 100 - (Object.values(stats.resourceBalance).reduce((acc, val, i, arr) => 
-                acc + Math.abs(val - arr.reduce((sum, v) => sum + v, 0) / arr.length), 0
-              ) * 10)).toFixed(0)}%
+              {(() => {
+                const resourceCounts = Object.values(stats.resourceBalance).filter(val => val > 0);
+                const totalResources = resourceCounts.reduce((sum, val) => sum + val, 0);
+                const expectedCount = totalResources / resourceCounts.length;
+                const variance = resourceCounts.reduce((acc, val) => acc + Math.pow(val - expectedCount, 2), 0) / resourceCounts.length;
+                const score = Math.max(0, 100 - (variance * 5));
+                return score.toFixed(0);
+              })()}%
             </span>
           </div>
           <div className={styles.balanceItem}>

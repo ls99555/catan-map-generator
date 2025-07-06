@@ -78,11 +78,11 @@ export function MapRenderer({ map }: MapRendererProps) {
 
   // Harbor colors - matching tile colors for consistency
   const harborColors: Record<HarborType, string> = {
-    generic: '#8B4513', // Brown for generic 3:1
+    generic: '#6B4423', // Dark brown for generic 3:1 (different from forest)
     brick: '#E74C3C', // Matching brick/hills color
     lumber: '#8B4513', // Matching forest color (dark brown)
     wool: '#ECEFF1', // Matching pasture color (light gray/white)
-    grain: '#FFFACD', // Matching fields color (light yellow)
+    grain: '#7CB342', // Matching fields color (bright green)
     ore: '#607D8B', // Matching mountains color (blue-gray)
   };
 
