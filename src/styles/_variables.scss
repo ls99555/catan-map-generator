@@ -13,57 +13,126 @@ $seafarers-sea: #4169E1;
 $seafarers-fish: #00CED1;
 $seafarers-gold: #FFD700;
 
-// ===== CORE COLORS =====
-$primary-blue: #2563eb;
-$primary-blue-hover: #1d4ed8;
-$secondary-gray: #6b7280;
-$background-light: #f9fafb;
+// ===== CORE BRAND COLORS =====
+$primary-slate: #334155;
+$primary-slate-light: #475569;
+$primary-slate-dark: #1e293b;
+$primary-slate-darker: #0f172a;
+$primary-accent: #475569; // For accents (slate-600)
+$primary-accent-light: #64748b; // For accents (slate-500)
+$primary-accent-dark: #334155; // For accents (slate-700)
+$primary-accent-darker: #1e293b; // For accents (slate-800)
+$primary-blue: #2563eb; // For legacy compatibility
+$primary-blue-hover: #1d4ed8; // For legacy compatibility
+$secondary-gray: #6b7280; // For legacy compatibility
+$background-light: #f8fafc;
 $background-white: #ffffff;
-$border-gray: #e5e7eb;
-$text-dark: #111827;
-$text-medium: #374151;
-$text-light: #6b7280;
+$border-gray: #e2e8f0;
+$text-dark: #0f172a;
+$text-medium: #334155;
+$text-light: #64748b;
 $success-green: #10b981;
-$warning-yellow: #f59e0b;
+$warning-yellow: #facc15; // Use yellow-400 for warnings
 $error-red: #ef4444;
 
 // ===== COMPONENT COLORS =====
-$color-primary: $primary-blue;
+$color-primary: $primary-slate;
 $color-white: #ffffff;
-$color-gray-50: #f9fafb;
-$color-gray-100: #f3f4f6;
-$color-gray-200: #e5e7eb;
-$color-gray-300: #d1d5db;
-$color-gray-400: #9ca3af;
-$color-gray-500: #6b7280;
-$color-gray-600: #4b5563;
-$color-gray-700: #374151;
-$color-gray-800: #1f2937;
-$color-gray-900: #111827;
+$color-gray-50: #f8fafc;
+$color-gray-100: #f1f5f9;
+$color-gray-200: #e2e8f0;
+$color-gray-300: #cbd5e1;
+$color-gray-400: #94a3b8;
+$color-gray-500: #64748b;
+$color-gray-600: #475569;
+$color-gray-700: #334155;
+$color-gray-800: #1e293b;
+$color-gray-900: #0f172a;
 
-$color-green-50: #f0fdf4;
-$color-green-100: #dcfce7;
-$color-green-200: #bbf7d0;
-$color-green-600: #16a34a;
-$color-green-800: #166534;
+// Slate palette colors
+$color-slate-50: #f8fafc;
+$color-slate-100: #f1f5f9;
+$color-slate-200: #e2e8f0;
+$color-slate-300: #cbd5e1;
+$color-slate-400: #94a3b8;
+$color-slate-500: #64748b;
+$color-slate-600: #475569;
+$color-slate-700: #334155;
+$color-slate-800: #1e293b;
+$color-slate-900: #0f172a;
 
+// Blue colors (for legacy compatibility)
 $color-blue-50: #eff6ff;
 $color-blue-100: #dbeafe;
 $color-blue-200: #bfdbfe;
+$color-blue-300: #93c5fd;
+$color-blue-400: #60a5fa;
+$color-blue-500: #3b82f6;
+$color-blue-600: #2563eb;
+$color-blue-700: #1d4ed8;
+$color-blue-800: #1e40af;
+$color-red-500: #ef4444;
+$color-red-600: #dc2626;
+$color-red-700: #b91c1c;
+$color-red-800: #991b1b;
 
-$color-amber-50: #fffbeb;
-$color-amber-200: #fde68a;
-$color-amber-600: #d97706;
-$color-amber-800: #92400e;
+$color-yellow-50: #fefce8;
+$color-yellow-100: #fef9c3;
+$color-yellow-200: #fef08a;
+$color-yellow-300: #fde047;
+$color-yellow-400: #facc15;
+$color-yellow-500: #eab308;
+$color-yellow-600: #ca8a04;
+$color-yellow-700: #a16207;
+$color-yellow-800: #854d0e;
 
-$color-red: #dc2626;
-$color-yellow: #eab308;
-$color-green: #16a34a;
-$color-gold: #f59e0b;
-$color-brown: #92400e;
+// Red colors
+$color-red-50: #fef2f2;
+$color-red-100: #fee2e2;
+$color-red-200: #fecaca;
+$color-red-300: #fca5a5;
+$color-red-400: #f87171;
+$color-red-500: #ef4444;
+$color-red-600: #dc2626;
+$color-red-700: #b91c1c;
+$color-red-800: #991b1b;
+
+// Blue colors (for legacy compatibility)
+$color-blue-50: #eff6ff;
+$color-blue-100: #dbeafe;
+$color-blue-200: #bfdbfe;
+$color-blue-300: #93c5fd;
+$color-blue-400: #60a5fa;
+$color-blue-500: #3b82f6;
+$color-blue-600: #2563eb;
+$color-blue-700: #1d4ed8;
+$color-blue-800: #1e40af;
+
+// ===== GRADIENTS =====
+$gradient-primary: linear-gradient(135deg, #{$primary-slate-dark} 0%, #{$primary-slate} 50%, #{$primary-slate-light} 100%);
+$gradient-primary-light: linear-gradient(135deg, #{$color-white} 0%, #{$color-slate-50} 100%);
+$gradient-warm-medium: linear-gradient(135deg, #{$color-slate-100} 0%, #{$color-slate-200} 100%);
+$gradient-warm-dark: linear-gradient(135deg, #{$color-slate-600} 0%, #{$color-slate-700} 100%);
+$gradient-background: linear-gradient(135deg, #e0f2fe 0%, #f1f5f9 20%, #f8fafc 40%, #f0f9ff 60%, #ecfdf5 80%, #f1f5f9 100%);
+$gradient-card: linear-gradient(135deg, #{$color-white} 0%, #{$color-slate-50} 100%);
+$gradient-footer: linear-gradient(135deg, #{$color-slate-800} 0%, #{$color-slate-700} 50%, #{$color-slate-600} 100%);
+$gradient-disabled: linear-gradient(135deg, #{$color-slate-400} 0%, #{$color-slate-500} 100%);
+$gradient-button-hover: linear-gradient(135deg, #{$color-slate-600} 0%, #{$color-slate-700} 100%);
+$gradient-feature: linear-gradient(135deg, #{$color-slate-100} 0%, #{$color-slate-200} 100%);
+$gradient-accent: linear-gradient(135deg, #{$color-slate-600} 0%, #{$color-slate-700} 100%);
+
+// ===== SAFE AREA INSETS (iPhone Notch Support) =====
+$safe-area-inset-top: env(safe-area-inset-top);
+$safe-area-inset-right: env(safe-area-inset-right);
+$safe-area-inset-bottom: env(safe-area-inset-bottom);
+$safe-area-inset-left: env(safe-area-inset-left);
 
 // ===== TYPOGRAPHY =====
-$font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+$font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+$font-family-serif: 'Roboto Slab', 'Georgia', 'Times New Roman', serif;
+$font-family-base: $font-family-sans;
+$font-family-headings: $font-family-serif;
+
 $font-size-xs: 0.75rem;
 $font-size-sm: 0.875rem;
 $font-size-base: 1rem;
@@ -72,11 +141,15 @@ $font-size-xl: 1.25rem;
 $font-size-2xl: 1.5rem;
 $font-size-3xl: 1.875rem;
 $font-size-4xl: 2.25rem;
+$font-size-5xl: 3rem;
+$font-size-6xl: 3.75rem;
 
+$font-weight-light: 300;
 $font-weight-normal: 400;
 $font-weight-medium: 500;
 $font-weight-semibold: 600;
 $font-weight-bold: 700;
+$font-weight-extrabold: 800;
 
 // ===== SPACING =====
 $spacing-xs: 0.25rem;

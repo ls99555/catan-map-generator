@@ -78,19 +78,10 @@ function generateTerrain(coordinates: CubeCoordinate[], config: GameConfiguratio
   const { rules } = config;
   const { playerCount } = rules;
   
-  console.log('DEBUG: Starting terrain generation');
-  console.log('Coordinates count:', coordinates.length);
-  console.log('Player count:', playerCount);
-  
   // Select the correct base game config based on player count
   const isUsingExtension = playerCount > 4;
   const expansionKey = isUsingExtension ? 'base-5-6' : 'base';
   const expansionConfig = EXPANSION_CONFIGS[expansionKey];
-  
-  console.log('Using expansion key:', expansionKey);
-  console.log('Expansion config found:', !!expansionConfig);
-  console.log('Expansion config name:', expansionConfig?.name);
-  console.log('Tile distributions:', expansionConfig?.tileDistributions);
   
   if (!expansionConfig) {
     throw new Error(`Unknown expansion configuration: ${expansionKey}`);
@@ -110,20 +101,12 @@ function generateTerrain(coordinates: CubeCoordinate[], config: GameConfiguratio
     }
   }
   
-  console.log('Tile pool created:', tilePool.length);
-  console.log('Tile pool contents:', tilePool.reduce((acc, tile) => {
-    acc[tile.terrain] = (acc[tile.terrain] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>));
-  
   // Shuffle and assign tiles
   const shuffledTiles = shuffle(tilePool);
   
   // Ensure we have enough tiles for all coordinates
   if (shuffledTiles.length < coordinates.length) {
     console.warn(`Not enough tiles (${shuffledTiles.length}) for coordinates (${coordinates.length})`);
-    console.warn('Tile pool:', shuffledTiles);
-    console.warn('Coordinates:', coordinates.length);
   }
   
   return coordinates.map((coord, index) => {

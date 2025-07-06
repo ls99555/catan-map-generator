@@ -1,15 +1,14 @@
 import React from 'react';
-import styles from '../../../styles/Legal.module.scss';
+import { Layout } from '../../../components/Layout';
+import styles from '../../../styles/LegalPage.module.scss';
 
 export default function PrivacyPolicy() {
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
-        <h1 className={styles.title}>Privacy Policy</h1>
-        
-        <div className={styles.section}>
-          <p className={styles.lastUpdated}>Last updated: {new Date().toLocaleDateString()}</p>
-        </div>
+    <Layout>
+      <div className={styles.container}>
+        <div className={styles.content}>
+          <h1 className={styles.title}>Privacy Policy</h1>
+          <p className={styles.lastUpdated}>Last updated: July 6, 2025</p>
 
         <div className={styles.section}>
           <h2 className={styles.heading}>Introduction</h2>
@@ -41,7 +40,6 @@ export default function PrivacyPolicy() {
           <ul className={styles.list}>
             <li>To provide and improve our map generation service</li>
             <li>To analyze usage patterns and optimize user experience</li>
-            <li>To display relevant advertisements through Google AdSense</li>
             <li>To respond to your inquiries and provide customer support</li>
             <li>To comply with legal obligations</li>
           </ul>
@@ -52,11 +50,6 @@ export default function PrivacyPolicy() {
           <h3 className={styles.subheading}>Google Analytics</h3>
           <p className={styles.text}>
             We use Google Analytics to understand how visitors interact with our website. Google Analytics collects information such as how often users visit our site, what pages they visit, and what other sites they used prior to coming to our site.
-          </p>
-          
-          <h3 className={styles.subheading}>Google AdSense</h3>
-          <p className={styles.text}>
-            We use Google AdSense to display advertisements. Google AdSense uses cookies to serve ads based on your prior visits to our website or other websites. You may opt out of personalized advertising by visiting Google&apos;s Ads Settings.
           </p>
         </div>
 
@@ -98,13 +91,12 @@ export default function PrivacyPolicy() {
         <div className={styles.section}>
           <h2 className={styles.heading}>Contact Us</h2>
           <p className={styles.text}>
-            If you have any questions about this Privacy Policy, please contact us at:
-          </p>
-          <p className={styles.contact}>
-            Email: privacy@catanmapgenerator.com
+            If you have any questions about this Privacy Policy, please contact us at{' '}
+            <a href="mailto:luke@lstevens.dev">luke@lstevens.dev</a>.
           </p>
         </div>
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 }

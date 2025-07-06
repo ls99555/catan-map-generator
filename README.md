@@ -1,6 +1,8 @@
 # Catan Map Generator
 
-A comprehensive, mobile-friendly web application for generating balanced Catan maps for all expansions and player counts. Built with Next.js 15, TypeScript, and Tailwind CSS.
+A comprehensive, responsive web application for generating balanced Catan maps for all expansions and player counts. Built with Next.js 15, TypeScript, and Tailwind CSS.
+
+**🎯 Educational and personal use only.** This is a free tool for Catan enthusiasts to create balanced game maps.
 
 ## 🎯 Official Compliance Guarantee
 
@@ -50,13 +52,7 @@ A comprehensive, mobile-friendly web application for generating balanced Catan m
 - **Balanced vs. Random** number placement
 - **Custom rule sets** for different play styles
 - **Map size** variations
-- **Export capabilities** (JSON, Image, PDF)
-
-### 💰 **Monetization Ready**
-- **Ad banner placements** (top, bottom, sidebar)
-- **Google AdSense integration** ready
-- **Mobile ad optimization**
-- **Non-intrusive ad placement**
+- **Visual display** options
 
 ## Technology Stack
 
@@ -138,7 +134,6 @@ src/
 - **MapRenderer**: SVG-based hex map visualization
 - **MapControls**: Game configuration interface
 - **MapStatisticsPanel**: Statistical analysis display
-- **AdBanner**: Advertisement placement component
 
 ### Map Generation Algorithm
 1. **Coordinate Generation**: Creates hex grid based on expansion and player count
@@ -170,20 +165,6 @@ npm start
 - **Meta tags** for social sharing
 - **Fast loading** with code splitting
 
-## Monetization
-
-### Ad Integration
-The app includes placeholder ad components ready for integration with:
-- **Google AdSense**
-- **Media.net**
-- **Other ad networks**
-
-### Ad Placements
-- **Top banner** (728x90 leaderboard)
-- **Bottom banner** (728x90)
-- **Sidebar rectangles** (300x250)
-- **Mobile-optimized** ad sizes
-
 ## Contributing
 
 1. Fork the repository
@@ -209,9 +190,47 @@ All game rules, component specifications, and scenarios are sourced exclusively 
 - **Game Rules**: [Official Game Rules](https://www.catan.com/understand-catan/game-rules)
 - **FAQ**: [Official FAQ](https://www.catan.com/faq)
 
-## License
+## Error Handling
 
-This project is for educational and non-commercial use. Settlers of Catan is a trademark of Catan Studio.
+The application includes comprehensive error handling:
+- **404 Page**: Custom not-found page for invalid routes
+- **Error Boundaries**: React error boundaries to catch runtime errors
+- **Fallback UI**: Graceful degradation when components fail
+- **Loading States**: Proper loading indicators during map generation
+
+## Author
+
+**Luke Stevens**
+- GitHub: [@lukestevens](https://github.com/lukestevens)
+- Website: [lukestevens.dev](https://lukestevens.dev)
+- Free Tool: [Catan Map Generator](https://catanmapgenerator.app)
+
+## License & Legal
+
+**⚠️ IMPORTANT LEGAL NOTICE**
+
+This project is a **fan-made tool** and is NOT affiliated with, endorsed by, or licensed by Catan Studio, KOSMOS, or any official Catan entities.
+
+### Educational & Personal Use Only
+- This tool is provided for **educational and personal use only**
+- **Non-commercial use only**
+- Created as a free resource for Catan enthusiasts
+- Demonstrates game design principles and web development techniques
+
+### Trademark Notice
+- "Settlers of Catan" and "Catan" are registered trademarks of Catan Studio
+- All game rules, mechanics, and terminology are the intellectual property of their respective owners
+- This tool merely implements publicly available game rules for educational purposes
+
+### Design Assets
+- **Custom hex styles, UI components, and visual designs** created for this project are original works
+- **Geometric patterns and layouts** are not trademark-specific and represent general game design principles
+- These original design elements represent common game design patterns
+
+### Disclaimer
+- Use this tool at your own risk
+- The author is not responsible for any legal issues arising from the use of this tool
+- This tool demonstrates web development skills and game design principles
 
 ## Acknowledgments
 

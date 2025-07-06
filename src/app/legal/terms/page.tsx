@@ -1,15 +1,14 @@
 import React from 'react';
-import styles from '../../../styles/Legal.module.scss';
+import { Layout } from '../../../components/Layout';
+import styles from '../../../styles/LegalPage.module.scss';
 
 export default function TermsOfService() {
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
-        <h1 className={styles.title}>Terms of Service</h1>
-        
-        <div className={styles.section}>
-          <p className={styles.lastUpdated}>Last updated: {new Date().toLocaleDateString()}</p>
-        </div>
+    <Layout>
+      <div className={styles.container}>
+        <div className={styles.content}>
+          <h1 className={styles.title}>Terms of Service</h1>
+          <p className={styles.lastUpdated}>Last updated: July 6, 2025</p>
 
         <div className={styles.section}>
           <h2 className={styles.heading}>Acceptance of Terms</h2>
@@ -21,7 +20,7 @@ export default function TermsOfService() {
         <div className={styles.section}>
           <h2 className={styles.heading}>Description of Service</h2>
           <p className={styles.text}>
-            Catan Map Generator is a web-based tool that allows users to generate random maps for the board game Settlers of Catan and its expansions. The service is provided free of charge and is supported by advertising.
+            Catan Map Generator is a web-based tool that allows users to generate random maps for the board game Settlers of Catan and its expansions. The service is provided free of charge for educational and personal use only.
           </p>
         </div>
 
@@ -61,13 +60,6 @@ export default function TermsOfService() {
         </div>
 
         <div className={styles.section}>
-          <h2 className={styles.heading}>Advertising</h2>
-          <p className={styles.text}>
-            Our service is supported by advertising. By using our service, you agree to the display of advertisements. We use Google AdSense to serve ads, and these ads may be targeted based on your interests and browsing behavior.
-          </p>
-        </div>
-
-        <div className={styles.section}>
           <h2 className={styles.heading}>Data and Privacy</h2>
           <p className={styles.text}>
             Your privacy is important to us. Please review our Privacy Policy, which also governs your use of the service, to understand our practices.
@@ -98,13 +90,12 @@ export default function TermsOfService() {
         <div className={styles.section}>
           <h2 className={styles.heading}>Contact Information</h2>
           <p className={styles.text}>
-            If you have any questions about these Terms of Service, please contact us at:
-          </p>
-          <p className={styles.contact}>
-            Email: legal@catanmapgenerator.com
+            If you have any questions about these Terms of Service, please contact us at{' '}
+            <a href="mailto:luke@lstevens.dev">luke@lstevens.dev</a>.
           </p>
         </div>
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 }

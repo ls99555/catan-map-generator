@@ -76,44 +76,133 @@ export function MapRenderer({ map }: MapRendererProps) {
     };
   }, [map.hexes, layout]); // Removed map.expansion and map.scenario as they're not actually used in the calculation
 
+  // Create mini hex for legend
+  const createMiniHex = (terrain: string, size: number = 20) => {
+    const hexPath = `M ${size/2} 0 L ${size*0.866} ${size/4} L ${size*0.866} ${size*0.75} L ${size/2} ${size} L ${size*0.134} ${size*0.75} L ${size*0.134} ${size/4} Z`;
+    
+    return (
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className={styles.miniHex}>
+        <defs dangerouslySetInnerHTML={{ __html: generateTilePatterns() }} />
+        <path
+          d={hexPath}
+          fill={getPatternUrl(terrain)}
+          stroke="#2F2F2F"
+          strokeWidth="1"
+        />
+      </svg>
+    );
+  };
+
+  // Create mini harbor icon for legend
+  const createMiniHarborIcon = (type: HarborType, size: number = 16) => {
+    const radius = size / 2;
+    
+    if (type === 'generic') {
+      return (
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className={styles.miniHarbor}>
+          <circle
+            cx={radius}
+            cy={radius}
+            r={radius - 1}
+            fill="#000000"
+            stroke="#FFF"
+            strokeWidth="1"
+          />
+          <text
+            x={radius}
+            y={radius}
+            textAnchor="middle"
+            fontSize="10"
+            fill="#FFFFFF"
+            dominantBaseline="central"
+            fontWeight="bold"
+          >
+            ?
+          </text>
+        </svg>
+      );
+    } else {
+      const color = harborColors[type];
+      return (
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className={styles.miniHarbor}>
+          <circle
+            cx={radius}
+            cy={radius}
+            r={radius - 1}
+            fill={color}
+            stroke="#000"
+            strokeWidth="1"
+          />
+        </svg>
+      );
+    }
+  };
+
   // Harbor colors - matching tile colors for consistency
   const harborColors: Record<HarborType, string> = {
-    generic: '#6B4423', // Dark brown for generic 3:1 (different from forest)
+    generic: '#000000', // Black for generic with white question mark
     brick: '#E74C3C', // Matching brick/hills color
     lumber: '#8B4513', // Matching forest color (dark brown)
-    wool: '#ECEFF1', // Matching pasture color (light gray/white)
-    grain: '#7CB342', // Matching fields color (bright green)
+    wool: '#8BC34A', // Matching updated pasture color (light green)
+    grain: '#cbd5e1', // Light slate to represent grain
     ore: '#607D8B', // Matching mountains color (blue-gray)
   };
 
   // Create harbor icon based on type - now round
-  const createHarborIcon = (type: HarborType, x: number, y: number, direction: number = 0) => {
-    const color = harborColors[type];
+  const createHarborIcon = (type: HarborType, x: number, y: number) => {
     const radius = 12;
     
-    return (
-      <g>
-        {/* Round harbor - no background, just colored circle */}
-        <circle
-          cx={x}
-          cy={y}
-          r={radius}
-          fill={color}
-          stroke="#000"
-          strokeWidth="2"
-        />
-        {/* Inner accent ring for better visibility */}
-        <circle
-          cx={x}
-          cy={y}
-          r={radius - 2}
-          fill="none"
-          stroke="#FFF"
-          strokeWidth="1"
-          opacity="0.3"
-        />
-      </g>
-    );
+    if (type === 'generic') {
+      // Generic harbor: black circle with white question mark
+      return (
+        <g>
+          <circle
+            cx={x}
+            cy={y}
+            r={radius}
+            fill="#000000"
+            stroke="#FFF"
+            strokeWidth="2"
+          />
+          <text
+            x={x}
+            y={y}
+            textAnchor="middle"
+            fontSize="14"
+            fill="#FFFFFF"
+            dominantBaseline="central"
+            fontWeight="bold"
+          >
+            ?
+          </text>
+        </g>
+      );
+    } else {
+      // Resource harbors: use same background as their hexes
+      const color = harborColors[type];
+      return (
+        <g>
+          <circle
+            cx={x}
+            cy={y}
+            r={radius}
+            fill={color}
+            stroke="#000"
+            strokeWidth="2"
+          />
+          {/* Inner accent ring for better visibility */}
+          <circle
+            cx={x}
+            cy={y}
+            r={radius - 2}
+            fill="none"
+            stroke="#FFF"
+            strokeWidth="1"
+            opacity="0.3"
+          />
+        </g>
+      );
+    }
   };
 
   return (
@@ -210,8 +299,8 @@ export function MapRenderer({ map }: MapRendererProps) {
                   {hex.harbor && isWaterHex && (
                     <g>
                       {(() => {
-                        const { x: harborX, y: harborY, direction } = calculateHarborPosition(hex, map.hexes, layout);
-                        return createHarborIcon(hex.harbor, harborX, harborY, direction);
+                        const { x: harborX, y: harborY } = calculateHarborPosition(hex, map.hexes, layout);
+                        return createHarborIcon(hex.harbor, harborX, harborY);
                       })()}
                     </g>
                   )}
@@ -231,28 +320,62 @@ export function MapRenderer({ map }: MapRendererProps) {
             {/* Terrain Types */}
             <div className={styles.legendSection}>
               <h4>Terrain Types:</h4>
-              <div className={styles.legendText}>
-                <div>🧱 Hills (Brick) • 🌲 Forest (Lumber) • 🐑 Pasture (Wool)</div>
-                <div>🌾 Fields (Grain) • ⛰️ Mountains (Ore) • 🏜️ Desert (Robber)</div>
-                <div>🌊 Water (Harbors) • 5-6 Player Extensions Available</div>
+              <div className={styles.terrainGrid}>
+                <div className={styles.terrainItem}>
+                  {createMiniHex('hills')}
+                  <span>Hills (Brick)</span>
+                </div>
+                <div className={styles.terrainItem}>
+                  {createMiniHex('forest')}
+                  <span>Forest (Lumber)</span>
+                </div>
+                <div className={styles.terrainItem}>
+                  {createMiniHex('pasture')}
+                  <span>Pasture (Wool)</span>
+                </div>
+                <div className={styles.terrainItem}>
+                  {createMiniHex('fields')}
+                  <span>Fields (Grain)</span>
+                </div>
+                <div className={styles.terrainItem}>
+                  {createMiniHex('mountains')}
+                  <span>Mountains (Ore)</span>
+                </div>
+                <div className={styles.terrainItem}>
+                  {createMiniHex('desert')}
+                  <span>Desert (Robber)</span>
+                </div>
               </div>
             </div>
             
-            {/* Harbor Colors */}
+            {/* Harbor Types */}
             <div className={styles.legendSection}>
-              <h4>Harbor Colors:</h4>
-              <div className={styles.legendText}>
-                <div>
-                  <span className={`${styles.harborDot} ${styles.generic}`}>●</span> Brown: Generic (3:1) • 
-                  <span className={`${styles.harborDot} ${styles.brick}`}>●</span> 🧱 Brick (2:1) • 
-                  <span className={`${styles.harborDot} ${styles.lumber}`}>●</span> 🌲 Lumber (2:1)
+              <h4>Harbor Types:</h4>
+              <div className={styles.harborGrid}>
+                <div className={styles.harborItem}>
+                  {createMiniHarborIcon('generic')}
+                  <span>Generic (3:1)</span>
                 </div>
-                <div>
-                  <span className={`${styles.harborDot} ${styles.wool}`}>●</span> 🐑 Wool (2:1) • 
-                  <span className={`${styles.harborDot} ${styles.grain}`}>●</span> 🌾 Grain (2:1) • 
-                  <span className={`${styles.harborDot} ${styles.ore}`}>●</span> ⛰️ Ore (2:1)
+                <div className={styles.harborItem}>
+                  {createMiniHarborIcon('brick')}
+                  <span>Brick (2:1)</span>
                 </div>
-                <div>Round harbors placed on water hexes adjacent to land</div>
+                <div className={styles.harborItem}>
+                  {createMiniHarborIcon('lumber')}
+                  <span>Lumber (2:1)</span>
+                </div>
+                <div className={styles.harborItem}>
+                  {createMiniHarborIcon('wool')}
+                  <span>Wool (2:1)</span>
+                </div>
+                <div className={styles.harborItem}>
+                  {createMiniHarborIcon('grain')}
+                  <span>Grain (2:1)</span>
+                </div>
+                <div className={styles.harborItem}>
+                  {createMiniHarborIcon('ore')}
+                  <span>Ore (2:1)</span>
+                </div>
               </div>
             </div>
           </div>

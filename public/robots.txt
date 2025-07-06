@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://catanmapgenerator.app/sitemap.xml
+
+# Disallow unnecessary paths
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+
+# Allow search engines to crawl all content
+Allow: /
+Allow: /seafarers
+Allow: /rules
+Allow: /legal/
+
+# Crawl delay (optional)
+Crawl-delay: 1

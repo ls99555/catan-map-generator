@@ -1,14 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { GameMap, GameConfiguration, MapStatistics } from '../types/game';
 import { generateMap, validateMap, getMapStatistics } from '../utils/mapGenerator';
 import { MapRenderer } from '../components/MapRenderer';
 import { MapControls } from '../components/MapControls';
 import { MapStatisticsPanel } from '../components/MapStatisticsPanel';
-import { AdBanner } from '../components/AdBanner';
+import { Layout } from '../components/Layout';
 import styles from '../styles/HomePage.module.scss';
+
+// This will be handled by layout.tsx metadata
 
 export default function Home() {
   const [gameMap, setGameMap] = useState<GameMap | null>(null);
@@ -63,62 +64,26 @@ export default function Home() {
     setConfig(newConfig);
   };
 
-  const handleExportMap = (format: 'image' | 'pdf' | 'json') => {
-    if (!gameMap) return;
-    
-    switch (format) {
-      case 'json':
-        const dataStr = JSON.stringify(gameMap, null, 2);
-        const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-        const exportFileDefaultName = `catan-map-${Date.now()}.json`;
-        
-        const linkElement = document.createElement('a');
-        linkElement.setAttribute('href', dataUri);
-        linkElement.setAttribute('download', exportFileDefaultName);
-        linkElement.click();
-        break;
-      case 'image':
-        // TODO: Implement image export
-        console.log('Image export not yet implemented');
-        break;
-      case 'pdf':
-        // TODO: Implement PDF export
-        console.log('PDF export not yet implemented');
-        break;
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-green-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-green-800">
-                Catan Map Generator
-              </h1>
-              <span className="ml-2 text-sm text-green-600 bg-green-100 px-2 py-1 rounded">
-                Base Game
-              </span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Link href="/rules" className="text-sm text-green-700 font-semibold hover:text-green-800 transition-colors">
-                Rules & Guide
-              </Link>
-            </div>
+    <Layout>
+      <div className={styles.container}>
+        {/* SEO-optimized heading section */}
+        <div className={styles.heroSection}>
+          <h1 className={styles.mainTitle}>Free Catan Map Builder - Create Balanced Board Game Maps</h1>
+          <p className={styles.heroDescription}>
+            Build perfectly balanced Settlers of Catan maps instantly. Our free online Catan map builder supports 3-4 and 5-6 player games with statistical analysis, mobile-friendly design, and export capabilities.
+          </p>
+          <div className={styles.keyFeatures}>
+            <span className={styles.feature}>✓ Instant Generation</span>
+            <span className={styles.feature}>✓ Mobile Optimized</span>
+            <span className={styles.feature}>✓ Statistical Analysis</span>
+            <span className={styles.feature}>✓ Free to Use</span>
           </div>
         </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Ad Banner */}
-        <AdBanner position="top" />
 
         {/* Map Configuration - Top Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+        <div className={styles.configSection}>
+          <h2 className={styles.sectionTitle}>
             Map Configuration
           </h2>
           <MapControls
@@ -130,113 +95,98 @@ export default function Home() {
         </div>
 
         {/* Map Display - Full Width */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-lg font-semibold text-gray-900">
-              Generated Map
+        <div className={styles.mapSection}>
+          <div className={styles.mapHeader}>
+            <h2 className={styles.sectionTitle}>
+              Generated Catan Map
             </h2>
-            <div className="flex space-x-2">
-              <button
-                onClick={() => handleExportMap('image')}
-                className="px-3 py-1 text-sm bg-green-100 text-green-800 rounded hover:bg-green-200 transition-colors"
-                disabled={!gameMap}
-              >
-                Export Image
-              </button>
-            </div>
           </div>
 
           {/* Map Renderer */}
-          <div className="relative">
+          <div className={styles.mapRenderer}>
             {isGenerating ? (
-              <div className="flex items-center justify-center h-96 bg-gray-50 rounded-lg">
-                <div className="text-center">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
-                  <p className="text-gray-600">Generating your Catan map...</p>
+              <div className={styles.loadingContainer}>
+                <div className={styles.loadingContent}>
+                  <div className={styles.spinner}></div>
+                  <p className={styles.loadingText}>Generating your balanced Catan map...</p>
                 </div>
               </div>
             ) : gameMap ? (
               <MapRenderer map={gameMap} />
             ) : (
-              <div className="flex items-center justify-center h-96 bg-gray-50 rounded-lg">
-                <p className="text-gray-600">Click &quot;Generate Map&quot; to create your Catan board</p>
+              <div className={styles.emptyState}>
+                <p>Click &quot;Generate Map&quot; to create your balanced Catan board</p>
               </div>
             )}
           </div>
         </div>
 
-        {/* Statistics Panel - Full Width on Desktop, Below Map on Mobile */}
+        {/* Statistics Panel */}
         {mapStats && (
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
-              Map Statistics
+          <div className={styles.statsSection}>
+            <h2 className={styles.sectionTitle}>
+              Map Statistics & Analysis
             </h2>
             <MapStatisticsPanel stats={mapStats} config={config} />
           </div>
         )}
-      </main>
 
-      {/* Bottom Ad */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AdBanner position="bottom" />
-      </div>
+        {/* SEO Content Section */}
+        <div className={styles.seoSection}>
+          <h2 className={styles.sectionTitle}>About Our Catan Map Builder</h2>
+          <div className={styles.seoContent}>
+            <p>
+              Our Catan map builder creates perfectly balanced Settlers of Catan boards for both 3-4 and 5-6 player games. 
+              Unlike random setups, our map building algorithm ensures fair resource distribution and optimal number placement following official Catan rules.
+            </p>
+            <h3>Key Features:</h3>
+            <ul>
+              <li><strong>Balanced Resource Distribution:</strong> Each player gets fair access to all resource types</li>
+              <li><strong>Optimal Number Placement:</strong> Prevents adjacent high-probability numbers (6s and 8s)</li>
+              <li><strong>Mobile-Friendly:</strong> Works perfectly on phones, tablets, and desktop computers</li>
+              <li><strong>Statistical Analysis:</strong> See probability distributions and balance metrics</li>
+              <li><strong>Free to Use:</strong> No registration or payment required</li>
+              <li><strong>Multiple Game Modes:</strong> Support for 3-4 players and 5-6 player extension</li>
+            </ul>
+          </div>
+        </div>
 
-      {/* Footer */}
-      <footer className={styles.footer}>
-        <div className={styles.footerContent}>
-          <div className={styles.footerSection}>
-            <h3 className={styles.footerTitle}>Catan Map Generator</h3>
-            <p className={styles.footerText}>
-              Generate balanced and fair Catan maps for the base game with 3-4 and 5-6 player support. 
-              Perfect for competitive play and casual games.
+        {/* Quick Rules Section */}
+        <div className={styles.rulesSection}>
+          <h2 className={styles.sectionTitle}>Essential Catan Rules</h2>
+          <div className={styles.rulesContent}>
+            <div className={styles.rulesGrid}>
+              <div className={styles.ruleCard}>
+                <h4>🎯 Victory Condition</h4>
+                <p>First player to reach <strong>10 victory points</strong> wins the game</p>
+              </div>
+              <div className={styles.ruleCard}>
+                <h4>🎲 Rolling 7</h4>
+                <p>Move the robber, discard half your cards if you have 8+</p>
+              </div>
+              <div className={styles.ruleCard}>
+                <h4>🏠 Building Costs</h4>
+                <p><strong>Road:</strong> Brick + Lumber<br/><strong>Settlement:</strong> Brick + Lumber + Wool + Grain</p>
+              </div>
+              <div className={styles.ruleCard}>
+                <h4>🃏 Development Cards</h4>
+                <p>Cost: Ore + Wool + Grain. Play on your turn (except when purchased)</p>
+              </div>
+              <div className={styles.ruleCard}>
+                <h4>🤝 Trading</h4>
+                <p>Trade with players anytime, or use ports for better ratios</p>
+              </div>
+              <div className={styles.ruleCard}>
+                <h4>🛡️ Robber Rules</h4>
+                <p>Blocks resource production, steal from adjacent players</p>
+              </div>
+            </div>
+            <p className={styles.rulesNote}>
+              <a href="/rules" className={styles.rulesLink}>View complete rules and strategies →</a>
             </p>
           </div>
-          
-          <div className={styles.footerSection}>
-            <h4 className={styles.footerSubtitle}>Legal</h4>
-            <div className={styles.footerLinks}>
-              <Link href="/legal/privacy" className={styles.footerLink}>
-                Privacy Policy
-              </Link>
-              <Link href="/legal/terms" className={styles.footerLink}>
-                Terms of Service
-              </Link>
-              <Link href="/legal/disclaimer" className={styles.footerLink}>
-                Disclaimer
-              </Link>
-            </div>
-          </div>
-          
-          <div className={styles.footerSection}>
-            <h4 className={styles.footerSubtitle}>Game Modes</h4>
-            <ul className={styles.footerList}>
-              <li>Base Game (3-4 players)</li>
-              <li>5-6 Player Extension</li>
-              <li>Balanced resource distribution</li>
-              <li>Random number placement</li>
-              <li>Harbor generation</li>
-            </ul>
-          </div>
-          
-          <div className={styles.footerSection}>
-            <h4 className={styles.footerSubtitle}>Features</h4>
-            <ul className={styles.footerList}>
-              <li>Mobile-friendly design</li>
-              <li>Balanced resource distribution</li>
-              <li>Standard base game rules</li>
-              <li>Export capabilities</li>
-              <li>Statistical analysis</li>
-            </ul>
-          </div>
         </div>
-        
-        <div className={styles.footerBottom}>
-          <p className={styles.copyright}>
-            © {new Date().getFullYear()} Catan Map Generator. This is an unofficial tool for Settlers of Catan. 
-            Catan is a trademark of Catan Studio.
-          </p>
-        </div>
-      </footer>
-    </div>
+      </div>
+    </Layout>
   );
 }

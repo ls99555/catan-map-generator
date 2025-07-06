@@ -47,16 +47,6 @@ export default function Disclaimer() {
         </div>
 
         <div className={styles.section}>
-          <h2 className={styles.heading}>Advertising Disclaimer</h2>
-          <p className={styles.text}>
-            This website is supported by advertising. We use Google AdSense to display advertisements. These advertisements are served by Google and may be targeted based on your interests and browsing behavior.
-          </p>
-          <p className={styles.text}>
-            We are not responsible for the content of advertisements displayed on our website, and the inclusion of any advertisement does not constitute an endorsement by us.
-          </p>
-        </div>
-
-        <div className={styles.section}>
           <h2 className={styles.heading}>Game Rules and Accuracy</h2>
           <p className={styles.text}>
             While we strive to ensure that the map generation follows official Catan rules and guidelines, we make no warranty as to the accuracy, completeness, or balance of generated maps. Users should verify map setups according to official game rules.

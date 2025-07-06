@@ -8,21 +8,23 @@
 }
 
 .gameInfo {
-  background-color: #f0fdf4;
-  border: 1px solid #bbf7d0;
+  background: $gradient-card;
+  border: 1px solid $color-slate-300;
   border-radius: 0.5rem;
   padding: 1rem;
+  box-shadow: $shadow-sm;
   
   h3 {
     font-size: 0.875rem;
     font-weight: 500;
-    color: #15803d;
+    color: $color-slate-700;
     margin-bottom: 0.5rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
   
   .infoText {
     font-size: 0.875rem;
-    color: #166534;
+    color: #475569;
     
     p {
       margin: 0;
@@ -39,7 +41,7 @@
     display: block;
     font-size: 0.875rem;
     font-weight: 500;
-    color: #374151;
+    color: $color-slate-700;
     margin-bottom: 0.5rem;
   }
   
@@ -53,35 +55,63 @@
     h4 {
       font-size: 0.875rem;
       font-weight: 500;
-      color: #4b5563;
+      color: $color-slate-600;
       margin-bottom: 0.5rem;
     }
   }
   
   .playerCountButton {
     width: 100%;
-    padding: 0.75rem;
+    min-width: 200px; /* Make buttons wider for better text visibility */
+    padding: 0.75rem 1rem;
     border-radius: 0.375rem;
-    border: 1px solid #d1d5db;
-    background-color: white;
-    color: #374151;
+    border: 2px solid #cbd5e1;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    color: $color-slate-700;
     transition: all 0.2s ease;
     cursor: pointer;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
+    
+    &:focus {
+      outline: none !important;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
     
     &:hover {
-      background-color: #f9fafb;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      border-color: $color-blue-600;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     }
     
     &.selected {
-      background-color: #dcfce7;
-      border-color: #22c55e;
-      color: #15803d;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+      border-color: $color-blue-600 !important;
+      color: $color-slate-800 !important;
+      font-weight: 600;
+      
+      &:focus {
+        outline: none !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
+      }
+      
+      &:hover {
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+        border-color: $color-blue-600 !important;
+        color: $color-slate-800 !important;
+        transform: translateY(-1px);
+      }
     }
     
     &.extension {
-      background-color: #fef3c7;
-      border-color: #f59e0b;
-      color: #92400e;
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      border-color: #cbd5e1;
+      color: $color-slate-700;
+      font-weight: 600;
     }
     
     .buttonTitle {
@@ -90,7 +120,7 @@
     
     .buttonSubtitle {
       font-size: 0.875rem;
-      color: #6b7280;
+      color: $color-slate-600;
     }
   }
 }
@@ -98,8 +128,8 @@
 .extensionNotice {
   margin-top: 0.75rem;
   padding: 0.75rem;
-  background-color: #fef3c7;
-  border: 1px solid #fbbf24;
+  background-color: #f8fafc;
+  border: 1px solid #cbd5e1;
   border-radius: 0.375rem;
   display: flex;
   align-items: flex-start;
@@ -109,20 +139,20 @@
     flex-shrink: 0;
     width: 1.25rem;
     height: 1.25rem;
-    color: #f59e0b;
+    color: $color-slate-400;
   }
   
   .noticeContent {
     h3 {
       font-size: 0.875rem;
       font-weight: 500;
-      color: #92400e;
+      color: $color-slate-700;
       margin-bottom: 0.25rem;
     }
     
     .noticeDescription {
       font-size: 0.875rem;
-      color: #b45309;
+      color: $color-slate-600;
       
       p {
         margin: 0;
@@ -150,16 +180,18 @@
 }
 
 .mapInfo {
-  background-color: #eff6ff;
-  border: 1px solid #93c5fd;
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  border: 1px solid $color-slate-400;
   border-radius: 0.5rem;
   padding: 1rem;
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
   
   h3 {
     font-size: 0.875rem;
     font-weight: 500;
-    color: #1e40af;
+    color: $color-slate-700;
     margin-bottom: 0.5rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
   
   .infoGrid {
@@ -167,7 +199,7 @@
     flex-direction: column;
     gap: 0.25rem;
     font-size: 0.875rem;
-    color: #1e40af;
+    color: $color-slate-700;
     
     .infoRow {
       display: flex;
@@ -175,10 +207,12 @@
       
       .infoLabel {
         font-weight: normal;
+        color: $color-blue-600;
       }
       
       .infoValue {
         font-weight: 500;
+        color: $color-slate-700;
       }
     }
   }
@@ -189,7 +223,7 @@
     display: block;
     font-size: 0.875rem;
     font-weight: 500;
-    color: #374151;
+    color: $color-slate-700;
     margin-bottom: 0.5rem;
   }
   
@@ -206,25 +240,25 @@
       
       input[type="checkbox"] {
         border-radius: 0.25rem;
-        border: 1px solid #d1d5db;
-        color: #059669;
+        border: 1px solid $color-slate-400;
+        color: $color-slate-400;
         margin-right: 0.5rem;
         
         &:focus {
-          box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.5);
+          box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.5);
         }
       }
       
       .optionText {
         font-size: 0.875rem;
-        color: #374151;
+        color: $color-slate-700;
       }
     }
     
     .optionDescription {
       margin-left: 1.5rem;
       font-size: 0.75rem;
-      color: #6b7280;
+      color: $color-blue-600;
       margin-top: 0.25rem;
     }
   }
@@ -233,39 +267,49 @@
 .generateButton {
   width: 100%;
   padding: 0.75rem 1rem;
-  background-color: #059669;
+  background: linear-gradient(135deg, $color-slate-400 0%, $color-slate-600 100%);
   color: white;
   border-radius: 0.375rem;
   border: none;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 0.875rem;
   cursor: pointer;
   transition: all 0.2s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   
   &:hover {
-    background-color: #047857;
+    background: linear-gradient(135deg, $color-slate-600 0%, #dc2626 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 8px -1px rgba(0, 0, 0, 0.1), 0 4px 6px -1px rgba(0, 0, 0, 0.06);
   }
   
   &:disabled {
-    background-color: #9ca3af;
+    background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
     cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
   }
 }
 
 .rulesInfo {
-  background-color: #f9fafb;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   border-radius: 0.375rem;
+  border: 1px solid $color-slate-400;
   padding: 1rem;
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
   
   h4 {
     font-size: 0.875rem;
     font-weight: 500;
-    color: #111827;
+    color: $color-slate-700;
     margin-bottom: 0.5rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
   
   .rulesText {
     font-size: 0.75rem;
-    color: #4b5563;
+    color: $color-blue-600;
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
@@ -274,7 +318,7 @@
       margin: 0;
       
       &.extensionRule {
-        color: #2563eb;
+        color: $color-slate-600;
       }
     }
     
@@ -282,7 +326,7 @@
       margin-top: 0.75rem;
       margin-bottom: 0.25rem;
       font-weight: 500;
-      color: #374151;
+      color: $color-slate-700;
     }
   }
 }
@@ -447,8 +491,8 @@
   }
 
   &.warning {
-    background: $warning-yellow;
-    color: $text-dark;
+    background: $color-blue-500;
+    color: $color-white;
   }
 }
 

@@ -1,0 +1,25 @@
+<!-- Apple Touch Icon 180x180 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#334155;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#475569;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Rounded rectangle background -->
+  <rect width="180" height="180" rx="20" ry="20" fill="url(#grad1)"/>
+  
+  <!-- Hexagonal shape -->
+  <polygon points="90,20 140,50 140,110 90,140 40,110 40,50" fill="rgba(255,255,255,0.1)" stroke="white" stroke-width="2"/>
+  
+  <!-- CM Letters -->
+  <text x="90" y="105" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle">CM</text>
+  
+  <!-- Decorative elements -->
+  <circle cx="50" cy="70" r="4" fill="white" opacity="0.7"/>
+  <circle cx="130" cy="70" r="4" fill="white" opacity="0.7"/>
+  <circle cx="90" cy="40" r="4" fill="white" opacity="0.7"/>
+  <circle cx="90" cy="130" r="4" fill="white" opacity="0.7"/>
+</svg>

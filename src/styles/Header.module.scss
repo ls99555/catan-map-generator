@@ -1,0 +1,96 @@
+@use 'variables' as *;
+
+.header {
+  background: $gradient-primary;
+  box-shadow: $shadow-md;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: $safe-area-inset-top;
+  padding-left: $safe-area-inset-left;
+  padding-right: $safe-area-inset-right;
+}
+
+.container {
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 0 $spacing-4;
+
+  @media (min-width: $breakpoint-sm) {
+    padding: 0 $spacing-6;
+  }
+
+  @media (min-width: $breakpoint-lg) {
+    padding: 0 $spacing-8;
+  }
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: $spacing-16;
+}
+
+.logoSection {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  margin: 0;
+
+  @media (min-width: 768px) {
+    font-size: 1.75rem;
+  }
+}
+
+.titleLink {
+  color: white;
+  text-decoration: none;
+  transition: all $transition-fast;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.9);
+    transform: scale(1.02);
+    text-decoration: none;
+  }
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  @media (min-width: 768px) {
+    gap: 1.5rem;
+  }
+}
+
+.navLink {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  &:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+    text-decoration: none;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+  }
+
+  @media (min-width: 768px) {
+    padding: 0.75rem 1rem;
+  }
+}

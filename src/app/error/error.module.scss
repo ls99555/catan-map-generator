@@ -1,0 +1,112 @@
+@use '../../styles/variables' as *;
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 2rem;
+  background-color: $background-light;
+}
+
+.content {
+  text-align: center;
+  max-width: 600px;
+  padding: 3rem 2rem;
+  background-color: $background-white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border: 1px solid $color-slate-300;
+}
+
+.icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: $color-slate-800;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.description {
+  font-size: 1.125rem;
+  color: $color-slate-600;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.errorList {
+  text-align: left;
+  margin: 1.5rem 0 2rem;
+  padding-left: 1.5rem;
+  
+  li {
+    color: $color-slate-600;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.help {
+  padding-top: 2rem;
+  border-top: 1px solid $color-slate-300;
+  
+  p {
+    font-size: 0.875rem;
+    color: $color-slate-500;
+    line-height: 1.4;
+    margin: 0;
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .content {
+    padding: 2rem 1.5rem;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+  
+  .description {
+    font-size: 1rem;
+  }
+  
+  .actions {
+    flex-direction: column;
+    
+    a, button {
+      width: 100%;
+    }
+  }
+}

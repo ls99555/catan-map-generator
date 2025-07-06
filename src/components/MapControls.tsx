@@ -1,5 +1,6 @@
 import { GameConfiguration, PlayerCount } from '../types/game';
 import { EXPANSION_CONFIGS, PLAYER_EXTENSION_CONFIG } from '../config/expansions/index';
+import { Button } from './Button';
 import styles from '../styles/MapControls.module.scss';
 
 interface MapControlsProps {
@@ -63,30 +64,28 @@ export function MapControls({ config, onChange, onGenerate, isGenerating }: MapC
           {/* Standard 3-4 Players */}
           <div className={styles.playerCountGroup}>
             <h4>Standard Game</h4>
-            <button
+            <Button
               onClick={() => handlePlayerCountChange(4)}
-              className={`${styles.playerCountButton} ${
-                config.rules.playerCount <= 4 ? styles.selected : ''
-              }`}
+              variant="outline"
+              className={`${styles.playerCountButton} ${config.rules.playerCount <= 4 ? styles.selected : ''}`}
             >
               <div className={styles.buttonTitle}>3-4 Players</div>
               <div className={styles.buttonSubtitle}>Base game components only</div>
-            </button>
+            </Button>
           </div>
 
           {/* Extension 5-6 Players */}
           {allSupportedPlayerCounts.some(count => count > 4) && (
             <div className={styles.playerCountGroup}>
               <h4>Extension Required</h4>
-              <button
+              <Button
                 onClick={() => handlePlayerCountChange(6)}
-                className={`${styles.playerCountButton} ${
-                  config.rules.playerCount > 4 ? styles.extension : ''
-                }`}
+                variant="outline"
+                className={`${styles.playerCountButton} ${config.rules.playerCount > 4 ? styles.selected : ''}`}
               >
                 <div className={styles.buttonTitle}>5-6 Players</div>
                 <div className={styles.buttonSubtitle}>Requires extension set</div>
-              </button>
+              </Button>
             </div>
           )}
         </div>
@@ -205,13 +204,16 @@ export function MapControls({ config, onChange, onGenerate, isGenerating }: MapC
       </div>
 
       {/* Generate Button */}
-      <button
+      <Button
         onClick={onGenerate}
         disabled={isGenerating}
+        loading={isGenerating}
+        variant="primary"
+        size="large"
         className={styles.generateButton}
       >
-        {isGenerating ? 'Generating...' : 'Generate New Map'}
-      </button>
+        Generate New Map
+      </Button>
 
       {/* Rules Information */}
       <div className={styles.rulesInfo}>

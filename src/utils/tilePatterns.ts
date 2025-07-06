@@ -58,10 +58,10 @@ export const TILE_PATTERNS = {
   
   pasture: (id: string) => `
     <pattern id="pasture-${id}" patternUnits="userSpaceOnUse" width="20" height="20">
-      <rect width="20" height="20" fill="#ECEFF1"/>
-      <!-- Rolling pasture hills - lighter/whiter -->
-      <path d="M0 12 Q5 8 10 12 Q15 16 20 12 L20 20 L0 20 Z" fill="#F5F5F5"/>
-      <path d="M0 8 Q5 4 10 8 Q15 12 20 8 L20 12 Q15 16 10 12 Q5 8 0 12 Z" fill="#E8F5E8"/>
+      <rect width="20" height="20" fill="#8BC34A"/>
+      <!-- Rolling green pasture hills -->
+      <path d="M0 12 Q5 8 10 12 Q15 16 20 12 L20 20 L0 20 Z" fill="#7CB342"/>
+      <path d="M0 8 Q5 4 10 8 Q15 12 20 8 L20 12 Q15 16 10 12 Q5 8 0 12 Z" fill="#9CCC65"/>
       <!-- Grass tufts -->
       <path d="M2 16 L2 12 L3 12 L3 16" stroke="#4CAF50" stroke-width="1"/>
       <path d="M4 17 L4 13 L5 13 L5 17" stroke="#4CAF50" stroke-width="1"/>
@@ -70,12 +70,16 @@ export const TILE_PATTERNS = {
       <path d="M12 16 L12 12 L13 12 L13 16" stroke="#4CAF50" stroke-width="1"/>
       <path d="M15 17 L15 13 L16 13 L16 17" stroke="#4CAF50" stroke-width="1"/>
       <path d="M18 15 L18 11 L19 11 L19 15" stroke="#4CAF50" stroke-width="1"/>
-      <!-- Sheep wool areas -->
-      <circle cx="5" cy="6" r="1.5" fill="#FFFFFF" opacity="0.8"/>
-      <circle cx="15" cy="7" r="1.5" fill="#FFFFFF" opacity="0.8"/>
-      <circle cx="10" cy="10" r="1.5" fill="#FFFFFF" opacity="0.8"/>
-      <circle cx="3" cy="9" r="1" fill="#FFFFFF" opacity="0.8"/>
-      <circle cx="17" cy="5" r="1" fill="#FFFFFF" opacity="0.8"/>
+      <!-- Fluffy sheep wool areas - creamy white, smaller and more natural -->
+      <circle cx="5" cy="6" r="1.2" fill="#F8F8FF" opacity="0.9"/>
+      <circle cx="15" cy="7" r="1.0" fill="#F8F8FF" opacity="0.9"/>
+      <circle cx="10" cy="10" r="1.3" fill="#F8F8FF" opacity="0.9"/>
+      <circle cx="3" cy="9" r="0.8" fill="#F8F8FF" opacity="0.9"/>
+      <circle cx="17" cy="5" r="0.9" fill="#F8F8FF" opacity="0.9"/>
+      <!-- Small flowers for pastoral beauty -->
+      <circle cx="6" cy="14" r="0.3" fill="#FFFFFF"/>
+      <circle cx="13" cy="15" r="0.3" fill="#FFFFFF"/>
+      <circle cx="18" cy="12" r="0.3" fill="#FFFFFF"/>
     </pattern>
   `,
   

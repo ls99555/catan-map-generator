@@ -1,163 +1,214 @@
 import Link from 'next/link';
+import { Layout } from '../../components/Layout';
+import styles from '../../styles/LegalPage.module.scss';
 
 export default function RulesPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-green-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-green-800">
-                Catan Map Generator
-              </Link>
-            </div>
-            <nav className="flex space-x-6">
-              <Link href="/" className="text-gray-600 hover:text-green-600">
-                Generator
-              </Link>
-              <Link href="/rules" className="text-green-600 font-medium">
-                Rules
-              </Link>
-              <Link href="/rules#base-game" className="text-gray-600 hover:text-green-600">
-                Base Game
-              </Link>
-              <Link href="/rules#expansions" className="text-gray-600 hover:text-green-600">
-                Expansions
-              </Link>
-              <Link href="/rules#player-extensions" className="text-gray-600 hover:text-green-600">
-                5-6 Players
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-lg shadow-lg p-8 min-h-screen">
-          <h1 className="text-4xl font-bold text-gray-900 mb-8">
-            Official Catan Rules & Guidelines
-          </h1>
+    <Layout>
+      <div className={styles.container}>
+        <div className={styles.content}>
+          <h1 className={styles.title}>Official Catan Rules & Guidelines</h1>
 
           {/* Navigation */}
-          <div className="mb-8">
-            <nav className="flex flex-wrap gap-4 p-4 bg-gray-50 rounded-lg">
-              <a href="#compliance" className="text-blue-600 hover:text-blue-800 font-medium">Compliance</a>
-              <a href="#base-game" className="text-blue-600 hover:text-blue-800 font-medium">Base Game</a>
-              <a href="#expansions" className="text-blue-600 hover:text-blue-800 font-medium">Expansions</a>
-              <a href="#player-extensions" className="text-blue-600 hover:text-blue-800 font-medium">5-6 Player Extensions</a>
-              <a href="#scenarios" className="text-blue-600 hover:text-blue-800 font-medium">Scenarios</a>
-              <a href="#map-generation" className="text-blue-600 hover:text-blue-800 font-medium">Map Generation</a>
+          <div className={styles.navigation}>
+            <nav className={styles.navContainer}>
+              <a href="#compliance" className={styles.navLink}>Compliance</a>
+              <a href="#base-game" className={styles.navLink}>Base Game</a>
+              <a href="#expansions" className={styles.navLink}>Expansions</a>
+              <a href="#player-extensions" className={styles.navLink}>5-6 Player Extensions</a>
+              <a href="#scenarios" className={styles.navLink}>Scenarios</a>
+              <a href="#map-generation" className={styles.navLink}>Map Generation</a>
             </nav>
           </div>
 
           {/* Compliance Notice */}
-          <div id="compliance" className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
-            <h2 className="text-lg font-semibold text-blue-900 mb-2">🎯 Official Compliance</h2>
-            <p className="text-blue-800 mb-4">
+          <div id="compliance" className={styles.complianceSection}>
+            <h2 className={styles.complianceTitle}>🎯 Official Compliance</h2>
+            <p className={styles.complianceText}>
               This map generator strictly follows all official Catan rules and component specifications 
               as published by KOSMOS and Catan Studio. All generated maps are guaranteed to be playable 
               according to official tournament rules.
             </p>
-            <div className="bg-white p-4 rounded-lg">
-              <h3 className="font-medium text-blue-900 mb-2">Official Rulebook PDFs</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div className={styles.rulebookSection}>
+              <h3 className={styles.rulebookTitle}>Official Rulebook PDFs</h3>
+              <div className={styles.rulebookGrid}>
                 <div>
-                  <p className="font-medium text-blue-800">Base Game & Extensions:</p>
-                  <ul className="text-blue-700 space-y-1">
-                    <li>• <a href="https://www.catan.com/sites/default/files/2025-03/CN3081%20CATAN%E2%80%93The%20Game%20Rulebook%20secure%20%281%29.pdf" target="_blank" rel="noopener noreferrer" className="hover:underline">Base Game Rulebook</a></li>
-                    <li>• <a href="https://www.catan.com/sites/default/files/2025-03/CN3082%20CATAN%20%E2%80%93%205-6%20Rulebook%202025%20reduced.pdf" target="_blank" rel="noopener noreferrer" className="hover:underline">5-6 Player Extension</a></li>
+                  <p className={styles.rulebookCategory}>Base Game & Extensions:</p>
+                  <ul className={styles.rulebookList}>
+                    <li>• <a href="https://www.catan.com/sites/default/files/2025-03/CN3081%20CATAN%E2%80%93The%20Game%20Rulebook%20secure%20%281%29.pdf" target="_blank" rel="noopener noreferrer" className={styles.rulebookLink}>Base Game Rulebook</a></li>
+                    <li>• <a href="https://www.catan.com/sites/default/files/2025-03/CN3082%20CATAN%20%E2%80%93%205-6%20Rulebook%202025%20reduced.pdf" target="_blank" rel="noopener noreferrer" className={styles.rulebookLink}>5-6 Player Extension</a></li>
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-blue-800">Expansions:</p>
-                  <ul className="text-blue-700 space-y-1">
-                    <li>• <a href="https://www.catan.com/sites/default/files/2025-03/CN3083%20CATAN%E2%80%93Seafarers%20Rulebook%202025%20secured%20reduced.pdf" target="_blank" rel="noopener noreferrer" className="hover:underline">Seafarers Rulebook</a></li>
-                    <li>• <a href="https://www.catan.com/sites/default/files/2025-03/CN3087%20CATAN%E2%80%93Cities%26Knights_%20Rulebook.pdf" target="_blank" rel="noopener noreferrer" className="hover:underline">Cities & Knights</a></li>
-                    <li>• <a href="https://www.catan.com/sites/default/files/2025-04/CN3089%20CATAN%20%E2%80%93%20T%26B%20Rulebook.pdf" target="_blank" rel="noopener noreferrer" className="hover:underline">Traders & Barbarians</a></li>
-                    <li>• <a href="https://www.catan.com/sites/default/files/2025-04/CN3085%20CATAN%20%E2%80%93%20E%26P%20Rulebook.pdf" target="_blank" rel="noopener noreferrer" className="hover:underline">Explorers & Pirates</a></li>
+                  <p className={styles.rulebookCategory}>Expansions:</p>
+                  <ul className={styles.rulebookList}>
+                    <li>• <a href="https://www.catan.com/sites/default/files/2025-03/CN3083%20CATAN%E2%80%93Seafarers%20Rulebook%202025%20secured%20reduced.pdf" target="_blank" rel="noopener noreferrer" className={styles.rulebookLink}>Seafarers Rulebook</a></li>
+                    <li>• <a href="https://www.catan.com/sites/default/files/2025-03/CN3087%20CATAN%E2%80%93Cities%26Knights_%20Rulebook.pdf" target="_blank" rel="noopener noreferrer" className={styles.rulebookLink}>Cities & Knights</a></li>
+                    <li>• <a href="https://www.catan.com/sites/default/files/2025-04/CN3089%20CATAN%20%E2%80%93%20T%26B%20Rulebook.pdf" target="_blank" rel="noopener noreferrer" className={styles.rulebookLink}>Traders & Barbarians</a></li>
+                    <li>• <a href="https://www.catan.com/sites/default/files/2025-04/CN3085%20CATAN%20%E2%80%93%20E%26P%20Rulebook.pdf" target="_blank" rel="noopener noreferrer" className={styles.rulebookLink}>Explorers & Pirates</a></li>
                   </ul>
                 </div>
               </div>
-              <p className="text-xs text-blue-600 mt-2">
+              <p className="text-xs text-sky-400 mt-2">
                 All rulebooks sourced directly from <a href="https://www.catan.com/" target="_blank" rel="noopener noreferrer" className="hover:underline font-medium">catan.com</a>
               </p>
             </div>
           </div>
 
-          {/* Base Game Rules */}
-          <section id="base-game" className="mb-12">
+          {/* Detailed Base Game Rules - 3-4 Players */}
+          <section id="base-game-3-4" className="mb-12">
             <h2 className="text-3xl font-semibold text-gray-800 mb-6 border-b-2 border-gray-200 pb-3">
-              Base Game Rules (3-4 Players)
+              Detailed Base Game Rules (3-4 Players)
             </h2>
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <div>
-                <h3 className="text-xl font-medium text-gray-700 mb-4">Official Components</h3>
+                <h3 className="text-xl font-medium text-gray-700 mb-4">Core Gameplay</h3>
                 <div className="space-y-4">
                   <div className="bg-gray-50 p-4 rounded-lg">
-                    <h4 className="font-medium text-gray-700 mb-2">Terrain Hexes (19 total):</h4>
+                    <h4 className="font-medium text-gray-700 mb-2">The Robber (Rolling 7):</h4>
                     <ul className="space-y-1 text-gray-600 text-sm ml-4">
-                      <li>• 4 Hills (Brick)</li>
-                      <li>• 4 Forest (Lumber)</li>
-                      <li>• 4 Pasture (Wool)</li>
-                      <li>• 4 Fields (Grain)</li>
-                      <li>• 3 Mountains (Ore)</li>
-                      <li>• 1 Desert (no resource)</li>
+                      <li>• When 7 is rolled, no resources are produced</li>
+                      <li>• Players with more than seven cards discard half (round down)</li>
+                      <li>• Active player moves robber to any hex (not ocean)</li>
+                      <li>• Robber blocks resource production on that hex</li>
+                      <li>• Steal 1 random card from player with settlement/city adjacent to robber</li>
                     </ul>
                   </div>
                   
                   <div className="bg-gray-50 p-4 rounded-lg">
-                    <h4 className="font-medium text-gray-700 mb-2">Number Tokens (18 total):</h4>
+                    <h4 className="font-medium text-gray-700 mb-2">Development Cards:</h4>
                     <ul className="space-y-1 text-gray-600 text-sm ml-4">
-                      <li>• Two each of: 3, 4, 5, 6, 8, 9, 10, 11</li>
-                      <li>• One each of: 2, 12</li>
-                      <li>• No token on desert hex</li>
+                      <li>• Cost: 1 Ore + 1 Wool + 1 Grain</li>
+                      <li>• Cannot be played same turn purchased</li>
+                      <li>• Knight: Move robber, steal card (most = Largest Army)</li>
+                      <li>• Victory Point: 1 VP (keep hidden until winning)</li>
+                      <li>• Progress: Year of Plenty, Monopoly, Road Building</li>
                     </ul>
                   </div>
                   
                   <div className="bg-gray-50 p-4 rounded-lg">
-                    <h4 className="font-medium text-gray-700 mb-2">Harbor Pieces (9 total):</h4>
+                    <h4 className="font-medium text-gray-700 mb-2">Building Rules:</h4>
                     <ul className="space-y-1 text-gray-600 text-sm ml-4">
-                      <li>• 4 Generic (3:1 any resource)</li>
-                      <li>• 5 Specific (2:1 for each resource)</li>
-                      <li>• Base must touch hex edge</li>
+                      <li>• Settlements must be 2+ intersections apart</li>
+                      <li>• Cities can only be built on existing settlements</li>
+                      <li>• Roads connect settlements and enable expansion</li>
+                      <li>• Cannot build in same turn as trading</li>
                     </ul>
                   </div>
                 </div>
               </div>
               
               <div>
-                <h3 className="text-xl font-medium text-gray-700 mb-4">Setup Requirements</h3>
+                <h3 className="text-xl font-medium text-gray-700 mb-4">Building Costs & Victory Points</h3>
                 <div className="space-y-4">
                   <div className="bg-green-50 p-4 rounded-lg">
-                    <h4 className="font-medium text-green-700 mb-2">✅ Required Rules:</h4>
-                    <ul className="space-y-1 text-green-600 text-sm">
-                      <li>• Hexagonal layout (19 hexes)</li>
-                      <li>• Random terrain placement</li>
-                      <li>• Avoid adjacent 6s and 8s</li>
-                      <li>• One resource per hex only</li>
-                      <li>• Robber starts on desert</li>
+                    <h4 className="font-medium text-green-700 mb-2">Building Costs:</h4>
+                    <ul className="space-y-1 text-green-600 text-sm ml-4">
+                      <li>• Road: 1 Brick + 1 Lumber</li>
+                      <li>• Settlement: 1 Brick + 1 Lumber + 1 Wool + 1 Grain</li>
+                      <li>• City: 3 Ore + 2 Grain</li>
+                      <li>• Development Card: 1 Ore + 1 Wool + 1 Grain</li>
                     </ul>
                   </div>
                   
+                  <div className="bg-blue-50 p-4 rounded-lg">
+                    <h4 className="font-medium text-blue-700 mb-2">Victory Points:</h4>
+                    <ul className="space-y-1 text-sky-400 text-sm ml-4">
+                      <li>• Settlement: 1 VP</li>
+                      <li>• City: 2 VP</li>
+                      <li>• Longest Road: 2 VP (5+ connected roads)</li>
+                      <li>• Largest Army: 2 VP (3+ knights played)</li>
+                      <li>• Development Card VP: 1 VP each</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-slate-50 p-4 rounded-lg">
+                    <h4 className="font-medium text-slate-700 mb-2">Trading Rules:</h4>
+                    <ul className="space-y-1 text-slate-600 text-sm ml-4">
+                      <li>• 4:1 trade with supply (no harbor)</li>
+                      <li>• 3:1 trade with generic harbor</li>
+                      <li>• 2:1 trade with specific resource harbor</li>
+                      <li>• Free player-to-player trading</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Detailed Base Game Rules - 5-6 Players */}
+          <section id="base-game-5-6" className="mb-12">
+            <h2 className="text-3xl font-semibold text-gray-800 mb-6 border-b-2 border-gray-200 pb-3">
+              Detailed Base Game Rules (5-6 Players)
+            </h2>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div>
+                <h3 className="text-xl font-medium text-gray-700 mb-4">Extension Components</h3>
+                <div className="space-y-4">
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <h4 className="font-medium text-gray-700 mb-2">Additional Hexes:</h4>
+                    <ul className="space-y-1 text-gray-600 text-sm ml-4">
+                      <li>• 11 additional terrain hexes</li>
+                      <li>• 6 additional number tokens</li>
+                      <li>• 2 additional harbors</li>
+                      <li>• Larger frame pieces</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <h4 className="font-medium text-gray-700 mb-2">Number Tokens (5-6 players):</h4>
+                    <ul className="space-y-1 text-gray-600 text-sm ml-4">
+                      <li>• Two each of: 2, 3, 4, 5, 6, 8, 9, 10, 11, 12</li>
+                      <li>• Includes rare 2 and 12 tokens</li>
+                      <li>• More diverse probability distribution</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <h4 className="font-medium text-gray-700 mb-2">Special 5-6 Player Rules:</h4>
+                    <ul className="space-y-1 text-gray-600 text-sm ml-4">
+                      <li>• Same robber rules as 3-4 players</li>
+                      <li>• Same development card rules</li>
+                      <li>• Same building and trading rules</li>
+                      <li>• Victory condition: 10 points</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="text-xl font-medium text-gray-700 mb-4">Extended Gameplay</h3>
+                <div className="space-y-4">
                   <div className="bg-red-50 p-4 rounded-lg">
-                    <h4 className="font-medium text-red-700 mb-2">❌ Forbidden:</h4>
-                    <ul className="space-y-1 text-red-600 text-sm">
-                      <li>• Multiple resources per hex</li>
-                      <li>• Wrong component counts</li>
-                      <li>• Harbors on non-coastal hexes</li>
-                      <li>• Number tokens on desert</li>
-                      <li>• Adjacent high-probability numbers</li>
+                    <h4 className="font-medium text-red-700 mb-2">Enhanced Robber Rules:</h4>
+                    <ul className="space-y-1 text-red-600 text-sm ml-4">
+                      <li>• Same 7 roll effects as base game</li>
+                      <li>• Discard half cards if more than seven (round down)</li>
+                      <li>• Move robber to any land hex</li>
+                      <li>• Steal from any adjacent player</li>
                     </ul>
                   </div>
                   
-                  <div className="bg-yellow-50 p-4 rounded-lg">
-                    <h4 className="font-medium text-yellow-700 mb-2">🏆 Victory Condition:</h4>
-                    <p className="text-yellow-600 text-sm">
-                      First player to reach <strong>10 victory points</strong> wins
-                    </p>
+                  <div className="bg-blue-50 p-4 rounded-lg">
+                    <h4 className="font-medium text-blue-700 mb-2">Development Cards (5-6):</h4>
+                    <ul className="space-y-1 text-sky-400 text-sm ml-4">
+                      <li>• Same cost: 1 Ore + 1 Wool + 1 Grain</li>
+                      <li>• Cannot play same turn purchased</li>
+                      <li>• Larger Army: 3+ knights for 2 VP</li>
+                      <li>• More competition for achievements</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-green-50 p-4 rounded-lg">
+                    <h4 className="font-medium text-green-700 mb-2">Building Restrictions:</h4>
+                    <ul className="space-y-1 text-green-600 text-sm ml-4">
+                      <li>• Same distance rule: 2+ intersections apart</li>
+                      <li>• Cities require existing settlements</li>
+                      <li>• Same building costs as base game</li>
+                      <li>• More competition for prime locations</li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -212,12 +263,12 @@ export default function RulesPage() {
               </div>
 
               {/* Traders & Barbarians */}
-              <div className="bg-orange-50 border border-orange-200 rounded-lg p-6">
-                <h3 className="text-xl font-semibold text-orange-900 mb-4">🏺 Traders & Barbarians</h3>
+              <div className="bg-slate-50 border border-slate-300 rounded-lg p-6">
+                <h3 className="text-xl font-semibold text-slate-800 mb-4">🏺 Traders & Barbarians</h3>
                 <div className="space-y-3">
                   <div>
-                    <h4 className="font-medium text-orange-800">Components:</h4>
-                    <ul className="text-orange-700 text-sm space-y-1">
+                    <h4 className="font-medium text-slate-700">Components:</h4>
+                    <ul className="text-slate-600 text-sm space-y-1">
                       <li>• 5 different scenarios</li>
                       <li>• Barbarian tokens</li>
                       <li>• Camels and wagons</li>
@@ -225,8 +276,8 @@ export default function RulesPage() {
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-medium text-orange-800">Victory Points:</h4>
-                    <p className="text-orange-700 text-sm">10 points (varies by scenario)</p>
+                    <h4 className="font-medium text-slate-700">Victory Points:</h4>
+                    <p className="text-slate-600 text-sm">10 points (varies by scenario)</p>
                   </div>
                 </div>
               </div>
@@ -311,30 +362,6 @@ export default function RulesPage() {
                   </div>
                 </div>
               </div>
-              
-              <div className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="text-xl font-medium text-gray-700 mb-4">Special Rules</h3>
-                <div className="space-y-3">
-                  <div>
-                    <h4 className="font-medium text-gray-700">Special Building Phase:</h4>
-                    <p className="text-gray-600 text-sm">
-                      After each player&apos;s turn, all players may build in turn order.
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-gray-700">Victory Points:</h4>
-                    <p className="text-gray-600 text-sm">
-                      Same as base game/expansion (10 for most, 13 for Cities & Knights).
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-gray-700">Numbers 2 & 12:</h4>
-                    <p className="text-gray-600 text-sm">
-                      Only available with 5-6 player extensions (lowest probability).
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
           </section>
 
@@ -344,9 +371,9 @@ export default function RulesPage() {
               Detailed Scenario Rules
             </h2>
             
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-6">
-              <h3 className="text-lg font-semibold text-yellow-900 mb-2">⚠️ Important Note</h3>
-              <p className="text-yellow-800">
+            <div className="bg-slate-50 border border-slate-300 rounded-lg p-6 mb-6">
+              <h3 className="text-lg font-semibold text-slate-800 mb-2">⚠️ Important Note</h3>
+              <p className="text-slate-700">
                 Different scenarios have varying victory point requirements, setup rules, and special mechanics. 
                 When you select a scenario in the generator, the relevant rules will be displayed in the statistics panel.
               </p>
@@ -459,11 +486,11 @@ export default function RulesPage() {
 
             {/* Traders & Barbarians Scenarios */}
             <div className="mb-8">
-              <h3 className="text-2xl font-semibold text-orange-900 mb-4">🏺 Traders & Barbarians Scenarios</h3>
+              <h3 className="text-2xl font-semibold text-slate-800 mb-4">🏺 Traders & Barbarians Scenarios</h3>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-orange-50 border border-orange-200 rounded-lg p-6">
-                  <h4 className="text-lg font-medium text-orange-900 mb-3">Fishermen of Catan</h4>
-                  <div className="space-y-2 text-orange-800 text-sm">
+                <div className="bg-slate-50 border border-slate-300 rounded-lg p-6">
+                  <h4 className="text-lg font-medium text-slate-800 mb-3">Fishermen of Catan</h4>
+                  <div className="space-y-2 text-slate-700 text-sm">
                     <p><strong>Victory Points:</strong> 10 points</p>
                     <p><strong>Setup:</strong> Standard map with fish tokens</p>
                     <p><strong>Special Rules:</strong></p>
@@ -476,9 +503,9 @@ export default function RulesPage() {
                   </div>
                 </div>
 
-                <div className="bg-orange-50 border border-orange-200 rounded-lg p-6">
-                  <h4 className="text-lg font-medium text-orange-900 mb-3">Rivers of Catan</h4>
-                  <div className="space-y-2 text-orange-800 text-sm">
+                <div className="bg-slate-50 border border-slate-300 rounded-lg p-6">
+                  <h4 className="text-lg font-medium text-slate-800 mb-3">Rivers of Catan</h4>
+                  <div className="space-y-2 text-slate-700 text-sm">
                     <p><strong>Victory Points:</strong> 10 points</p>
                     <p><strong>Setup:</strong> Standard map with rivers</p>
                     <p><strong>Special Rules:</strong></p>
@@ -491,9 +518,9 @@ export default function RulesPage() {
                   </div>
                 </div>
 
-                <div className="bg-orange-50 border border-orange-200 rounded-lg p-6">
-                  <h4 className="text-lg font-medium text-orange-900 mb-3">Great River</h4>
-                  <div className="space-y-2 text-orange-800 text-sm">
+                <div className="bg-slate-50 border border-slate-300 rounded-lg p-6">
+                  <h4 className="text-lg font-medium text-slate-800 mb-3">Great River</h4>
+                  <div className="space-y-2 text-slate-700 text-sm">
                     <p><strong>Victory Points:</strong> 10 points</p>
                     <p><strong>Setup:</strong> 5×7 rectangular map with central river</p>
                     <p><strong>Special Rules:</strong></p>
@@ -506,9 +533,9 @@ export default function RulesPage() {
                   </div>
                 </div>
 
-                <div className="bg-orange-50 border border-orange-200 rounded-lg p-6">
-                  <h4 className="text-lg font-medium text-orange-900 mb-3">Barbarian Attack</h4>
-                  <div className="space-y-2 text-orange-800 text-sm">
+                <div className="bg-slate-50 border border-slate-300 rounded-lg p-6">
+                  <h4 className="text-lg font-medium text-slate-800 mb-3">Barbarian Attack</h4>
+                  <div className="space-y-2 text-slate-700 text-sm">
                     <p><strong>Victory Points:</strong> 10 points</p>
                     <p><strong>Setup:</strong> Standard map with barbarian camps</p>
                     <p><strong>Special Rules:</strong></p>
@@ -674,7 +701,7 @@ export default function RulesPage() {
             </div>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </Layout>
   );
 }

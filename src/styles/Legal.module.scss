@@ -2,7 +2,7 @@
 
 .container {
   min-height: 100vh;
-  background: linear-gradient(135deg, $color-gray-50 0%, $color-blue-50 100%);
+  background: $gradient-primary-light;
   padding: $spacing-6 $spacing-4;
 }
 
