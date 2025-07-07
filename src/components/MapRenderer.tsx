@@ -142,16 +142,6 @@ export function MapRenderer({ map, config, onChange, onGenerate, isGenerating }:
     });
   };
 
-  const handleRuleChange = (rule: string, value: boolean) => {
-    onChange({
-      ...config,
-      rules: {
-        ...config.rules,
-        [rule]: value,
-      },
-    });
-  };
-
   const currentExpansion = EXPANSION_CONFIGS['base'];
   const extensionConfig = EXPANSION_CONFIGS['base-5-6'];
   
@@ -177,9 +167,8 @@ export function MapRenderer({ map, config, onChange, onGenerate, isGenerating }:
       viewBox: '0 0 400 300' // Smaller default viewBox when no hexes
     };
     
-    // Calculate positions for both layouts
+    // Calculate positions for viewBox layout
     const viewBoxPositions = map.hexes.map(hex => cubeToPixel(hex.position, viewBoxLayout));
-    const renderPositions = map.hexes.map(hex => cubeToPixel(hex.position, layout));
     
     // Calculate bounds for viewBox layout
     const margin = viewBoxLayout.size * 2;
@@ -202,7 +191,7 @@ export function MapRenderer({ map, config, onChange, onGenerate, isGenerating }:
     return {
       viewBox
     };
-  }, [map.hexes, viewBoxLayout, layout]);
+  }, [map.hexes, viewBoxLayout]);
 
   // Create mini hex for legend
   const createMiniHex = (terrain: string, size: number = 20) => {

@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { GameMap, GameConfiguration, MapStatistics } from '../types/game';
 import { generateMap, validateMap, getMapStatistics } from '../utils/mapGenerator';
 import { MapRenderer } from '../components/MapRenderer';
-import { MapControls } from '../components/MapControls';
 import { MapStatisticsPanel } from '../components/MapStatisticsPanel';
 import { Layout } from '../components/Layout';
 import styles from '../styles/HomePage.module.scss';
