@@ -34,9 +34,6 @@
 .mapSvg {
   width: 100%;
   height: auto;
-  min-height: 600px;
-  max-height: 1200px;
-  max-width: 100%;
   border-radius: $border-radius-base;
   display: block;
   margin: 0 auto;
@@ -102,7 +99,7 @@
 
 .numberToken {
   font-family: $font-family-base;
-  font-size: 24px;
+  /* font-size: 48px; */ // Removed - now controlled by inline fontSize in component
   font-weight: $hex-number-font-weight;
   text-anchor: middle;
   dominant-baseline: central;
@@ -141,7 +138,7 @@
 
 .harbor {
   font-family: $font-family-base;
-  font-size: 18px;
+  font-size: 36px; // Double the font size
   font-weight: $font-weight-semibold;
   text-anchor: middle;
   dominant-baseline: central;
@@ -152,7 +149,7 @@
 .harborIcon {
   fill: $primary-blue;
   stroke: $background-white;
-  stroke-width: 2;
+  stroke-width: 4; // Double the stroke width
 }
 
 // Additional classes for new styling
@@ -242,51 +239,56 @@
     }
   }
   
-  // Mini hex and harbor styles
-  .miniHex {
-    flex-shrink: 0;
-    width: 20px;
-    height: 20px;
+  // Player count controls
+  .playerCountGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    margin-top: 0.5rem;
   }
   
-  .miniHarbor {
-    flex-shrink: 0;
-    width: 16px;
-    height: 16px;
+  .playerCountButton {
+    padding: 0.5rem 0.75rem;
+    border: 2px solid $color-slate-300;
+    border-radius: $border-radius-md;
+    background: $background-white;
+    color: $color-slate-700;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all $transition-fast;
+    
+    &:hover {
+      border-color: $primary-accent;
+      background: $color-slate-50;
+    }
+    
+    &.selected {
+      border-color: $primary-accent;
+      background: $primary-accent;
+      color: $background-white;
+    }
+    
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
   
-  // Harbor color dots for legend - matching tile colors (keeping for backwards compatibility)
-  .harborDot {
-    display: inline-block;
-    width: 0.8em;
-    height: 0.8em;
-    border-radius: 50%;
-    margin-right: 0.25rem;
-    
-    &.generic {
-      color: #6B4423;
-    }
-    
-    &.brick {
-      color: #E74C3C;
-    }
-    
-    &.lumber {
-      color: #8B4513;
-    }
-    
-    &.wool {
-      color: #ECEFF1;
-      border: 1px solid #666;
-    }
-    
-    &.grain {
-      color: #7CB342;
-    }
-    
-    &.ore {
-      color: #607D8B;
-    }
+  .extensionNotice {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background: $color-blue-50;
+    border: 1px solid $color-blue-200;
+    border-radius: $border-radius-sm;
+    font-size: 0.75rem;
+    color: $color-blue-700;
+    text-align: center;
+  }
+  
+  .generateButton {
+    width: 100%;
+    margin-top: 0.5rem;
   }
 }
 
@@ -353,13 +355,13 @@
 
 // Responsive adjustments
 @media (max-width: $breakpoint-sm) {
-  .numberToken {
+  /* .numberToken {
     font-size: $hex-number-font-size - 2;
-  }
+  } */ // Removed - now controlled by component logic
 
-  .harbor {
+  /* .harbor {
     font-size: 8px;
-  }
+  } */ // Removed - now controlled by component logic
 
   .hexagon {
     stroke-width: $hex-stroke-width - 0.5;

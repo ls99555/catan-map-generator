@@ -1,11 +1,13 @@
-import { GameMap, HarborType, Hex } from '@/types/game';
+import { GameMap, HarborType, Hex, GameConfiguration, PlayerCount } from '@/types/game';
 import { 
   cubeToPixel, 
   getHexPath, 
   HexLayout
 } from '@/utils/hexGrid';
 import { generateTilePatterns, getPatternUrl } from '@/utils/tilePatterns';
-import { useMemo } from 'react';
+import { EXPANSION_CONFIGS } from '@/config/expansions/index';
+import { Button } from './Button';
+import { useMemo, useRef, useState, useEffect } from 'react';
 import styles from '../styles/MapRenderer.module.scss';
 
 // Calculate harbor position for water hexes (base game only)
@@ -44,37 +46,163 @@ function calculateHarborPosition(waterHex: Hex, allHexes: Hex[], layout: HexLayo
 
 interface MapRendererProps {
   map: GameMap;
+  config: GameConfiguration;
+  onChange: (config: GameConfiguration) => void;
+  onGenerate: () => void;
+  isGenerating: boolean;
 }
 
-export function MapRenderer({ map }: MapRendererProps) {
-  const layout: HexLayout = useMemo(() => ({
-    size: 150, // Even larger hex size
-    origin: { x: 400, y: 300 },
+export function MapRenderer({ map, config, onChange, onGenerate, isGenerating }: MapRendererProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(800);
+  const [containerHeight, setContainerHeight] = useState(600);
+
+  useEffect(() => {
+    function handleResize() {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
+        setContainerHeight(containerRef.current.offsetHeight);
+      }
+    }
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Calculate hex positions and map dimensions
+  const hexPositions = map.hexes.map(hex => hex.position);
+  const minQ = Math.min(...hexPositions.map(h => h.q));
+  const maxQ = Math.max(...hexPositions.map(h => h.q));
+  const minR = Math.min(...hexPositions.map(h => h.r));
+  const maxR = Math.max(...hexPositions.map(h => h.r));
+  
+  // Calculate how many hexes wide and tall the map is
+  const mapWidthInHexes = maxQ - minQ + 1;
+  const mapHeightInHexes = maxR - minR + 1;
+  
+  // For pointy-top hexes, calculate dimensions
+  const padding = 32; // Reduced padding for mobile
+  const availableWidth = containerWidth - padding;
+  const availableHeight = containerHeight - padding;
+  const hexWidthRatio = Math.sqrt(3); // width/size ratio for pointy-top hex
+  const hexHeightRatio = 2; // height/size ratio for pointy-top hex
+  
+  // Calculate optimal hex size based on both width and height constraints
+  const hexSizeByWidth = availableWidth / (mapWidthInHexes * hexWidthRatio);
+  const hexSizeByHeight = availableHeight / (mapHeightInHexes * hexHeightRatio * 0.75);
+  
+  // Use the smaller of the two to ensure it fits, but set minimum for readability
+  const calculatedHexSize = Math.min(hexSizeByWidth, hexSizeByHeight);
+  
+  // Set responsive minimums - larger minimum on mobile for better readability
+  let minHexSize;
+  if (containerWidth < 480) {
+    minHexSize = 60; // Small mobile
+  } else if (containerWidth < 768) {
+    minHexSize = 80; // Large mobile/tablet
+  } else {
+    minHexSize = 40; // Desktop - can be smaller since screen is bigger
+  }
+  
+  const optimalHexSize = Math.max(calculatedHexSize, minHexSize);
+
+  // Layout for viewBox calculation (smaller, for consistent viewport)
+  const viewBoxLayout: HexLayout = useMemo(() => ({
+    size: 60, // Smaller fixed size for viewBox calculation
+    origin: { x: 0, y: 0 }, // Origin at 0,0 for easier centering
     orientation: 'pointy' as const,
   }), []);
+
+  // Calculate responsive sizes for circles and text based on hex size
+  const circleRadius = Math.max(optimalHexSize * 0.16, 20); // Scale with hex size, minimum 20
+  
+  // Font size: make it scale more predictably across screen sizes
+  let fontSizeRatio;
+  if (containerWidth < 480) {
+    fontSizeRatio = 0.12; // 12% on small mobile - bigger for readability
+  } else if (containerWidth < 768) {
+    fontSizeRatio = 0.10; // 10% on large mobile/tablet
+  } else if (containerWidth < 1200) {
+    fontSizeRatio = 0.12; // 12% on small desktop
+  } else {
+    fontSizeRatio = 0.14; // 14% on large desktop - bigger numbers
+  }
+  
+  const fontSize = Math.max(optimalHexSize * fontSizeRatio, 12); // Minimum 12px
+  const strokeWidth = Math.max(optimalHexSize * 0.02, 2); // Scale with hex size, minimum 2
+
+  // Control handlers for the generation options
+  const handlePlayerCountChange = (playerCount: PlayerCount) => {
+    onChange({
+      ...config,
+      rules: {
+        ...config.rules,
+        playerCount,
+      },
+    });
+  };
+
+  const handleRuleChange = (rule: string, value: boolean) => {
+    onChange({
+      ...config,
+      rules: {
+        ...config.rules,
+        [rule]: value,
+      },
+    });
+  };
+
+  const currentExpansion = EXPANSION_CONFIGS['base'];
+  const extensionConfig = EXPANSION_CONFIGS['base-5-6'];
+  
+  // Combine supported player counts from both base and extension configs
+  const baseSupportedCounts = currentExpansion?.supportedPlayerCounts || [3, 4];
+  const extensionSupportedCounts = extensionConfig?.supportedPlayerCounts || [];
+  const allSupportedPlayerCounts = [...baseSupportedCounts, ...extensionSupportedCounts];
+
+  // Check if using 5-6 player extension
+  const isUsingExtension = config.rules.playerCount > 4;
+  const requires56Extension = isUsingExtension;
+
+  // Layout for actual hex rendering (calculated optimal size)
+  const layout: HexLayout = useMemo(() => ({
+    size: optimalHexSize, // Calculated hex size to fit container
+    origin: { x: 0, y: 0 }, // Origin at 0,0 for easier centering
+    orientation: 'pointy' as const,
+  }), [optimalHexSize]);
 
   // Calculate SVG dimensions based on hex positions with proper margins
   const { viewBox } = useMemo(() => {
     if (map.hexes.length === 0) return { 
-      viewBox: '0 0 800 600'
+      viewBox: '0 0 400 300' // Smaller default viewBox when no hexes
     };
     
-    const positions = map.hexes.map(hex => cubeToPixel(hex.position, layout));
-    const margin = layout.size * 3; // Increased margin for better view
+    // Calculate positions for both layouts
+    const viewBoxPositions = map.hexes.map(hex => cubeToPixel(hex.position, viewBoxLayout));
+    const renderPositions = map.hexes.map(hex => cubeToPixel(hex.position, layout));
     
-    const minX = Math.min(...positions.map(p => p.x)) - margin;
-    const maxX = Math.max(...positions.map(p => p.x)) + margin;
-    const minY = Math.min(...positions.map(p => p.y)) - margin;
-    const maxY = Math.max(...positions.map(p => p.y)) + margin;
+    // Calculate bounds for viewBox layout
+    const margin = viewBoxLayout.size * 2;
+    const minX = Math.min(...viewBoxPositions.map(p => p.x)) - margin;
+    const maxX = Math.max(...viewBoxPositions.map(p => p.x)) + margin;
+    const minY = Math.min(...viewBoxPositions.map(p => p.y)) - margin;
+    const maxY = Math.max(...viewBoxPositions.map(p => p.y)) + margin;
     
     const width = maxX - minX;
     const height = maxY - minY;
-    const viewBox = `${minX} ${minY} ${width} ${height}`;
+    
+    // Center the viewBox properly
+    const centerX = (minX + maxX) / 2;
+    const centerY = (minY + maxY) / 2;
+    const viewBoxX = centerX - width / 2;
+    const viewBoxY = centerY - height / 2;
+    
+    const viewBox = `${viewBoxX} ${viewBoxY} ${width} ${height}`;
     
     return {
       viewBox
     };
-  }, [map.hexes, layout]); // Removed map.expansion and map.scenario as they're not actually used in the calculation
+  }, [map.hexes, viewBoxLayout, layout]);
 
   // Create mini hex for legend
   const createMiniHex = (terrain: string, size: number = 20) => {
@@ -144,16 +272,16 @@ export function MapRenderer({ map }: MapRendererProps) {
     brick: '#E74C3C', // Matching brick/hills color
     lumber: '#8B4513', // Matching forest color (dark brown)
     wool: '#8BC34A', // Matching updated pasture color (light green)
-    grain: '#cbd5e1', // Light slate to represent grain
+    grain: '#FFE066', // Light yellow for grain
     ore: '#607D8B', // Matching mountains color (blue-gray)
   };
 
   // Create harbor icon based on type - now round
   const createHarborIcon = (type: HarborType, x: number, y: number) => {
-    const radius = 28; // Even larger harbor icons
+    const radius = circleRadius; // Use responsive circle radius
     
     if (type === 'generic') {
-      // Generic harbor: black circle with white question mark
+      // Generic harbor: all black circle with white question mark
       return (
         <g>
           <circle
@@ -161,14 +289,14 @@ export function MapRenderer({ map }: MapRendererProps) {
             cy={y}
             r={radius}
             fill="#000000"
-            stroke="#FFF"
-            strokeWidth="4"
+            stroke="#000000"
+            strokeWidth={strokeWidth}
           />
           <text
             x={x}
             y={y}
             textAnchor="middle"
-            fontSize="26"
+            fontSize={fontSize} // Use responsive font size
             fill="#FFFFFF"
             dominantBaseline="central"
             fontWeight="bold"
@@ -188,16 +316,16 @@ export function MapRenderer({ map }: MapRendererProps) {
             r={radius}
             fill={color}
             stroke="#000"
-            strokeWidth="4"
+            strokeWidth={strokeWidth}
           />
           {/* Inner accent ring for better visibility */}
           <circle
             cx={x}
             cy={y}
-            r={radius - 4}
+            r={radius - strokeWidth}
             fill="none"
             stroke="#FFF"
-            strokeWidth="3"
+            strokeWidth={Math.max(strokeWidth - 1, 1)}
             opacity="0.3"
           />
         </g>
@@ -206,7 +334,7 @@ export function MapRenderer({ map }: MapRendererProps) {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} ref={containerRef}>
       <div className={styles.layout}>
         {/* Map SVG */}
         <div className={styles.mapContainer}>
@@ -249,10 +377,10 @@ export function MapRenderer({ map }: MapRendererProps) {
                       <circle
                         cx={center.x}
                         cy={center.y}
-                        r="32"
+                        r={circleRadius} // Responsive circle radius
                         fill={hex.number === 6 || hex.number === 8 ? '#FF6B6B' : '#FFF'}
                         stroke="#2F2F2F"
-                        strokeWidth="4"
+                        strokeWidth={strokeWidth} // Responsive stroke width
                       />
                       <text
                         x={center.x}
@@ -260,7 +388,7 @@ export function MapRenderer({ map }: MapRendererProps) {
                         textAnchor="middle"
                         className={styles.numberToken}
                         fill={hex.number === 6 || hex.number === 8 ? '#FFF' : '#2F2F2F'}
-                        fontSize="26"
+                        fontSize={fontSize} // Responsive font size
                         dominantBaseline="central"
                       >
                         {hex.number}
@@ -275,10 +403,10 @@ export function MapRenderer({ map }: MapRendererProps) {
                       <circle
                         cx={center.x}
                         cy={center.y}
-                        r="22"
+                        r={circleRadius} // Responsive circle radius
                         fill="#8B4513"
                         stroke="#654321"
-                        strokeWidth="4"
+                        strokeWidth={strokeWidth} // Responsive stroke width
                         opacity="0.8"
                       />
                       <text
@@ -286,7 +414,7 @@ export function MapRenderer({ map }: MapRendererProps) {
                         y={center.y}
                         textAnchor="middle"
                         className={styles.desertText}
-                        fontSize="18"
+                        fontSize={fontSize} // Responsive font size
                         fill="#FFF"
                         dominantBaseline="central"
                       >
@@ -314,9 +442,44 @@ export function MapRenderer({ map }: MapRendererProps) {
 
         {/* Legend Panel */}
         <div className={styles.legendPanel}>
-          <h3>Legend</h3>
+          <h3>Map Generator</h3>
           
           <div className={styles.legendSections}>
+            {/* Generation Controls */}
+            <div className={styles.legendSection}>
+              <h4>Player Count:</h4>
+              <div className={styles.playerCountGrid}>
+                {allSupportedPlayerCounts.map((count) => (
+                  <button
+                    key={count}
+                    onClick={() => handlePlayerCountChange(count)}
+                    className={`${styles.playerCountButton} ${
+                      config.rules.playerCount === count ? styles.selected : ''
+                    }`}
+                  >
+                    {count}
+                  </button>
+                ))}
+              </div>
+              
+              {requires56Extension && (
+                <div className={styles.extensionNotice}>
+                  <span>5-6 Player Extension Required</span>
+                </div>
+              )}
+            </div>
+
+            {/* Generate Button */}
+            <div className={styles.legendSection}>
+              <Button
+                onClick={onGenerate}
+                disabled={isGenerating}
+                className={styles.generateButton}
+              >
+                {isGenerating ? 'Generating...' : 'Generate New Map'}
+              </Button>
+            </div>
+
             {/* Terrain Types */}
             <div className={styles.legendSection}>
               <h4>Terrain Types:</h4>

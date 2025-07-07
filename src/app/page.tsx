@@ -81,58 +81,8 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Map Configuration - Top Section */}
-        <div className={styles.configSection}>
-          <h2 className={styles.sectionTitle}>
-            Map Configuration
-          </h2>
-          <MapControls
-            config={config}
-            onChange={handleConfigChange}
-            onGenerate={handleGenerateMap}
-            isGenerating={isGenerating}
-          />
-        </div>
-
-        {/* Map Display - Full Width */}
-        <div className={styles.mapSection}>
-          <div className={styles.mapHeader}>
-            <h2 className={styles.sectionTitle}>
-              Generated Catan Map
-            </h2>
-          </div>
-
-          {/* Map Renderer */}
-          <div className={styles.mapRenderer}>
-            {isGenerating ? (
-              <div className={styles.loadingContainer}>
-                <div className={styles.loadingContent}>
-                  <div className={styles.spinner}></div>
-                  <p className={styles.loadingText}>Generating your balanced Catan map...</p>
-                </div>
-              </div>
-            ) : gameMap ? (
-              <MapRenderer map={gameMap} />
-            ) : (
-              <div className={styles.emptyState}>
-                <p>Click &quot;Generate Map&quot; to create your balanced Catan board</p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Statistics Panel */}
-        {mapStats && (
-          <div className={styles.statsSection}>
-            <h2 className={styles.sectionTitle}>
-              Map Statistics & Analysis
-            </h2>
-            <MapStatisticsPanel stats={mapStats} config={config} />
-          </div>
-        )}
-
-        {/* SEO Content Section */}
-        <div className={styles.seoSection}>
+        {/* About Section */}
+        <div className={styles.aboutSection}>
           <h2 className={styles.sectionTitle}>About Our Catan Map Builder</h2>
           <div className={styles.seoContent}>
             <p>
@@ -186,6 +136,60 @@ export default function Home() {
             </p>
           </div>
         </div>
+
+        {/* Map Display - Full Width */}
+        <div className={styles.mapSection}>
+          <div className={styles.mapHeader}>
+            <h2 className={styles.sectionTitle}>
+              Generated Catan Map
+            </h2>
+          </div>
+
+          {/* Map Renderer */}
+          <div className={styles.mapRenderer}>
+            {isGenerating ? (
+              <div className={styles.loadingContainer}>
+                <div className={styles.loadingContent}>
+                  <div className={styles.spinner}></div>
+                  <p className={styles.loadingText}>Generating your balanced Catan map...</p>
+                </div>
+              </div>
+            ) : gameMap ? (
+              <MapRenderer 
+                map={gameMap} 
+                config={config}
+                onChange={handleConfigChange}
+                onGenerate={handleGenerateMap}
+                isGenerating={isGenerating}
+              />
+            ) : (
+              <div className={styles.emptyStateWithControls}>
+                <MapRenderer 
+                  map={{ 
+                    hexes: [], 
+                    playerCount: config.rules.playerCount,
+                    expansion: 'base',
+                    mapSize: 'medium' as const
+                  }}
+                  config={config}
+                  onChange={handleConfigChange}
+                  onGenerate={handleGenerateMap}
+                  isGenerating={isGenerating}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Statistics Panel */}
+        {mapStats && (
+          <div className={styles.statsSection}>
+            <h2 className={styles.sectionTitle}>
+              Map Statistics & Analysis
+            </h2>
+            <MapStatisticsPanel stats={mapStats} config={config} />
+          </div>
+        )}
       </div>
     </Layout>
   );
